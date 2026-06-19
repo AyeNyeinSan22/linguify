@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "linguify-skill": {
+      "command": "node",
+      "args": ["mcp-servers/skill-server.js"],
+      "description": "Linguify English Coach — grammar analysis, vocabulary explanations, writing feedback (Gemini API)"
+    },
+    "linguify-agent": {
+      "command": "node",
+      "args": ["mcp-servers/agent-server.js"],
+      "description": "Linguify Practice Coach — role-play scenarios, quick drills, guided conversations (Gemini API)"
+    }
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "entries": [
+    {
+      "timestamp": 1781865928542,
+      "mode": "grammar",
+      "userText": "I goed to the store yesterday",
+      "coachResponse": "🔍 **Correction** — I went to the store yesterday\n📖 **Explanation** — The verb \"go\" is irregular and its past tense is \"went\", not \"goed\", which is a common mistake among language learners.\n📝 **Examples** — I went to the movies last night, She went to the beach for vacation.\n🎯 **Next Step** — Practice using the correct form of \"go\" in the past tense by writing a short paragraph about what you did yesterday.",
+      "errorTypes": [
+        "past-tense"
+      ],
+      "corrections": [],
+      "wordsLearned": []
+    },
+    {
+      "timestamp": 1781890687002,
+      "mode": "grammar",
+      "userText": "Hello I goed to school",
+      "coachResponse": "🔍 **Correction** — Hello, I went to school\n📖 **Explanation** — The verb \"go\" is irregular and its past tense is \"went\", not \"goed\", which is a common mistake.\n📝 **Examples** — I went to the store yesterday, She went to the movies last night\n🎯 **Next Step** — Practice writing 3 sentences using the correct form of the verb \"go\" in the past tense, such as \"I went\", \"you went\", or \"they went\".",
+      "errorTypes": [
+        "past-tense"
+      ],
+      "corrections": [],
+      "wordsLearned": []
+    },
+    {
+      "timestamp": 1781890697146,
+      "mode": "grammar",
+      "userText": "I ated banaa",
+      "coachResponse": "🔍 **Correction** — I ate a banana\n📖 **Explanation** — The verb \"eat\" is irregular and its past tense is \"ate\", and we also need to add the indefinite article \"a\" before the noun \"banana\" to make the sentence grammatically correct.\n📝 **Examples** — I ate an apple, She ate a sandwich\n🎯 **Next Step** — Practice writing 2 sentences using the correct form of the verb \"eat\" in the past tense, such as \"I ate\" or \"he ate\", and don't forget to add the correct article before the noun.",
+      "errorTypes": [
+        "past-tense",
+        "articles"
+      ],
+      "corrections": [],
+      "wordsLearned": []
+    },
+    {
+      "timestamp": 1781890715322,
+      "mode": "grammar",
+      "userText": "what does famous",
+      "coachResponse": "🔍 **Correction** — What does \"famous\" mean?\n📖 **Explanation** — The word \"famous\" is an adjective that means well-known or widely recognized, and to ask about its meaning, we need to use the verb \"mean\" and add quotation marks around the word \"famous\".\n📝 **Examples** — What does \"happy\" mean?, What does \"success\" mean?\n🎯 **Next Step** — Practice writing 2 sentences asking about the meaning of different vocabulary words, such as \"What does 'victory' mean?\" or \"What does 'generous' mean?\".",
+      "errorTypes": [],
+      "corrections": [],
+      "wordsLearned": []
+    },
+    {
+      "timestamp": 1781890748605,
+      "mode": "voice",
+      "userText": "hello",
+      "coachResponse": "🎙️ **What You Said** — You said \"hello\". \n🔊 **Pronunciation** — The pronunciation of \"hello\" is /həˈloʊ/, with a soft \"h\" sound and a slightly drawn-out \"o\" at the end. \n💬 **Fluency** — Your greeting sounds natural and friendly, which is perfect for starting a conversation. \n📝 **Key Tip** — To sound even more natural, try to relax and use a slightly rising intonation at the end of your greeting, like you're expecting a response. Keep up the good work, you're off to a great start!",
+      "errorTypes": [],
+      "corrections": [],
+      "wordsLearned": []
+    },
+    {
+      "timestamp": 1781890955575,
+      "mode": "writing",
+      "userText": "Yesterday I go to the market with my friend. We was looking for some fruits and vegetable's to buy. The weather were very hot, but we still enjoy our trip. After buying apple's and banana's, we goes to a cafe and drinked some coffee. It was a nice day and we had alot of fun.",
+      "coachResponse": "🔍 **Correction** — Yesterday, I went to the market with my friend. We were looking for some fruits and vegetables to buy. The weather was very hot, but we still enjoyed our trip. After buying apples and bananas, we went to a cafe and drank some coffee. It was a nice day and we had a lot of fun.\n📖 **Explanation** — The sentence requires the correct use of verb tenses, subject-verb agreement, and plural noun forms. Specifically, \"yesterday\" indicates the past simple tense, and nouns like \"fruits\" and \"vegetables\" are uncountable or plural.\n📝 **Examples** — I went to the store yesterday, and we bought some fruits and vegetables. The weather was hot, so we drank a lot of water.\n🎯 **Next Step** — Practice writing a short paragraph about your daily routine using the correct verb tenses and subject-verb agreement.",
+      "errorTypes": [
+        "plurals",
+        "subject-verb-agreement",
+        "countability"
+      ],
+      "corrections": [],
+      "wordsLearned": []
+    },
+    {
+      "timestamp": 1781893556172,
+      "mode": "writing",
+      "userText": "Is it better to live in a big city or a small town? Compare.",
+      "coachResponse": "🔍 **Correction** — Your sentence is correct, but a more nuanced version could be: \"What are the advantages and disadvantages of living in a big city compared to a small town?\"\n📖 **Explanation** — When comparing two options, it's helpful to use phrases like \"advantages and disadvantages\" or \"pros and cons\" to clarify the comparison.\n📝 **Examples** — For example, \"Living in a big city has its pros and cons, such as access to better job opportunities, but also higher living costs.\" or \"In contrast to big cities, small towns often offer a more relaxed pace of life.\"\n🎯 **Next Step** — Practice writing a short paragraph comparing the benefits of living in a big city versus a small town, using transitional phrases like \"on the one hand\" and \"on the other hand\".",
+      "errorTypes": [
+        "modal-verbs"
+      ],
+      "corrections": [],
+      "wordsLearned": []
+    }
+  ],
+  "masteryScores": {
+    "past-tense": {
+      "topic": "past-tense",
+      "correct": 0,
+      "total": 3,
+      "lastSeen": 1781890697147
+    },
+    "articles": {
+      "topic": "articles",
+      "correct": 0,
+      "total": 1,
+      "lastSeen": 1781890697147
+    },
+    "plurals": {
+      "topic": "plurals",
+      "correct": 0,
+      "total": 1,
+      "lastSeen": 1781890955576
+    },
+    "subject-verb-agreement": {
+      "topic": "subject-verb-agreement",
+      "correct": 0,
+      "total": 1,
+      "lastSeen": 1781890955576
+    },
+    "countability": {
+      "topic": "countability",
+      "correct": 0,
+      "total": 1,
+      "lastSeen": 1781890955576
+    },
+    "modal-verbs": {
+      "topic": "modal-verbs",
+      "correct": 0,
+      "total": 1,
+      "lastSeen": 1781893556174
+    }
+  },
+  "totalSessions": 1,
+  "totalMessages": 7,
+  "streakDays": 1,
+  "lastActiveDate": "2026-06-19"
+}
