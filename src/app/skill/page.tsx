@@ -2,6 +2,8 @@
 
 import { useState, useCallback, useEffect } from "react";
 import ChatPanel from "@/components/ChatPanel";
+import XPNotification from "@/components/flashcards/XPNotification";
+import AchievementPopup from "@/components/flashcards/AchievementPopup";
 
 type Mode = "grammar" | "vocabulary" | "writing";
 
@@ -30,6 +32,9 @@ export default function SkillPage() {
   const [dailyPrompt, setDailyPrompt] = useState<DailyPrompt | null>(null);
   const [levels, setLevels] = useState<Record<string, string> | null>(null);
   const [streak, setStreak] = useState(0);
+  const [xpGain, setXpGain] = useState(0);
+  const [showXp, setShowXp] = useState(false);
+  const [achievement, setAchievement] = useState<{ name: string; description: string; icon: string } | null>(null);
 
   useEffect(() => {
     fetch("/api/prompts").then(r=>r.json()).then(d=>{if(d.prompt)setDailyPrompt(d.prompt);}).catch(()=>{});
@@ -67,12 +72,31 @@ export default function SkillPage() {
   };
 
   const handleStartPrompt = () => { if(!dailyPrompt)return; setMode("writing"); setInput(dailyPrompt.text); };
+
+  const handleFeedbackComplete = useCallback(async (_section: string, _messageIndex: number) => {
+    try {
+      const res = await fetch("/api/flashcards", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "feedback-complete" }),
+      });
+      const data = await res.json();
+      // Award a small XP bonus for reviewing feedback
+      setXpGain(5);
+      setShowXp(true);
+      if (data.newAchievements?.length > 0) {
+        setAchievement(data.newAchievements[0]);
+      }
+    } catch {}
+  }, []);
   const hour = new Date().getHours();
   const greeting = hour<12?"Good morning":hour<17?"Good afternoon":"Good evening";
   const hasChat = messages.length>0||streamingText;
 
   return (
     <div className="flex flex-col flex-1">
+      <XPNotification amount={xpGain} show={showXp} onDone={() => setShowXp(false)} />
+      <AchievementPopup achievement={achievement} onDismiss={() => setAchievement(null)} />
       <div className="mx-auto w-full max-w-6xl flex-1 flex flex-col gap-6 px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
@@ -109,19 +133,19 @@ export default function SkillPage() {
         <div className="flex gap-2 overflow-x-auto pb-1">
           {MODES.map(m=><button key={m.key} onClick={()=>setMode(m.key)} className={`flex-shrink-0 pill ${mode===m.key?"pill-active":""}`}><span className="block text-lg">{m.icon}</span><div><span className="block text-xs font-semibold text-text-primary">{m.label}</span><span className="mt-0.5 block text-[11px] text-text-muted leading-snug">{m.desc}</span></div></button>)}
         </div>
-        <ChatPanel messages={messages} isLoading={loading} streamingText={streamingText} />
+        <ChatPanel messages={messages} isLoading={loading} streamingText={streamingText} onFeedbackComplete={handleFeedbackComplete} />
         <div className="flex gap-2">
           <input type="text" value={input} onChange={e=>setInput(e.target.value)} onKeyDown={e=>e.key==="Enter"&&handleSend()} placeholder={mode==="grammar"?"Type a sentence…":mode==="vocabulary"?'Ask about a word…':"Paste a paragraph…"} className="glass-input flex-1" />
           <button onClick={()=>handleSend()} disabled={!input.trim()||loading} className="btn-gradient shrink-0">Send</button>
         </div>
         <details className="glass-details p-4 mt-auto">
-          <summary className="cursor-pointer text-xs font-semibold text-text-muted select-none">How AI Coaching Works</summary>
-          <ul className="mt-3 space-y-2 text-xs text-text-secondary">
-            <li>🔍 <strong className="text-text-primary">Correction</strong> — your sentence, refined</li>
-            <li>📖 <strong className="text-text-primary">Explanation</strong> — the rule, clearly stated</li>
-            <li>📝 <strong className="text-text-primary">Examples</strong> — real-world usage</li>
-            <li>🎯 <strong className="text-text-primary">Next Step</strong> — practice exercise</li>
-            <li className="mt-1.5 text-accent-600">⚡ Responses stream in real time. 🃏 Mistakes become flashcards.</li>
+          <summary className="cursor-pointer text-xs font-semibold text-[var(--text-muted)] select-none">How AI Coaching Works</summary>
+          <ul className="mt-3 space-y-2 text-xs text-[var(--text-secondary)]">
+            <li>✏️ <strong className="text-emerald-600">Correction</strong> — your sentence, refined</li>
+            <li>ℹ️ <strong className="text-sky-600">Explanation</strong> — the rule, clearly stated</li>
+            <li>📖 <strong className="text-amber-600">Examples</strong> — real-world usage</li>
+            <li>🎯 <strong className="text-violet-600">Next Step</strong> — practice exercise</li>
+            <li className="mt-1.5 text-accent-600">⚡ Cards appear progressively. ✅ Click &ldquo;Got it&rdquo; to earn XP. 🃏 Mistakes become flashcards.</li>
           </ul>
         </details>
       </div>

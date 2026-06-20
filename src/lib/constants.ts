@@ -117,6 +117,7 @@ export interface AchievementDef {
     setMastery: Record<string, { masteredCards: number; totalCards: number }>;
     xp: number;
     level: number;
+    feedbackCompleted?: number;
   }) => boolean;
 }
 
@@ -137,4 +138,8 @@ export const ACHIEVEMENT_DEFS: AchievementDef[] = [
     check: (d) => d.xp >= 1000 },
   { id: "level-5", name: "Rising Star", description: "Reach level 5", icon: "🌟",
     check: (d) => d.level >= 5 },
+  { id: "feedback-10", name: "Active Learner", description: "Complete 10 feedback tasks", icon: "✅",
+    check: (d) => (d.feedbackCompleted || 0) >= 10 },
+  { id: "feedback-50", name: "Feedback Master", description: "Complete 50 feedback tasks", icon: "🎓",
+    check: (d) => (d.feedbackCompleted || 0) >= 50 },
 ];

@@ -27,6 +27,7 @@ export async function GET(): Promise<NextResponse> {
       achievements: progress.achievements || [],
       flashcardStats: progress.flashcardStats || { totalReviews: 0, correctReviews: 0, currentStreak: 0, bestStreak: 0, lastReviewDate: null },
       setMastery: progress.setMastery || {},
+      feedbackCompleted: progress.feedbackCompleted || 0,
     });
   } catch (err) {
     return NextResponse.json(

@@ -399,3 +399,32 @@ body::before {
 .streak-glow {
   box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.15), 0 4px 15px rgba(245, 158, 11, 0.08);
 }
+
+/* ── Feedback Cards ───────────────────────────────────────────────── */
+
+@keyframes feedback-card-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.feedback-card {
+  animation: feedback-card-in 0.4s ease both;
+}
+.feedback-card-1 { animation-delay: 0ms; }
+.feedback-card-2 { animation-delay: 300ms; }
+.feedback-card-3 { animation-delay: 600ms; }
+.feedback-card-4 { animation-delay: 900ms; }
+
+.feedback-section-btn {
+  transition: all 0.2s ease;
+}
+.feedback-section-btn:hover {
+  transform: scale(1.02);
+}
+.feedback-section-btn.completed {
+  opacity: 0.7;
+}
+.feedback-section-btn.completed .feedback-check {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+}

@@ -61,6 +61,7 @@ export interface ProgressData {
   achievements: Achievement[];
   flashcardStats: FlashcardStats;
   setMastery: Record<string, SetMastery>;
+  feedbackCompleted: number;
 }
 
 // ── In-memory fallback (works on Vercel + local) ─────────────────────────
@@ -89,6 +90,7 @@ function load(): ProgressData {
       achievements: [],
       flashcardStats: { totalReviews: 0, correctReviews: 0, currentStreak: 0, bestStreak: 0, lastReviewDate: null },
       setMastery: {},
+      feedbackCompleted: 0,
     };
   }
 }
@@ -304,6 +306,7 @@ function ensureDefaults(data: ProgressData): void {
     data.flashcardStats = { totalReviews: 0, correctReviews: 0, currentStreak: 0, bestStreak: 0, lastReviewDate: null };
   }
   if (!data.setMastery) data.setMastery = {};
+  if (data.feedbackCompleted === undefined) data.feedbackCompleted = 0;
 }
 
 export function addXP(amount: number): { xp: number; level: number; levelUp: boolean } {
@@ -384,6 +387,7 @@ function checkAchievementsInternal(data: ProgressData): Achievement[] {
       setMastery: data.setMastery,
       xp: data.xp,
       level: data.level,
+      feedbackCompleted: data.feedbackCompleted,
     })) {
       const achievement: Achievement = {
         id: def.id,
@@ -418,4 +422,16 @@ export function updateSetMastery(setId: string, totalCards: number, masteredCard
     lastStudied: Date.now(),
   };
   save(data);
+}
+
+export function recordFeedbackCompletion(): {
+  feedbackCompleted: number;
+  newAchievements: Achievement[];
+} {
+  const data = load();
+  ensureDefaults(data);
+  data.feedbackCompleted++;
+  const newAchievements = checkAchievementsInternal(data);
+  save(data);
+  return { feedbackCompleted: data.feedbackCompleted, newAchievements };
 }

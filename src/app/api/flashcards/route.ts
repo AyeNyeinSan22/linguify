@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Groq from "groq-sdk";
 import { generateFlashcards } from "@/lib/flashcard-engine";
-import { recordFlashcardReview } from "@/lib/progress-store";
+import { recordFlashcardReview, recordFeedbackCompletion } from "@/lib/progress-store";
 import { saveUserSet } from "@/lib/user-sets-store";
 
 /**
@@ -67,6 +67,12 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // ── Review ack (SM-2 is client-side) ─────────────────────────────
     if (action === "review") {
       return NextResponse.json({ success: true });
+    }
+
+    // ── Feedback completion (gamification) ──────────────────────────
+    if (action === "feedback-complete") {
+      const result = recordFeedbackCompletion();
+      return NextResponse.json(result);
     }
 
     // ── Review stats (server-side XP/achievement tracking) ───────────
