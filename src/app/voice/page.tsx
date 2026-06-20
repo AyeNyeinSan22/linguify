@@ -11,30 +11,37 @@ function getRecognition() {
   return new SpeechRecognitionAPI();
 }
 
+// Inline the event type since global types may not be picked up
+interface SpeechResultEvent {
+  resultIndex: number;
+  results: { length: number; [index: number]: { isFinal: boolean; [index: number]: { transcript: string } } };
+}
+
 export default function VoicePage() {
   const [isRecording, setIsRecording] = useState(false);
   const [transcript, setTranscript] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
-  const [supported, setSupported] = useState(true);
+  const [supported] = useState(() => {
+    if (typeof window === "undefined") return true;
+    return !!(window.SpeechRecognition || window.webkitSpeechRecognition);
+  });
   const recRef = useRef<ReturnType<typeof getRecognition>>(null);
 
   // Initialize recognition once on mount
   useEffect(() => {
     const rec = getRecognition();
-    if (!rec) {
-      setSupported(false);
-      return;
-    }
+    if (!rec) return;
     rec.continuous = false;
     rec.interimResults = true;
     rec.lang = "en-US";
 
-    rec.onresult = (event: any) => {
+    rec.onresult = (event: unknown) => {
+      const e = event as SpeechResultEvent;
       let final = "";
-      for (let i = event.resultIndex; i < event.results.length; i++) {
-        if (event.results[i].isFinal) {
-          final += event.results[i][0].transcript;
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        if (e.results[i].isFinal) {
+          final += e.results[i][0].transcript;
         }
       }
       if (final) setTranscript(final);

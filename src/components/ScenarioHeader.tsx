@@ -4,11 +4,11 @@ interface ScenarioHeaderProps {
   icon: string; title: string; subtitle: string;
   duration: string; dialogues: number; students: number;
   rating: number; reviews: number;
-  accentColor: string; accentBg: string; gradient: string;
+  accentColor?: string; accentBg: string; gradient: string;
   onStart: () => void;
 }
 
-export default function ScenarioHeader({ icon, title, subtitle, duration, dialogues, students, rating, reviews, accentColor, accentBg, gradient, onStart }: ScenarioHeaderProps) {
+export default function ScenarioHeader({ icon, title, subtitle, duration, dialogues, students, rating, reviews, accentBg, gradient, onStart }: ScenarioHeaderProps) {
   return (
     <div className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${gradient} p-6 sm:p-8 text-white shadow-lg`}>
       <div className="absolute top-0 right-0 w-48 h-48 rounded-full bg-white/6 blur-3xl pointer-events-none" />

@@ -56,7 +56,7 @@ export default function ScenarioDetailPage({ params }: { params: Promise<{ domai
 
   if(loading)return <div className="flex items-center justify-center min-h-[60vh]"><div className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-accent-400 animate-bounce [animation-delay:0ms]"/><span className="h-2 w-2 rounded-full bg-accent-500 animate-bounce [animation-delay:150ms]"/><span className="h-2 w-2 rounded-full bg-accent-600 animate-bounce [animation-delay:300ms]"/></div></div>;
   if(error)return <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4"><div className="text-5xl">⚠️</div><h2 className="text-lg font-semibold text-red-600">Something went wrong</h2><p className="text-sm text-text-secondary">{error}</p><button onClick={()=>router.push("/agent")} className="btn-gradient">Browse Scenarios</button></div>;
-  if(!detail)return <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4"><div className="text-5xl">🔍</div><h2 className="text-lg font-semibold text-text-primary">Not found</h2><p className="text-sm text-text-secondary">"{domain}" doesn&apos;t exist.</p><button onClick={()=>router.push("/agent")} className="btn-gradient">Browse Scenarios</button></div>;
+  if(!detail)return <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4"><div className="text-5xl">🔍</div><h2 className="text-lg font-semibold text-text-primary">Not found</h2><p className="text-sm text-text-secondary">&quot;{domain}&quot; doesn&apos;t exist.</p><button onClick={()=>router.push("/agent")} className="btn-gradient">Browse Scenarios</button></div>;
 
   const style = DOMAIN_STYLES[domain] || DOMAIN_STYLES.restaurant;
 

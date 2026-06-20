@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import Link from "next/link";
 import { sm2, getDueCards, getCardStats, type Flashcard } from "@/lib/flashcard-engine";
 
@@ -10,11 +10,10 @@ function load(): Flashcard[] { try{const r=localStorage.getItem(STORAGE_KEY);ret
 function save(c:Flashcard[]){localStorage.setItem(STORAGE_KEY,JSON.stringify(c));}
 
 export default function FlashcardsPage() {
-  const [cards,setCards]=useState<Flashcard[]>([]);
+  const [cards,setCards]=useState<Flashcard[]>(()=>load());
   const [idx,setIdx]=useState(0);
   const [flipped,setFlipped]=useState(false);
-  const [loaded,setLoaded]=useState(false);
-  useEffect(()=>{setCards(load());setLoaded(true);},[]);
+  const [loaded]=useState(true);
   const due=getDueCards(cards), stats=getCardStats(cards), card=due[idx];
 
   const rate = useCallback((q:number)=>{

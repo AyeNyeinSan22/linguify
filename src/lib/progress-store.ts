@@ -124,6 +124,7 @@ function extractCorrections(response: string): string[] {
   return corrections;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function extractWordsLearned(mode: string, userText: string, response: string): string[] {
   if (mode !== "vocabulary") return [];
   // Single-word queries

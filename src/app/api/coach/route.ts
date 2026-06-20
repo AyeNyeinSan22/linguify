@@ -130,8 +130,8 @@ export async function POST(request: NextRequest) {
         sse.send({ type: "done", sessionId: session!.id, mode: session!.mode, label: labels[session!.mode], messageCount: session!.messageCount });
         sse.close();
 
-        try { recordCoaching({ mode: session!.mode as any, userText: message, coachResponse: full }); } catch {}
-      } catch (err: any) {
+        try { recordCoaching({ mode: session!.mode as "grammar" | "vocabulary" | "writing", userText: message, coachResponse: full }); } catch {}
+      } catch (err: unknown) {
         console.error("Groq stream error:", err);
         const fallback = getSimulated(session!.mode, session!.messageCount);
         addMessage(session!.id, "assistant", fallback);
@@ -160,8 +160,8 @@ export async function POST(request: NextRequest) {
       });
       response = result.choices[0]?.message?.content || "";
       if (!response) response = getSimulated(session.mode, session.messageCount);
-      else try { recordCoaching({ mode: session.mode as any, userText: message, coachResponse: response }); } catch {}
-    } catch (err: any) {
+      else try { recordCoaching({ mode: session.mode as "grammar" | "vocabulary" | "writing", userText: message, coachResponse: response }); } catch {}
+    } catch (err: unknown) {
       console.error("Groq error:", err);
       response = getSimulated(session.mode, session.messageCount);
     }

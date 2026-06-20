@@ -44,8 +44,9 @@ export async function POST(request: NextRequest) {
     if (vocabMatch) vocabMatch[1].trim().split("\n").forEach(l => { const c = l.replace(/^[-•*]\s*/, "").trim(); if (c) vocabulary.push(c); });
 
     return NextResponse.json({ nativeText, userTranslation, naturalTranslation, comparison: fullResponse, vocabulary });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("Translate error:", err);
-    return NextResponse.json({ error: "Translation failed", detail: err.message, hint: "Get a free key at https://console.groq.com/keys" }, { status: 502 });
+    const message = err instanceof Error ? err.message : String(err);
+    return NextResponse.json({ error: "Translation failed", detail: message, hint: "Get a free key at https://console.groq.com/keys" }, { status: 502 });
   }
 }

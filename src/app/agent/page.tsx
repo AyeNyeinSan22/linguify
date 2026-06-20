@@ -32,12 +32,9 @@ function AgentPageContent() {
   const [activeDomain, setActiveDomain] = useState<string|null>(scenarioParam||null);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
-  useEffect(()=>{fetch("/api/scenarios").then(r=>r.json()).then(d=>{if(d.domains){setMwDomains(d.domains);if(scenarioParam){const m=d.domains.find((x:DomainMeta)=>x.name===scenarioParam);if(m)handleMultiWOZ(m);}}else{setMwError(d.error||"Failed to load scenarios.");}}).catch(()=>setMwError("Could not reach the server. Please try again later."));},[]);
-  useEffect(()=>{chatEndRef.current?.scrollIntoView({behavior:"smooth"});},[messages]);
-
   const resetSession = useCallback(()=>{setSessionId(null);setMessages([]);setSessionGoal("");setInput("");setStarted(false);setActiveDomain(null);},[]);
 
-  const handleMultiWOZ = async (domain: DomainMeta) => {
+  const handleMultiWOZ = useCallback(async (domain: DomainMeta) => {
     setMwLoading(p=>({...p,[domain.name]:true})); setActiveDomain(domain.name);
     try {
       const res=await fetch("/api/scenarios",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({domain:domain.name,type:"roleplay"})});
@@ -48,7 +45,10 @@ function AgentPageContent() {
       setStarted(true);
     }catch{setMessages([{role:"coach",content:"Sorry, couldn't load scenario."}]);setStarted(true);}
     finally{setMwLoading(p=>({...p,[domain.name]:false}));}
-  };
+  },[]);
+
+  useEffect(()=>{fetch("/api/scenarios").then(r=>r.json()).then(d=>{if(d.domains){setMwDomains(d.domains);if(scenarioParam){const m=d.domains.find((x:DomainMeta)=>x.name===scenarioParam);if(m)handleMultiWOZ(m);}}else{setMwError(d.error||"Failed to load scenarios.");}}).catch(()=>setMwError("Could not reach the server. Please try again later."));},[scenarioParam, handleMultiWOZ]);
+  useEffect(()=>{chatEndRef.current?.scrollIntoView({behavior:"smooth"});},[messages]);
 
   const handleSend = async () => {
     const text=input.trim(); if(!text||loading)return;
