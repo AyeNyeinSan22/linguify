@@ -6,6 +6,22 @@ Built with Next.js 16, React 19, Tailwind CSS 4, and Groq (Llama 3.3 70B).
 
 ---
 
+## Screenshots
+
+| Home | AI Coach |
+|:---:|:---:|
+| ![Home](public/images/home.png) | ![AI Coach](public/images/coach.png) |
+
+| Practice Coach | Flashcards |
+|:---:|:---:|
+| ![Practice](public/images/practice.png) | ![Flashcards](public/images/flashcards.png) |
+
+| Translation | Voice Coach |
+|:---:|:---:|
+| ![Translation](public/images/translate.png) | ![Voice](public/images/voicecoach.png) |
+
+---
+
 ## Features
 
 ### AI English Coach
