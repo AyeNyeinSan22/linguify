@@ -27,8 +27,8 @@ auto-advance: 20
 <!-- slide 3 -->
 # What I built
 
-* **The Solution:** Linguify — an AI-powered English learning platform with real-world conversation practice, instant feedback, and spaced-repetition flashcards.
-* **What it does:** Pulls from 8,437 authentic Cambridge UK dialogues (MultiWOZ 2.2) across 6 domains — restaurant, hotel, train, taxi, hospital, attractions. AI coaches you through role-play with structured feedback cards (correction, explanation, examples, next step).
+* **The Solution:** Linguify is an AI-powered English learning platform with real-world conversation practice, instant feedback, and spaced-repetition flashcards.
+* **What it does:** Pulls from 8,437 authentic Cambridge UK dialogues (MultiWOZ 2.2) across 6 domains — restaurant, hotel, train, taxi, hospital, and attractions. AI coaches you through role-play with structured feedback cards (correction, explanation, examples, next step).
 * **The Output:** A full-featured web app with grammar coaching, translation coach, voice practice, CEFR vocabulary sets, XP/level gamification, and a progress dashboard — all in a glassmorphism UI with dark mode.
 
 ---
