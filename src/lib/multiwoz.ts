@@ -1,27 +1,12 @@
 /**
  * MultiWOZ 2.2 Data Utility
  *
- * Uses a pre-built compact index (multiwoz-index.json) for fast lookups
- * across 8,437 training dialogues in 7 domains. Lazy-loads full dialogue
- * JSON files only when a specific scenario is requested.
+ * Uses pre-built bundled data (multiwoz-index.json + multiwoz-dialogues.json)
+ * for fast lookups across 8,437 training dialogues in 7 domains.
+ * No filesystem reads — all data is imported at build time.
  */
 
-import fs from "fs";
-import path from "path";
-
 // ── Types ────────────────────────────────────────────────────────────────
-
-export interface MultiWOZSlot {
-  name: string;
-  description: string;
-  possible_values: string[];
-  is_categorical: boolean;
-}
-
-export interface MultiWOZService {
-  service_name: string;
-  slots: MultiWOZSlot[];
-}
 
 export interface MultiWOZTurn {
   speaker: "USER" | "SYSTEM";
@@ -52,27 +37,14 @@ export interface ScenarioPrompt {
   numTurns: number;
 }
 
-// ── Paths ────────────────────────────────────────────────────────────────
+// ── Bundled data (imported at build time, no fs reads) ───────────────────
 
-function getDatasetRoot(): string {
-  const cacheRoot =
-    process.env.KAGGLEHUB_CACHE ||
-    path.join(process.env.HOME || "~", ".cache", "kagglehub");
-  return path.join(
-    cacheRoot,
-    "datasets",
-    "taejinwoo",
-    "multiwoz-22",
-    "versions",
-    "1",
-    "MultiWOZ_2.2"
-  );
-}
+import indexData from "./multiwoz-index.json";
+import dialogueData from "./multiwoz-dialogues.json";
 
-// Resolve index path relative to this file (works in both CJS and ESM)
-const LIB_DIR = path.resolve(process.cwd(), "src", "lib");
-const INDEX_PATH = path.join(LIB_DIR, "multiwoz-index.json");
-const SCHEMA_PATH = path.join(getDatasetRoot(), "schema.json");
+const index = indexData as unknown as IndexEntry;
+// dialogueData maps fileName -> Array<Array<[number, string]>>  (0=USER, 1=SYSTEM)
+const dialogues = dialogueData as unknown as Record<string, Array<Array<[number, string]>>>;
 
 // ── Domain metadata ──────────────────────────────────────────────────────
 
@@ -124,72 +96,25 @@ const DOMAIN_META: Record<
   },
 };
 
-// ── Caches (survive HMR via globalThis) ──────────────────────────────────
+// ── Helpers ──────────────────────────────────────────────────────────────
 
-const g = globalThis as unknown as Record<string, unknown>;
-
-function cacheGet<T>(key: string): T | null {
-  return (g[key] as T) ?? null;
+/**
+ * Convert compact [speaker, utterance] pairs to MultiWOZTurn objects.
+ */
+function toTurns(pairs: Array<[number, string]>): MultiWOZTurn[] {
+  return pairs.map(([s, u]) => ({
+    speaker: s === 0 ? "USER" : "SYSTEM",
+    utterance: u,
+  }));
 }
 
-function cacheSet<T>(key: string, value: T): void {
-  g[key] = value;
-}
-
-// ── Index ────────────────────────────────────────────────────────────────
-
-function loadIndex(): IndexEntry {
-  const cached = cacheGet<IndexEntry>("__mwz_index");
-  if (cached) return cached;
-
-  if (!fs.existsSync(INDEX_PATH)) {
-    throw new Error(
-      `MultiWOZ index not found at ${INDEX_PATH}. Run the preprocessing script first.`
-    );
-  }
-
-  const raw = fs.readFileSync(INDEX_PATH, "utf8");
-  const index: IndexEntry = JSON.parse(raw);
-  cacheSet("__mwz_index", index);
-  return index;
-}
-
-// ── Schema ───────────────────────────────────────────────────────────────
-
-function loadSchema(): MultiWOZService[] {
-  const cached = cacheGet<MultiWOZService[]>("__mwz_schema");
-  if (cached) return cached;
-
-  if (!fs.existsSync(SCHEMA_PATH)) {
-    console.warn("[multiwoz] Schema not found at", SCHEMA_PATH);
-    return [];
-  }
-
-  const raw = fs.readFileSync(SCHEMA_PATH, "utf8");
-  const schema: MultiWOZService[] = JSON.parse(raw);
-  cacheSet("__mwz_schema", schema);
-  return schema;
-}
-
-// ── Dialogue file cache ──────────────────────────────────────────────────
-
-const _fileDialogueCache = new Map<string, MultiWOZTurn[][]>();
-
-function loadDialoguesFile(fileName: string): MultiWOZTurn[][] {
-  const cached = _fileDialogueCache.get(fileName);
-  if (cached) return cached;
-
-  const filePath = path.join(getDatasetRoot(), "train", fileName);
-  if (!fs.existsSync(filePath)) {
-    console.warn("[multiwoz] Dialogue file not found:", filePath);
-    return [];
-  }
-
-  const raw = fs.readFileSync(filePath, "utf8");
-  const dialogues: Array<{ turns: MultiWOZTurn[] }> = JSON.parse(raw);
-  const turns = dialogues.map((d) => d.turns);
-  _fileDialogueCache.set(fileName, turns);
-  return turns;
+/**
+ * Get the full dialogue turns for a file + index.
+ */
+function getTurnsFromFile(fileName: string, dialogueIdx: number): MultiWOZTurn[] {
+  const fileDialogues = dialogues[fileName];
+  if (!fileDialogues || !fileDialogues[dialogueIdx]) return [];
+  return toTurns(fileDialogues[dialogueIdx]);
 }
 
 // ── Public API ───────────────────────────────────────────────────────────
@@ -204,7 +129,6 @@ const ORDERED_DOMAINS = [
 ];
 
 export function getDomains(): DomainInfo[] {
-  const index = loadIndex();
   return ORDERED_DOMAINS.filter((d) => index.d[d]).map((name) => {
     const meta = DOMAIN_META[name] || {
       label: name,
@@ -226,7 +150,6 @@ export function getDomains(): DomainInfo[] {
  * Get a random opening prompt for a domain (first USER turn from a real dialogue).
  */
 export function getScenarioOpening(domain: string): string | null {
-  const index = loadIndex();
   const openings = index.o[domain];
   if (!openings || openings.length === 0) return null;
   return openings[Math.floor(Math.random() * openings.length)];
@@ -236,7 +159,6 @@ export function getScenarioOpening(domain: string): string | null {
  * Get a full multi-turn dialogue as a role-play scenario.
  */
 export function getRoleplayScenario(domain: string): ScenarioPrompt | null {
-  const index = loadIndex();
   const entries = index.d[domain];
   if (!entries || entries.length === 0) return null;
 
@@ -247,9 +169,7 @@ export function getRoleplayScenario(domain: string): ScenarioPrompt | null {
   const entry = eligible[Math.floor(Math.random() * eligible.length)];
   const [fileName, dialogueIdx, numTurns] = entry;
 
-  // Load the full dialogue
-  const allTurns = loadDialoguesFile(fileName);
-  const turns = allTurns[dialogueIdx] || [];
+  const turns = getTurnsFromFile(fileName, dialogueIdx);
   const firstUser = turns.find((t) => t.speaker === "USER");
 
   if (!firstUser) return null;
@@ -271,15 +191,13 @@ export function getRoleplayScenario(domain: string): ScenarioPrompt | null {
  * Get a drill exercise — a random USER turn to respond to.
  */
 export function getDrillExercise(domain: string): ScenarioPrompt | null {
-  const index = loadIndex();
   const entries = index.d[domain];
   if (!entries || entries.length === 0) return null;
 
   const entry = entries[Math.floor(Math.random() * entries.length)];
   const [fileName, dialogueIdx, numTurns] = entry;
 
-  const allTurns = loadDialoguesFile(fileName);
-  const turns = allTurns[dialogueIdx] || [];
+  const turns = getTurnsFromFile(fileName, dialogueIdx);
   const userTurns = turns.filter((t) => t.speaker === "USER");
   if (userTurns.length === 0) return null;
 
@@ -298,10 +216,9 @@ export function getDrillExercise(domain: string): ScenarioPrompt | null {
 }
 
 /**
- * Get fallback SYSTEM responses for a domain (used when Claude API is unavailable).
+ * Get fallback SYSTEM responses for a domain (used when LLM API is unavailable).
  */
 export function getSystemFallbackPool(domain: string): string[] {
-  const index = loadIndex();
   return index.f[domain] || [];
 }
 
@@ -311,6 +228,5 @@ export function getSystemFallbackPool(domain: string): string[] {
 export function getDialogueTurns(dialogueId: string): MultiWOZTurn[] {
   const [fileName, idxStr] = dialogueId.split("#");
   const dialogueIdx = parseInt(idxStr, 10);
-  const allTurns = loadDialoguesFile(fileName);
-  return allTurns[dialogueIdx] || [];
+  return getTurnsFromFile(fileName, dialogueIdx);
 }

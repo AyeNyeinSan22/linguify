@@ -28,10 +28,11 @@ function AgentPageContent() {
   const [started, setStarted] = useState(false);
   const [mwDomains, setMwDomains] = useState<DomainMeta[]>([]);
   const [mwLoading, setMwLoading] = useState<Record<string,boolean>>({});
+  const [mwError, setMwError] = useState<string|null>(null);
   const [activeDomain, setActiveDomain] = useState<string|null>(scenarioParam||null);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
-  useEffect(()=>{fetch("/api/scenarios").then(r=>r.json()).then(d=>{if(d.domains){setMwDomains(d.domains);if(scenarioParam){const m=d.domains.find((x:DomainMeta)=>x.name===scenarioParam);if(m)handleMultiWOZ(m);}}}).catch(()=>{});},[]);
+  useEffect(()=>{fetch("/api/scenarios").then(r=>r.json()).then(d=>{if(d.domains){setMwDomains(d.domains);if(scenarioParam){const m=d.domains.find((x:DomainMeta)=>x.name===scenarioParam);if(m)handleMultiWOZ(m);}}else{setMwError(d.error||"Failed to load scenarios.");}}).catch(()=>setMwError("Could not reach the server. Please try again later."));},[]);
   useEffect(()=>{chatEndRef.current?.scrollIntoView({behavior:"smooth"});},[messages]);
 
   const resetSession = useCallback(()=>{setSessionId(null);setMessages([]);setSessionGoal("");setInput("");setStarted(false);setActiveDomain(null);},[]);
@@ -85,7 +86,8 @@ function AgentPageContent() {
             <p className="mt-6 text-center text-[11px] text-text-muted">Powered by <span className="font-medium text-text-secondary">MultiWOZ 2.2</span> · 8,437 dialogues · 7 domains · Cambridge, UK</p>
           </section>
         )}
-        {!started&&messages.length===0&&mwDomains.length===0&&(<div className="flex-1 flex items-center justify-center"><div className="text-center"><div className="flex items-center justify-center gap-1.5 mb-3"><span className="h-2 w-2 rounded-full bg-accent-400 animate-bounce"/><span className="h-2 w-2 rounded-full bg-accent-500 animate-bounce"/><span className="h-2 w-2 rounded-full bg-accent-600 animate-bounce"/></div><p className="text-sm text-text-muted">Loading scenarios…</p></div></div>)}
+        {!started&&messages.length===0&&mwError&&(<div className="flex-1 flex items-center justify-center"><div className="text-center"><div className="text-4xl mb-3">⚠️</div><p className="text-sm text-red-600 font-medium">{mwError}</p><button onClick={()=>{setMwError(null);fetch("/api/scenarios").then(r=>r.json()).then(d=>{if(d.domains)setMwDomains(d.domains);else setMwError(d.error||"Failed to load scenarios.");}).catch(()=>setMwError("Could not reach the server."));}} className="btn-gradient mt-4 text-xs">Retry</button></div></div>)}
+        {!started&&messages.length===0&&mwDomains.length===0&&!mwError&&(<div className="flex-1 flex items-center justify-center"><div className="text-center"><div className="flex items-center justify-center gap-1.5 mb-3"><span className="h-2 w-2 rounded-full bg-accent-400 animate-bounce"/><span className="h-2 w-2 rounded-full bg-accent-500 animate-bounce"/><span className="h-2 w-2 rounded-full bg-accent-600 animate-bounce"/></div><p className="text-sm text-text-muted">Loading scenarios…</p></div></div>)}
         {sessionGoal&&(<div className="rounded-xl border border-accent-200 bg-accent-50 px-4 py-3 text-sm text-accent-800"><span className="font-semibold">🎯 Goal:</span> {sessionGoal}</div>)}
         {started&&messages.length>0&&(<><ChatPanel messages={messages} isLoading={loading} /><div className="flex gap-2"><input type="text" value={input} onChange={e=>setInput(e.target.value)} onKeyDown={e=>e.key==="Enter"&&handleSend()} placeholder="Type your response…" className="glass-input flex-1" /><button onClick={handleSend} disabled={!input.trim()||loading} className="btn-gradient shrink-0">Send</button></div></>)}
         <details className="glass-details p-4 mt-auto">

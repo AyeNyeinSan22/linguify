@@ -28,6 +28,7 @@ export default function ScenarioDetailPage({ params }: { params: Promise<{ domai
   const [lessons,setLessons] = useState<Lesson[]>([]);
   const [related,setRelated] = useState<DomainDetail[]>([]);
   const [loading,setLoading] = useState(true);
+  const [error,setError] = useState<string|null>(null);
   const [chatStarted,setChatStarted] = useState(false);
   const [messages,setMessages] = useState<Message[]>([]);
   const [input,setInput] = useState("");
@@ -35,12 +36,12 @@ export default function ScenarioDetailPage({ params }: { params: Promise<{ domai
   const [sessionId,setSessionId] = useState<string|null>(null);
 
   useEffect(()=>{
-    fetch(`/api/scenarios?domain=${domain}`).then(r=>r.json()).then(d=>{if(d.domain){setDetail(d.domain);setLessons(d.lessons||[]);}setLoading(false);}).catch(()=>setLoading(false));
+    fetch(`/api/scenarios?domain=${domain}`).then(r=>r.json()).then(d=>{if(d.domain){setDetail(d.domain);setLessons(d.lessons||[]);}else{setError(d.error||"Failed to load scenario.");}setLoading(false);}).catch(()=>{setError("Could not reach the server. Please try again later.");setLoading(false);});
     fetch("/api/scenarios").then(r=>r.json()).then(d=>{if(d.domains)setRelated(d.domains.filter((x:DomainDetail)=>x.name!==domain).slice(0,3));}).catch(()=>{});
   },[domain]);
 
   const handleStart = async () => {
-    try{const r=await fetch("/api/scenarios",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({domain,type:"roleplay"})});const d=await r.json();if(d.scenario){setMessages([{role:"coach",content:`**${d.domainInfo?.label||domain}**\n\n${d.scenario.context}\n\n**Your turn:** ${d.scenario.prompt}`,meta:`🏙️ ${d.domainInfo?.label||domain}`}]);setChatStarted(true);}}catch{}
+    try{const r=await fetch("/api/scenarios",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({domain,type:"roleplay"})});const d=await r.json();if(d.scenario){setMessages([{role:"coach",content:`**${d.domainInfo?.label||domain}**\n\n${d.scenario.context}\n\n**Your turn:** ${d.scenario.prompt}`,meta:`🏙️ ${d.domainInfo?.label||domain}`}]);setChatStarted(true);}else{setMessages([{role:"coach",content:`Couldn't load scenario: ${d.error||"Unknown error"}`}]);setChatStarted(true);}}catch{setMessages([{role:"coach",content:"Could not reach the server. Please try again."}]);setChatStarted(true);}
   };
 
   const handleSend = async () => {
@@ -50,7 +51,8 @@ export default function ScenarioDetailPage({ params }: { params: Promise<{ domai
   };
 
   if(loading)return <div className="flex items-center justify-center min-h-[60vh]"><div className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-accent-400 animate-bounce [animation-delay:0ms]"/><span className="h-2 w-2 rounded-full bg-accent-500 animate-bounce [animation-delay:150ms]"/><span className="h-2 w-2 rounded-full bg-accent-600 animate-bounce [animation-delay:300ms]"/></div></div>;
-  if(!detail)return <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4"><div className="text-5xl">🔍</div><h2 className="text-lg font-semibold text-text-primary">Not found</h2><p className="text-sm text-text-secondary">"{domain}" doesn't exist.</p><button onClick={()=>router.push("/agent")} className="btn-gradient">Browse Scenarios</button></div>;
+  if(error)return <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4"><div className="text-5xl">⚠️</div><h2 className="text-lg font-semibold text-red-600">Something went wrong</h2><p className="text-sm text-text-secondary">{error}</p><button onClick={()=>router.push("/agent")} className="btn-gradient">Browse Scenarios</button></div>;
+  if(!detail)return <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4"><div className="text-5xl">🔍</div><h2 className="text-lg font-semibold text-text-primary">Not found</h2><p className="text-sm text-text-secondary">"{domain}" doesn&apos;t exist.</p><button onClick={()=>router.push("/agent")} className="btn-gradient">Browse Scenarios</button></div>;
 
   const style = DOMAIN_STYLES[domain] || DOMAIN_STYLES.restaurant;
 
