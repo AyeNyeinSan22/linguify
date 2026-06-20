@@ -8,47 +8,52 @@ auto-advance: 20
 
 <!-- slide 1 -->
 # Who's my person?
-<!-- 20s -->
 
-An English learner — someone studying for work, school, or immigration — who wants to speak confidently but doesn't have a native speaker to practice with.
+* **Target User:** English learners — students, professionals, and immigrants who need to speak confidently in real situations.
+* **The Reality:** They study grammar rules and memorize vocabulary, but when it's time to actually talk, they freeze. No native speaker to practice with, no one to correct them in the moment.
+* **Their Goal:** Build real conversational fluency through practice that feels authentic — not textbook dialogues.
 
 ---
 
 <!-- slide 2 -->
 # Their problem
 
-Classrooms teach grammar rules but not real conversation. Textbooks don't talk back. Learners make the same mistakes repeatedly because nobody corrects them in the moment. They need practice that feels real.
+* **No Real Practice:** Textbooks and apps teach grammar rules but never let you actually *talk*. Learners know the theory but can't hold a conversation.
+* **No Instant Feedback:** Without a tutor present, mistakes go unnoticed and fossilize into bad habits. Learners repeat the same errors for months.
+* **No Retention System:** Vocabulary is crammed and forgotten. There's no spaced repetition, no streak tracking, no way to measure progress over time.
 
 ---
 
 <!-- slide 3 -->
 # What I built
 
-**Linguify** — an AI-powered English coach with:
-- Real conversation practice from 8,437 Cambridge UK dialogues
-- Instant AI feedback (correction, explanation, examples, next step)
-- Spaced-repetition flashcards with CEFR vocabulary sets
-- Translation coach, voice practice, and progress tracking
+* **The Solution:** Linguify — an AI-powered English learning platform with real-world conversation practice, instant feedback, and spaced-repetition flashcards.
+* **What it does:** Pulls from 8,437 authentic Cambridge UK dialogues (MultiWOZ 2.2) across 6 domains — restaurant, hotel, train, taxi, hospital, attractions. AI coaches you through role-play with structured feedback cards (correction, explanation, examples, next step).
+* **The Output:** A full-featured web app with grammar coaching, translation coach, voice practice, CEFR vocabulary sets, XP/level gamification, and a progress dashboard — all in a glassmorphism UI with dark mode.
 
 ---
 
 <!-- slide 4 -->
 # How I built it
-- **MCP**: Two servers — skill-server (coaching) and agent-server (practice) — both calling Groq's Llama 3.3 70B
-- **Skill**: Grammar/vocabulary/writing coaching with streaming SSE responses and structured feedback cards
-- **Agent**: MultiWOZ 2.2 dataset for real-world role-play across 6 domains (restaurant, hotel, train, taxi, hospital, attractions)
+
+* **MCP:** Two custom servers — a skill-server for grammar/vocabulary/writing coaching and an agent-server for multi-turn practice sessions. Both call Groq's Llama 3.3 70B via the Model Context Protocol.
+* **Skill:** Built a structured feedback engine that parses AI responses into color-coded cards with progressive reveal. Each coaching session auto-generates flashcards from corrections.
+* **Agent:** Integrated the MultiWOZ 2.2 dataset to power real-world role-play scenarios. Built a scenario instruction system with context cards, task cards, and expandable tip cards.
 
 ---
 
 <!-- slide 5 -->
 # Why it matters
 
-Learners don't need another grammar app — they need to *practice speaking*. Linguify gives them a safe space to make mistakes, get corrected, and build muscle memory through spaced repetition. Every error becomes a flashcard. Every session builds a streak.
+* **Practice, Not Theory:** Learners don't need another grammar app — they need a safe space to speak, make mistakes, and get corrected in real time.
+* **Every Error Becomes a Card:** Coaching corrections auto-generate flashcards. Spaced repetition ensures they're reviewed at the right moment — not too early, not too late.
+* **Gamification That Works:** XP, levels, streaks, and 8 achievements keep learners coming back. The progress dashboard shows exactly where they're improving and where they need work.
 
 ---
 
 <!-- slide 6 -->
 # Done checklist
+
 - [x] repo public
 - [x] MCP + skill + agent used
 - [x] report.md in team repo
