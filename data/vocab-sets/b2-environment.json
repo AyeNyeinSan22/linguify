@@ -1,0 +1,22 @@
+[
+  { "word": "climate", "definition": "The usual weather conditions in an area", "example": "Climate change is a global issue.", "partOfSpeech": "noun", "phonetic": "/ˈklaɪ.mət/" },
+  { "word": "pollution", "definition": "Harmful substances released into the environment", "example": "Air pollution is a problem in big cities.", "partOfSpeech": "noun", "phonetic": "/pəˈluː.ʃən/" },
+  { "word": "recycle", "definition": "To convert waste into reusable material", "example": "We should recycle plastic and paper.", "partOfSpeech": "verb", "phonetic": "/riːˈsaɪ.kəl/" },
+  { "word": "renewable", "definition": "A resource that can be replaced naturally", "example": "Solar power is a renewable energy source.", "partOfSpeech": "adjective", "phonetic": "/rɪˈnjuː.ə.bəl/" },
+  { "word": "ecosystem", "definition": "All living things in an area and how they interact", "example": "The rainforest has a complex ecosystem.", "partOfSpeech": "noun", "phonetic": "/ˈiː.koʊˌsɪs.təm/" },
+  { "word": "emission", "definition": "The release of gas or radiation into the air", "example": "Carbon emissions must be reduced.", "partOfSpeech": "noun", "phonetic": "/ɪˈmɪʃ.ən/" },
+  { "word": "sustainable", "definition": "Able to continue without harming the environment", "example": "We need sustainable farming practices.", "partOfSpeech": "adjective", "phonetic": "/səˈsteɪ.nə.bəl/" },
+  { "word": "biodiversity", "definition": "The variety of plant and animal life in an area", "example": "Biodiversity is threatened by deforestation.", "partOfSpeech": "noun", "phonetic": "/ˌbaɪ.oʊ.daɪˈvɜːr.sə.ti/" },
+  { "word": "fossil", "definition": "Remains of ancient animals or plants in rock", "example": "Fossil fuels take millions of years to form.", "partOfSpeech": "noun", "phonetic": "/ˈfɒs.əl/" },
+  { "word": "conservation", "definition": "The protection of natural resources", "example": "Conservation efforts have saved many species.", "partOfSpeech": "noun", "phonetic": "/ˌkɒn.sərˈveɪ.ʃən/" },
+  { "word": "deforestation", "definition": "The clearing of trees in a large area", "example": "Deforestation destroys animal habitats.", "partOfSpeech": "noun", "phonetic": "/diːˌfɒr.ɪˈsteɪ.ʃən/" },
+  { "word": "drought", "definition": "A long period without rain", "example": "The drought killed many crops.", "partOfSpeech": "noun", "phonetic": "/draʊt/" },
+  { "word": "waste", "definition": "Unwanted materials thrown away", "example": "We should reduce food waste.", "partOfSpeech": "noun", "phonetic": "/weɪst/" },
+  { "word": "carbon", "definition": "A chemical element found in all living things", "example": "We need to reduce our carbon footprint.", "partOfSpeech": "noun", "phonetic": "/ˈkɑːr.bən/" },
+  { "word": "endangered", "definition": "At risk of extinction", "example": "Pandas are an endangered species.", "partOfSpeech": "adjective", "phonetic": "/ɪnˈdeɪn.dʒərd/" },
+  { "word": "global", "definition": "Relating to the whole world", "example": "Global warming affects everyone.", "partOfSpeech": "adjective", "phonetic": "/ˈɡloʊ.bəl/" },
+  { "word": "organic", "definition": "Grown without artificial chemicals", "example": "I prefer organic vegetables.", "partOfSpeech": "adjective", "phonetic": "/ɔːrˈɡæn.ɪk/" },
+  { "word": "habitat", "definition": "The natural home of an animal or plant", "example": "Wetlands are an important habitat for birds.", "partOfSpeech": "noun", "phonetic": "/ˈhæb.ɪ.tæt/" },
+  { "word": "greenhouse", "definition": "A glass building for growing plants; also relates to warming gases", "example": "Greenhouse gases trap heat in the atmosphere.", "partOfSpeech": "noun", "phonetic": "/ˈɡriːn.haʊs/" },
+  { "word": "extinction", "definition": "The dying out of a species", "example": "Many animals face extinction.", "partOfSpeech": "noun", "phonetic": "/ɪkˈstɪŋk.ʃən/" }
+]

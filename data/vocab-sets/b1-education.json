@@ -1,0 +1,22 @@
+[
+  { "word": "university", "definition": "A place where people study for a degree", "example": "She studies at the university.", "partOfSpeech": "noun", "phonetic": "/ˌjuː.nɪˈvɜːr.sə.ti/" },
+  { "word": "degree", "definition": "A qualification from a university", "example": "He has a degree in computer science.", "partOfSpeech": "noun", "phonetic": "/dɪˈɡriː/" },
+  { "word": "exam", "definition": "A test of knowledge or ability", "example": "I have a math exam next week.", "partOfSpeech": "noun", "phonetic": "/ɪɡˈzæm/" },
+  { "word": "homework", "definition": "Work you do at home for school", "example": "I have a lot of homework tonight.", "partOfSpeech": "noun", "phonetic": "/ˈhoʊm.wɜːrk/" },
+  { "word": "lesson", "definition": "A period of learning in school", "example": "The lesson starts at 9 a.m.", "partOfSpeech": "noun", "phonetic": "/ˈles.ən/" },
+  { "word": "subject", "definition": "An area of knowledge studied in school", "example": "My favorite subject is history.", "partOfSpeech": "noun", "phonetic": "/ˈsʌb.dʒekt/" },
+  { "word": "teacher", "definition": "A person who teaches in a school", "example": "Our teacher is very patient.", "partOfSpeech": "noun", "phonetic": "/ˈtiː.tʃər/" },
+  { "word": "student", "definition": "A person who is studying at a school or university", "example": "She is a hard-working student.", "partOfSpeech": "noun", "phonetic": "/ˈstjuː.dənt/" },
+  { "word": "course", "definition": "A series of lessons about a subject", "example": "I'm taking an English course.", "partOfSpeech": "noun", "phonetic": "/kɔːrs/" },
+  { "word": "library", "definition": "A building with books you can borrow", "example": "I study in the library.", "partOfSpeech": "noun", "phonetic": "/ˈlaɪ.brər.i/" },
+  { "word": "research", "definition": "Careful study to discover new facts", "example": "She did research for her thesis.", "partOfSpeech": "noun", "phonetic": "/rɪˈsɜːrtʃ/" },
+  { "word": "essay", "definition": "A short piece of writing on a subject", "example": "I need to write an essay about climate change.", "partOfSpeech": "noun", "phonetic": "/ˈes.eɪ/" },
+  { "word": "graduate", "definition": "To complete a course of study", "example": "She graduated from university last year.", "partOfSpeech": "verb", "phonetic": "/ˈɡrædʒ.u.eɪt/" },
+  { "word": "study", "definition": "To learn about a subject", "example": "I study English every day.", "partOfSpeech": "verb", "phonetic": "/ˈstʌd.i/" },
+  { "word": "pass", "definition": "To succeed in an exam", "example": "I passed the driving test!", "partOfSpeech": "verb", "phonetic": "/pæs/" },
+  { "word": "fail", "definition": "To not succeed in an exam", "example": "He failed the math exam.", "partOfSpeech": "verb", "phonetic": "/feɪl/" },
+  { "word": "scholarship", "definition": "Money given to a student to help pay for study", "example": "She won a scholarship to Oxford.", "partOfSpeech": "noun", "phonetic": "/ˈskɒl.ər.ʃɪp/" },
+  { "word": "semester", "definition": "A half-year period in a school or university", "example": "Fall semester starts in September.", "partOfSpeech": "noun", "phonetic": "/sɪˈmes.tər/" },
+  { "word": "lecture", "definition": "A talk given to a group of students", "example": "The professor gave an interesting lecture.", "partOfSpeech": "noun", "phonetic": "/ˈlek.tʃər/" },
+  { "word": "campus", "definition": "The grounds of a university", "example": "The campus is beautiful in spring.", "partOfSpeech": "noun", "phonetic": "/ˈkæm.pəs/" }
+]

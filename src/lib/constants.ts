@@ -99,3 +99,42 @@ export const LEVELS = [
 ] as const;
 
 export type LevelKey = typeof LEVELS[number]["key"];
+
+// ── Gamification Constants ────────────────────────────────────────────
+
+export const XP_PER_REVIEW = { correct: 10, easy: 15, hard: 5, forgot: 0 } as const;
+export const STREAK_BONUS_THRESHOLD = 5;
+export const STREAK_BONUS_XP = 5;
+export const LEVEL_THRESHOLDS = [0, 100, 250, 500, 1000, 2000, 3500, 5500, 8000, 12000];
+
+export interface AchievementDef {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  check: (data: {
+    flashcardStats: { totalReviews: number; correctReviews: number; currentStreak: number };
+    setMastery: Record<string, { masteredCards: number; totalCards: number }>;
+    xp: number;
+    level: number;
+  }) => boolean;
+}
+
+export const ACHIEVEMENT_DEFS: AchievementDef[] = [
+  { id: "first-card", name: "First Card", description: "Review your first flashcard", icon: "🃏",
+    check: (d) => d.flashcardStats.totalReviews >= 1 },
+  { id: "reviews-100", name: "Century", description: "Complete 100 flashcard reviews", icon: "💯",
+    check: (d) => d.flashcardStats.totalReviews >= 100 },
+  { id: "streak-7", name: "Week Warrior", description: "7 correct answers in a row", icon: "🔥",
+    check: (d) => d.flashcardStats.currentStreak >= 7 },
+  { id: "streak-30", name: "Monthly Master", description: "30 correct answers in a row", icon: "🏆",
+    check: (d) => d.flashcardStats.currentStreak >= 30 },
+  { id: "accuracy-90", name: "Sharpshooter", description: "90% accuracy over 50+ reviews", icon: "🎯",
+    check: (d) => d.flashcardStats.totalReviews >= 50 && (d.flashcardStats.correctReviews / d.flashcardStats.totalReviews) >= 0.9 },
+  { id: "set-complete", name: "Set Scholar", description: "Complete an entire vocabulary set", icon: "📚",
+    check: (d) => Object.values(d.setMastery).some(s => s.masteredCards >= s.totalCards && s.totalCards > 0) },
+  { id: "xp-1000", name: "Thousand Club", description: "Earn 1000 XP", icon: "⭐",
+    check: (d) => d.xp >= 1000 },
+  { id: "level-5", name: "Rising Star", description: "Reach level 5", icon: "🌟",
+    check: (d) => d.level >= 5 },
+];

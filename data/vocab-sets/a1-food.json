@@ -1,0 +1,22 @@
+[
+  { "word": "water", "definition": "A clear liquid for drinking", "example": "Can I have a glass of water?", "partOfSpeech": "noun", "phonetic": "/ˈwɔː.tər/" },
+  { "word": "bread", "definition": "A common food made from flour and baked", "example": "I eat bread with butter for breakfast.", "partOfSpeech": "noun", "phonetic": "/bred/" },
+  { "word": "rice", "definition": "A white or brown grain eaten as food", "example": "We have rice with every meal.", "partOfSpeech": "noun", "phonetic": "/raɪs/" },
+  { "word": "chicken", "definition": "A type of poultry often eaten as food", "example": "I had grilled chicken for dinner.", "partOfSpeech": "noun", "phonetic": "/ˈtʃɪk.ɪn/" },
+  { "word": "apple", "definition": "A round fruit that is usually red or green", "example": "She eats an apple every day.", "partOfSpeech": "noun", "phonetic": "/ˈæp.əl/" },
+  { "word": "milk", "definition": "A white drink from cows", "example": "Children should drink milk.", "partOfSpeech": "noun", "phonetic": "/mɪlk/" },
+  { "word": "egg", "definition": "An oval object from a hen, used as food", "example": "I had two eggs for breakfast.", "partOfSpeech": "noun", "phonetic": "/eɡ/" },
+  { "word": "sugar", "definition": "A sweet substance used in food and drinks", "example": "Do you take sugar in your tea?", "partOfSpeech": "noun", "phonetic": "/ˈʃʊɡ.ər/" },
+  { "word": "salt", "definition": "A white mineral used to flavor food", "example": "This soup needs more salt.", "partOfSpeech": "noun", "phonetic": "/sɒlt/" },
+  { "word": "hungry", "definition": "Needing food", "example": "I'm hungry — let's eat.", "partOfSpeech": "adjective", "phonetic": "/ˈhʌŋ.ɡri/" },
+  { "word": "thirsty", "definition": "Needing something to drink", "example": "I'm thirsty after running.", "partOfSpeech": "adjective", "phonetic": "/ˈθɜːr.sti/" },
+  { "word": "eat", "definition": "To put food in your mouth and swallow it", "example": "We eat lunch at noon.", "partOfSpeech": "verb", "phonetic": "/iːt/" },
+  { "word": "drink", "definition": "To take liquid into your mouth and swallow", "example": "I drink coffee every morning.", "partOfSpeech": "verb", "phonetic": "/drɪŋk/" },
+  { "word": "order", "definition": "To ask for food at a restaurant", "example": "I'd like to order a pizza.", "partOfSpeech": "verb", "phonetic": "/ˈɔːr.dər/" },
+  { "word": "menu", "definition": "A list of food you can order at a restaurant", "example": "Can I see the menu, please?", "partOfSpeech": "noun", "phonetic": "/ˈmen.juː/" },
+  { "word": "delicious", "definition": "Very pleasant to taste", "example": "This cake is delicious!", "partOfSpeech": "adjective", "phonetic": "/dɪˈlɪʃ.əs/" },
+  { "word": "breakfast", "definition": "The first meal of the day", "example": "What do you want for breakfast?", "partOfSpeech": "noun", "phonetic": "/ˈbrek.fəst/" },
+  { "word": "dinner", "definition": "The main meal of the day, usually in the evening", "example": "Dinner is ready!", "partOfSpeech": "noun", "phonetic": "/ˈdɪn.ər/" },
+  { "word": "tea", "definition": "A hot drink made from dried leaves", "example": "Would you like some tea?", "partOfSpeech": "noun", "phonetic": "/tiː/" },
+  { "word": "fruit", "definition": "Food like apples, bananas, and oranges", "example": "Eat more fruit and vegetables.", "partOfSpeech": "noun", "phonetic": "/fruːt/" }
+]

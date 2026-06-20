@@ -1,0 +1,22 @@
+[
+  { "word": "hypothesis", "definition": "A proposed explanation to be tested", "example": "The scientist tested her hypothesis.", "partOfSpeech": "noun", "phonetic": "/haɪˈpɒθ.ə.sɪs/" },
+  { "word": "experiment", "definition": "A test to discover something", "example": "We conducted an experiment in the lab.", "partOfSpeech": "noun", "phonetic": "/ɪkˈsper.ɪ.mənt/" },
+  { "word": "phenomenon", "definition": "A fact or event in nature that can be observed", "example": "Climate change is a global phenomenon.", "partOfSpeech": "noun", "phonetic": "/fɪˈnɒm.ɪ.nən/" },
+  { "word": "methodology", "definition": "A system of methods used in a particular area", "example": "The research methodology was carefully designed.", "partOfSpeech": "noun", "phonetic": "/ˌmeθ.əˈdɒl.ə.dʒi/" },
+  { "word": "analysis", "definition": "A detailed examination of something", "example": "The data analysis revealed surprising results.", "partOfSpeech": "noun", "phonetic": "/əˈnæl.ə.sɪs/" },
+  { "word": "molecule", "definition": "The smallest unit of a chemical substance", "example": "A water molecule has two hydrogen atoms.", "partOfSpeech": "noun", "phonetic": "/ˈmɒl.ɪ.kjuːl/" },
+  { "word": "gravity", "definition": "The force that pulls objects toward the earth", "example": "Gravity keeps us on the ground.", "partOfSpeech": "noun", "phonetic": "/ˈɡræv.ə.ti/" },
+  { "word": "evolution", "definition": "The gradual change in living things over time", "example": "Darwin's theory of evolution changed science.", "partOfSpeech": "noun", "phonetic": "/ˌiː.vəˈluː.ʃən/" },
+  { "word": "quantum", "definition": "Relating to the smallest units of energy", "example": "Quantum physics is difficult to understand.", "partOfSpeech": "adjective", "phonetic": "/ˈkwɒn.təm/" },
+  { "word": "cellular", "definition": "Relating to cells in living organisms", "example": "Cellular biology studies how cells work.", "partOfSpeech": "adjective", "phonetic": "/ˈsel.jə.lər/" },
+  { "word": "synthesize", "definition": "To combine different things to create something new", "example": "The lab synthesized a new compound.", "partOfSpeech": "verb", "phonetic": "/ˈsɪn.θə.saɪz/" },
+  { "word": "correlate", "definition": "To have a mutual relationship", "example": "Exercise correlates with better health.", "partOfSpeech": "verb", "phonetic": "/ˈkɒr.ə.leɪt/" },
+  { "word": "replicate", "definition": "To repeat an experiment to verify results", "example": "Other scientists replicated the study.", "partOfSpeech": "verb", "phonetic": "/ˈrep.lɪ.keɪt/" },
+  { "word": "variable", "definition": "A factor that can change in an experiment", "example": "Temperature is the key variable in this test.", "partOfSpeech": "noun", "phonetic": "/ˈveə.ri.ə.bəl/" },
+  { "word": "peer-reviewed", "definition": "Evaluated by other experts before publication", "example": "The study was published in a peer-reviewed journal.", "partOfSpeech": "adjective", "phonetic": "/ˌpɪr.rɪˈvjuːd/" },
+  { "word": "empirical", "definition": "Based on observation and experiment", "example": "The theory needs empirical evidence.", "partOfSpeech": "adjective", "phonetic": "/ɪmˈpɪr.ɪ.kəl/" },
+  { "word": "genetic", "definition": "Relating to genes and heredity", "example": "Genetic testing can reveal health risks.", "partOfSpeech": "adjective", "phonetic": "/dʒəˈnet.ɪk/" },
+  { "word": "isotope", "definition": "Atoms of the same element with different masses", "example": "Carbon-14 is a radioactive isotope.", "partOfSpeech": "noun", "phonetic": "/ˈaɪ.sə.toʊp/" },
+  { "word": "neuroscience", "definition": "The study of the nervous system and brain", "example": "Neuroscience is advancing rapidly.", "partOfSpeech": "noun", "phonetic": "/ˈnjʊə.roʊ.saɪ.əns/" },
+  { "word": "paradigm", "definition": "A typical example or model of something", "example": "The discovery created a paradigm shift in physics.", "partOfSpeech": "noun", "phonetic": "/ˈpær.ə.daɪm/" }
+]

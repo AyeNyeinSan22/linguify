@@ -1,0 +1,22 @@
+[
+  { "word": "weather", "definition": "The condition of the atmosphere (hot, cold, rainy, etc.)", "example": "What's the weather like today?", "partOfSpeech": "noun", "phonetic": "/ˈweð.ər/" },
+  { "word": "rain", "definition": "Water falling from clouds", "example": "Take an umbrella — it might rain.", "partOfSpeech": "noun", "phonetic": "/reɪn/" },
+  { "word": "snow", "definition": "Frozen water falling as white flakes", "example": "We had heavy snow last winter.", "partOfSpeech": "noun", "phonetic": "/snoʊ/" },
+  { "word": "wind", "definition": "Air moving across the earth's surface", "example": "The wind is very strong today.", "partOfSpeech": "noun", "phonetic": "/wɪnd/" },
+  { "word": "sun", "definition": "The star that gives us light and warmth", "example": "The sun is shining brightly.", "partOfSpeech": "noun", "phonetic": "/sʌn/" },
+  { "word": "cloud", "definition": "A white or grey mass in the sky", "example": "There are dark clouds — it might rain.", "partOfSpeech": "noun", "phonetic": "/klaʊd/" },
+  { "word": "storm", "definition": "Very bad weather with strong wind and rain", "example": "A big storm is coming tonight.", "partOfSpeech": "noun", "phonetic": "/stɔːrm/" },
+  { "word": "temperature", "definition": "How hot or cold something is", "example": "The temperature is 25 degrees today.", "partOfSpeech": "noun", "phonetic": "/ˈtem.prə.tʃər/" },
+  { "word": "season", "definition": "One of the four parts of the year", "example": "Autumn is my favorite season.", "partOfSpeech": "noun", "phonetic": "/ˈsiː.zən/" },
+  { "word": "spring", "definition": "The season between winter and summer", "example": "Flowers bloom in spring.", "partOfSpeech": "noun", "phonetic": "/sprɪŋ/" },
+  { "word": "summer", "definition": "The hottest season of the year", "example": "We go to the beach in summer.", "partOfSpeech": "noun", "phonetic": "/ˈsʌm.ər/" },
+  { "word": "autumn", "definition": "The season between summer and winter", "example": "The leaves change color in autumn.", "partOfSpeech": "noun", "phonetic": "/ˈɔː.təm/" },
+  { "word": "winter", "definition": "The coldest season of the year", "example": "Winter days are short and cold.", "partOfSpeech": "noun", "phonetic": "/ˈwɪn.tər/" },
+  { "word": "hot", "definition": "Having a high temperature", "example": "It's very hot in July.", "partOfSpeech": "adjective", "phonetic": "/hɒt/" },
+  { "word": "cold", "definition": "Having a low temperature", "example": "It's cold outside — wear a coat.", "partOfSpeech": "adjective", "phonetic": "/koʊld/" },
+  { "word": "warm", "definition": "A little hot, pleasantly heated", "example": "It's warm enough to sit outside.", "partOfSpeech": "adjective", "phonetic": "/wɔːrm/" },
+  { "word": "cool", "definition": "Slightly cold", "example": "The evening air is cool.", "partOfSpeech": "adjective", "phonetic": "/kuːl/" },
+  { "word": "sunny", "definition": "Having a lot of sunshine", "example": "It's a beautiful sunny day.", "partOfSpeech": "adjective", "phonetic": "/ˈsʌn.i/" },
+  { "word": "rainy", "definition": "Having a lot of rain", "example": "It's a rainy afternoon.", "partOfSpeech": "adjective", "phonetic": "/ˈreɪ.ni/" },
+  { "word": "cloudy", "definition": "Covered with clouds", "example": "The sky is cloudy today.", "partOfSpeech": "adjective", "phonetic": "/ˈklaʊ.di/" }
+]

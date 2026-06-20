@@ -1,0 +1,22 @@
+[
+  { "word": "journalist", "definition": "A person who writes news stories", "example": "She works as a journalist for a newspaper.", "partOfSpeech": "noun", "phonetic": "/ˈdʒɜːr.nəl.ɪst/" },
+  { "word": "article", "definition": "A piece of writing in a newspaper or magazine", "example": "I read an interesting article about AI.", "partOfSpeech": "noun", "phonetic": "/ˈɑːr.tɪ.kəl/" },
+  { "word": "headline", "definition": "The title of a news story in large letters", "example": "The headline was shocking.", "partOfSpeech": "noun", "phonetic": "/ˈhed.laɪn/" },
+  { "word": "documentary", "definition": "A film presenting facts about a real subject", "example": "We watched a documentary about ocean life.", "partOfSpeech": "noun", "phonetic": "/ˌdɒk.jəˈmen.tər.i/" },
+  { "word": "broadcast", "definition": "To send out a program on TV or radio", "example": "The game will be broadcast live tonight.", "partOfSpeech": "verb", "phonetic": "/ˈbrɒd.kæst/" },
+  { "word": "audience", "definition": "The people who watch or listen to something", "example": "The audience loved the show.", "partOfSpeech": "noun", "phonetic": "/ˈɔː.di.əns/" },
+  { "word": "fiction", "definition": "Stories that are not real, invented by writers", "example": "I prefer fiction to non-fiction.", "partOfSpeech": "noun", "phonetic": "/ˈfɪk.ʃən/" },
+  { "word": "review", "definition": "An article giving an opinion about a book, film, etc.", "example": "The film got a five-star review.", "partOfSpeech": "noun", "phonetic": "/rɪˈvjuː/" },
+  { "word": "publish", "definition": "To make a book or article available to the public", "example": "Her first novel was published last year.", "partOfSpeech": "verb", "phonetic": "/ˈpʌb.lɪʃ/" },
+  { "word": "edit", "definition": "To prepare text or film by correcting and changing it", "example": "She edited the video before posting it.", "partOfSpeech": "verb", "phonetic": "/ˈed.ɪt/" },
+  { "word": "subscribe", "definition": "To sign up to receive something regularly", "example": "I subscribe to a monthly magazine.", "partOfSpeech": "verb", "phonetic": "/səbˈskraɪb/" },
+  { "word": "influencer", "definition": "A person who affects others' opinions on social media", "example": "She's a popular fashion influencer.", "partOfSpeech": "noun", "phonetic": "/ˈɪn.flu.en.sər/" },
+  { "word": "viral", "definition": "Spreading quickly on the internet", "example": "The video went viral overnight.", "partOfSpeech": "adjective", "phonetic": "/ˈvaɪ.rəl/" },
+  { "word": "biased", "definition": "Unfairly favoring one side", "example": "That news channel is very biased.", "partOfSpeech": "adjective", "phonetic": "/ˈbaɪ.əst/" },
+  { "word": "credible", "definition": "Able to be believed; trustworthy", "example": "Always check if a source is credible.", "partOfSpeech": "adjective", "phonetic": "/ˈkred.ə.bəl/" },
+  { "word": "misleading", "definition": "Giving the wrong idea or impression", "example": "The headline was misleading.", "partOfSpeech": "adjective", "phonetic": "/ˌmɪsˈliː.dɪŋ/" },
+  { "word": "coverage", "definition": "The reporting of news events", "example": "The election received worldwide coverage.", "partOfSpeech": "noun", "phonetic": "/ˈkʌv.ər.ɪdʒ/" },
+  { "word": "column", "definition": "A regular article by the same writer in a newspaper", "example": "She writes a weekly column about food.", "partOfSpeech": "noun", "phonetic": "/ˈkɒl.əm/" },
+  { "word": "tabloid", "definition": "A newspaper with short, sensational stories", "example": "Tabloids often exaggerate the truth.", "partOfSpeech": "noun", "phonetic": "/ˈtæb.lɔɪd/" },
+  { "word": "press", "definition": "Newspapers, magazines, and journalists collectively", "example": "The press covered the event extensively.", "partOfSpeech": "noun", "phonetic": "/pres/" }
+]

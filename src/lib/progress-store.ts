@@ -26,6 +26,29 @@ export interface MasteryScore {
   lastSeen: number;
 }
 
+export interface Achievement {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  unlockedAt: number;
+}
+
+export interface FlashcardStats {
+  totalReviews: number;
+  correctReviews: number;
+  currentStreak: number;
+  bestStreak: number;
+  lastReviewDate: string | null;
+}
+
+export interface SetMastery {
+  setId: string;
+  totalCards: number;
+  masteredCards: number;
+  lastStudied: number;
+}
+
 export interface ProgressData {
   entries: CoachingEntry[];
   masteryScores: Record<string, MasteryScore>;
@@ -33,6 +56,11 @@ export interface ProgressData {
   totalMessages: number;
   streakDays: number;
   lastActiveDate: string | null;
+  xp: number;
+  level: number;
+  achievements: Achievement[];
+  flashcardStats: FlashcardStats;
+  setMastery: Record<string, SetMastery>;
 }
 
 // ── In-memory fallback (works on Vercel + local) ─────────────────────────
@@ -56,6 +84,11 @@ function load(): ProgressData {
       totalMessages: 0,
       streakDays: 0,
       lastActiveDate: null,
+      xp: 0,
+      level: 1,
+      achievements: [],
+      flashcardStats: { totalReviews: 0, correctReviews: 0, currentStreak: 0, bestStreak: 0, lastReviewDate: null },
+      setMastery: {},
     };
   }
 }
@@ -257,4 +290,132 @@ export function getWritingStats(): {
     avgWordCount,
     wordCounts: wordCounts.slice(-30), // last 30 for trend
   };
+}
+
+// ── Gamification ─────────────────────────────────────────────────────────
+
+import { XP_PER_REVIEW, STREAK_BONUS_THRESHOLD, STREAK_BONUS_XP, LEVEL_THRESHOLDS, ACHIEVEMENT_DEFS } from "./constants";
+
+function ensureDefaults(data: ProgressData): void {
+  if (data.xp === undefined) data.xp = 0;
+  if (data.level === undefined) data.level = 1;
+  if (!data.achievements) data.achievements = [];
+  if (!data.flashcardStats) {
+    data.flashcardStats = { totalReviews: 0, correctReviews: 0, currentStreak: 0, bestStreak: 0, lastReviewDate: null };
+  }
+  if (!data.setMastery) data.setMastery = {};
+}
+
+export function addXP(amount: number): { xp: number; level: number; levelUp: boolean } {
+  const data = load();
+  ensureDefaults(data);
+  const oldLevel = data.level;
+  data.xp += amount;
+  // Calculate level from XP
+  let newLevel = 1;
+  for (let i = LEVEL_THRESHOLDS.length - 1; i >= 0; i--) {
+    if (data.xp >= LEVEL_THRESHOLDS[i]) {
+      newLevel = i + 1;
+      break;
+    }
+  }
+  data.level = newLevel;
+  save(data);
+  return { xp: data.xp, level: data.level, levelUp: newLevel > oldLevel };
+}
+
+export function recordFlashcardReview(quality: number): {
+  stats: FlashcardStats;
+  xpGained: number;
+  level: number;
+  levelUp: boolean;
+  newAchievements: Achievement[];
+} {
+  const data = load();
+  ensureDefaults(data);
+
+  // Update stats
+  data.flashcardStats.totalReviews++;
+  if (quality >= 3) {
+    data.flashcardStats.correctReviews++;
+    data.flashcardStats.currentStreak++;
+    if (data.flashcardStats.currentStreak > data.flashcardStats.bestStreak) {
+      data.flashcardStats.bestStreak = data.flashcardStats.currentStreak;
+    }
+  } else {
+    data.flashcardStats.currentStreak = 0;
+  }
+  data.flashcardStats.lastReviewDate = new Date().toISOString().split("T")[0];
+
+  // Calculate XP
+  let xpGained = quality >= 4 ? XP_PER_REVIEW.easy : quality >= 3 ? XP_PER_REVIEW.correct : quality >= 1 ? XP_PER_REVIEW.hard : XP_PER_REVIEW.forgot;
+  if (data.flashcardStats.currentStreak >= STREAK_BONUS_THRESHOLD && quality >= 3) {
+    xpGained += STREAK_BONUS_XP;
+  }
+
+  const oldLevel = data.level;
+  data.xp += xpGained;
+  // Calculate level
+  let newLevel = 1;
+  for (let i = LEVEL_THRESHOLDS.length - 1; i >= 0; i--) {
+    if (data.xp >= LEVEL_THRESHOLDS[i]) {
+      newLevel = i + 1;
+      break;
+    }
+  }
+  data.level = newLevel;
+  const levelUp = newLevel > oldLevel;
+
+  // Check achievements
+  const newAchievements = checkAchievementsInternal(data);
+
+  save(data);
+  return { stats: { ...data.flashcardStats }, xpGained, level: data.level, levelUp, newAchievements };
+}
+
+function checkAchievementsInternal(data: ProgressData): Achievement[] {
+  const existing = new Set(data.achievements.map((a) => a.id));
+  const newlyUnlocked: Achievement[] = [];
+
+  for (const def of ACHIEVEMENT_DEFS) {
+    if (existing.has(def.id)) continue;
+    if (def.check({
+      flashcardStats: data.flashcardStats,
+      setMastery: data.setMastery,
+      xp: data.xp,
+      level: data.level,
+    })) {
+      const achievement: Achievement = {
+        id: def.id,
+        name: def.name,
+        description: def.description,
+        icon: def.icon,
+        unlockedAt: Date.now(),
+      };
+      data.achievements.push(achievement);
+      newlyUnlocked.push(achievement);
+    }
+  }
+
+  return newlyUnlocked;
+}
+
+export function checkAchievements(): Achievement[] {
+  const data = load();
+  ensureDefaults(data);
+  const newAchievements = checkAchievementsInternal(data);
+  if (newAchievements.length > 0) save(data);
+  return newAchievements;
+}
+
+export function updateSetMastery(setId: string, totalCards: number, masteredCards: number): void {
+  const data = load();
+  ensureDefaults(data);
+  data.setMastery[setId] = {
+    setId,
+    totalCards,
+    masteredCards,
+    lastStudied: Date.now(),
+  };
+  save(data);
 }

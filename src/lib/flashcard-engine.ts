@@ -10,6 +10,7 @@ export interface Flashcard {
   topic: string;       // grammar topic
   mode: string;        // grammar | vocabulary | writing
   created: number;     // timestamp
+  setId?: string;      // vocabulary set ID (for built-in set cards)
 
   // SM-2 fields
   interval: number;    // days until next review

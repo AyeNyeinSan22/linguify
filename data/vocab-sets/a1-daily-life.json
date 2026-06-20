@@ -1,0 +1,22 @@
+[
+  { "word": "house", "definition": "A building where people live", "example": "My house has three bedrooms.", "partOfSpeech": "noun", "phonetic": "/haʊs/" },
+  { "word": "family", "definition": "A group of people related to each other", "example": "My family is small — just my parents and me.", "partOfSpeech": "noun", "phonetic": "/ˈfæm.ə.li/" },
+  { "word": "breakfast", "definition": "The first meal of the day", "example": "I eat breakfast at 7 a.m.", "partOfSpeech": "noun", "phonetic": "/ˈbrek.fəst/" },
+  { "word": "sleep", "definition": "To rest with your eyes closed at night", "example": "I usually sleep for eight hours.", "partOfSpeech": "verb", "phonetic": "/sliːp/" },
+  { "word": "work", "definition": "To do a job or activity for money", "example": "She works in a hospital.", "partOfSpeech": "verb", "phonetic": "/wɜːrk/" },
+  { "word": "friend", "definition": "A person you like and enjoy spending time with", "example": "My best friend lives next door.", "partOfSpeech": "noun", "phonetic": "/frend/" },
+  { "word": "clean", "definition": "To remove dirt from something", "example": "I clean the kitchen every Saturday.", "partOfSpeech": "verb", "phonetic": "/kliːn/" },
+  { "word": "cook", "definition": "To prepare food using heat", "example": "My mother cooks dinner for us.", "partOfSpeech": "verb", "phonetic": "/kʊk/" },
+  { "word": "watch", "definition": "To look at something for a period of time", "example": "We watch TV in the evening.", "partOfSpeech": "verb", "phonetic": "/wɒtʃ/" },
+  { "word": "morning", "definition": "The early part of the day", "example": "I go for a walk every morning.", "partOfSpeech": "noun", "phonetic": "/ˈmɔːr.nɪŋ/" },
+  { "word": "evening", "definition": "The part of the day between afternoon and night", "example": "Good evening! How are you?", "partOfSpeech": "noun", "phonetic": "/ˈiːv.nɪŋ/" },
+  { "word": "kitchen", "definition": "The room where you prepare and cook food", "example": "The kitchen is very modern.", "partOfSpeech": "noun", "phonetic": "/ˈkɪtʃ.ɪn/" },
+  { "word": "garden", "definition": "An area of land near a house with plants and flowers", "example": "She grows tomatoes in her garden.", "partOfSpeech": "noun", "phonetic": "/ˈɡɑːr.dən/" },
+  { "word": "neighbor", "definition": "A person who lives near you", "example": "Our neighbors are very friendly.", "partOfSpeech": "noun", "phonetic": "/ˈneɪ.bər/" },
+  { "word": "busy", "definition": "Having a lot to do", "example": "I'm busy today — I have many meetings.", "partOfSpeech": "adjective", "phonetic": "/ˈbɪz.i/" },
+  { "word": "tired", "definition": "Needing to rest or sleep", "example": "I'm tired after work.", "partOfSpeech": "adjective", "phonetic": "/taɪərd/" },
+  { "word": "happy", "definition": "Feeling pleasure and enjoyment", "example": "She looks happy today.", "partOfSpeech": "adjective", "phonetic": "/ˈhæp.i/" },
+  { "word": "always", "definition": "Every time; all the time", "example": "He always arrives on time.", "partOfSpeech": "adverb", "phonetic": "/ˈɔːl.weɪz/" },
+  { "word": "sometimes", "definition": "On some occasions but not always", "example": "Sometimes I walk to work.", "partOfSpeech": "adverb", "phonetic": "/ˈsʌm.taɪmz/" },
+  { "word": "never", "definition": "Not at any time", "example": "I never eat meat.", "partOfSpeech": "adverb", "phonetic": "/ˈnev.ər/" }
+]

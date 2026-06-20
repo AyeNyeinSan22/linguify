@@ -1,0 +1,22 @@
+[
+  { "word": "airport", "definition": "A place where planes take off and land", "example": "We arrived at the airport two hours early.", "partOfSpeech": "noun", "phonetic": "/ˈer.pɔːrt/" },
+  { "word": "ticket", "definition": "A piece of paper that lets you travel or enter", "example": "I bought a train ticket online.", "partOfSpeech": "noun", "phonetic": "/ˈtɪk.ɪt/" },
+  { "word": "passport", "definition": "An official document for international travel", "example": "Don't forget your passport!", "partOfSpeech": "noun", "phonetic": "/ˈpæs.pɔːrt/" },
+  { "word": "hotel", "definition": "A building where you pay to sleep and stay", "example": "The hotel has a swimming pool.", "partOfSpeech": "noun", "phonetic": "/hoʊˈtel/" },
+  { "word": "luggage", "definition": "Bags and suitcases you carry when traveling", "example": "My luggage is very heavy.", "partOfSpeech": "noun", "phonetic": "/ˈlʌɡ.ɪdʒ/" },
+  { "word": "direction", "definition": "The way to go to reach a place", "example": "Can you give me directions to the museum?", "partOfSpeech": "noun", "phonetic": "/dɪˈrek.ʃən/" },
+  { "word": "map", "definition": "A drawing of an area showing roads and places", "example": "I need a map of the city.", "partOfSpeech": "noun", "phonetic": "/mæp/" },
+  { "word": "train", "definition": "A long vehicle that travels on rails", "example": "The train leaves at 9 a.m.", "partOfSpeech": "noun", "phonetic": "/treɪn/" },
+  { "word": "bus", "definition": "A large vehicle that carries many passengers", "example": "I take the bus to work.", "partOfSpeech": "noun", "phonetic": "/bʌs/" },
+  { "word": "station", "definition": "A place where trains or buses stop", "example": "The station is near the city center.", "partOfSpeech": "noun", "phonetic": "/ˈsteɪ.ʃən/" },
+  { "word": "arrive", "definition": "To reach a place", "example": "We arrive in Paris tomorrow.", "partOfSpeech": "verb", "phonetic": "/əˈraɪv/" },
+  { "word": "depart", "definition": "To leave a place", "example": "The flight departs at 6 p.m.", "partOfSpeech": "verb", "phonetic": "/dɪˈpɑːrt/" },
+  { "word": "book", "definition": "To reserve a seat, room, or ticket", "example": "I need to book a hotel room.", "partOfSpeech": "verb", "phonetic": "/bʊk/" },
+  { "word": "miss", "definition": "To fail to catch a train, bus, or plane", "example": "I missed the bus this morning.", "partOfSpeech": "verb", "phonetic": "/mɪs/" },
+  { "word": "expensive", "definition": "Costing a lot of money", "example": "London hotels are expensive.", "partOfSpeech": "adjective", "phonetic": "/ɪkˈspen.sɪv/" },
+  { "word": "cheap", "definition": "Costing little money", "example": "This is a cheap flight.", "partOfSpeech": "adjective", "phonetic": "/tʃiːp/" },
+  { "word": "far", "definition": "A long distance away", "example": "The beach is not far from here.", "partOfSpeech": "adverb", "phonetic": "/fɑːr/" },
+  { "word": "near", "definition": "Close to something", "example": "The hotel is near the airport.", "partOfSpeech": "adverb", "phonetic": "/nɪr/" },
+  { "word": "trip", "definition": "A journey to a place and back", "example": "We took a trip to the mountains.", "partOfSpeech": "noun", "phonetic": "/trɪp/" },
+  { "word": "tourist", "definition": "A person visiting a place for pleasure", "example": "Many tourists visit this city.", "partOfSpeech": "noun", "phonetic": "/ˈtʊr.ɪst/" }
+]

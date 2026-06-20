@@ -1,0 +1,164 @@
+[
+  {
+    "id": "a1-daily-life",
+    "name": "A1 Daily Life Essentials",
+    "level": "A1",
+    "topic": "daily-life",
+    "description": "Everyday words for beginners — home, family, routines",
+    "wordCount": 20,
+    "icon": "🏠"
+  },
+  {
+    "id": "a1-greetings",
+    "name": "A1 Greetings & Basics",
+    "level": "A1",
+    "topic": "greetings",
+    "description": "Hello, goodbye, please, thank you — your first English words",
+    "wordCount": 20,
+    "icon": "👋"
+  },
+  {
+    "id": "a1-food",
+    "name": "A1 Food & Drink",
+    "level": "A1",
+    "topic": "food",
+    "description": "Common foods, drinks, and restaurant vocabulary",
+    "wordCount": 20,
+    "icon": "🍕"
+  },
+  {
+    "id": "a2-travel",
+    "name": "A2 Travel & Transport",
+    "level": "A2",
+    "topic": "travel",
+    "description": "Getting around — airports, hotels, directions",
+    "wordCount": 20,
+    "icon": "✈️"
+  },
+  {
+    "id": "a2-shopping",
+    "name": "A2 Shopping & Money",
+    "level": "A2",
+    "topic": "shopping",
+    "description": "Stores, prices, sizes, and paying",
+    "wordCount": 20,
+    "icon": "🛍️"
+  },
+  {
+    "id": "a2-weather",
+    "name": "A2 Weather & Nature",
+    "level": "A2",
+    "topic": "weather",
+    "description": "Seasons, weather conditions, and the natural world",
+    "wordCount": 20,
+    "icon": "🌤️"
+  },
+  {
+    "id": "b1-work",
+    "name": "B1 Work & Careers",
+    "level": "B1",
+    "topic": "work",
+    "description": "Office life, job hunting, and professional communication",
+    "wordCount": 20,
+    "icon": "💼"
+  },
+  {
+    "id": "b1-health",
+    "name": "B1 Health & Body",
+    "level": "B1",
+    "topic": "health",
+    "description": "Doctor visits, symptoms, fitness, and wellbeing",
+    "wordCount": 20,
+    "icon": "🏥"
+  },
+  {
+    "id": "b1-education",
+    "name": "B1 Education & Learning",
+    "level": "B1",
+    "topic": "education",
+    "description": "School, university, studying, and academic life",
+    "wordCount": 20,
+    "icon": "🎓"
+  },
+  {
+    "id": "b2-technology",
+    "name": "B2 Technology & Internet",
+    "level": "B2",
+    "topic": "technology",
+    "description": "Computers, apps, social media, and digital life",
+    "wordCount": 20,
+    "icon": "💻"
+  },
+  {
+    "id": "b2-environment",
+    "name": "B2 Environment & Climate",
+    "level": "B2",
+    "topic": "environment",
+    "description": "Ecology, sustainability, and environmental issues",
+    "wordCount": 20,
+    "icon": "🌍"
+  },
+  {
+    "id": "b2-media",
+    "name": "B2 Media & Entertainment",
+    "level": "B2",
+    "topic": "media",
+    "description": "News, film, music, and cultural topics",
+    "wordCount": 20,
+    "icon": "📰"
+  },
+  {
+    "id": "c1-politics",
+    "name": "C1 Politics & Society",
+    "level": "C1",
+    "topic": "politics",
+    "description": "Government, elections, policy, and civic life",
+    "wordCount": 20,
+    "icon": "🏛️"
+  },
+  {
+    "id": "c1-science",
+    "name": "C1 Science & Research",
+    "level": "C1",
+    "topic": "science",
+    "description": "Scientific method, discoveries, and academic discourse",
+    "wordCount": 20,
+    "icon": "🔬"
+  },
+  {
+    "id": "c1-arts",
+    "name": "C1 Arts & Culture",
+    "level": "C1",
+    "topic": "arts",
+    "description": "Visual arts, literature, performance, and aesthetics",
+    "wordCount": 20,
+    "icon": "🎨"
+  },
+  {
+    "id": "c2-philosophy",
+    "name": "C2 Philosophy & Ethics",
+    "level": "C2",
+    "topic": "philosophy",
+    "description": "Abstract thought, morality, and philosophical concepts",
+    "wordCount": 20,
+    "icon": "🤔"
+  },
+  {
+    "id": "c2-law",
+    "name": "C2 Law & Justice",
+    "level": "C2",
+    "topic": "law",
+    "description": "Legal systems, court proceedings, and justice",
+    "wordCount": 20,
+    "icon": "⚖️"
+  },
+  {
+    "id": "c2-idioms",
+    "name": "C2 Idioms & Expressions",
+    "level": "C2",
+    "topic": "idioms",
+    "description": "Advanced idiomatic expressions and figurative language",
+    "wordCount": 20,
+    "icon": "💬"
+  }
+]

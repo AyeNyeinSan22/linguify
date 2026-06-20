@@ -1,0 +1,22 @@
+[
+  { "word": "democracy", "definition": "A system of government where people vote for leaders", "example": "Democracy requires free and fair elections.", "partOfSpeech": "noun", "phonetic": "/dɪˈmɒk.rə.si/" },
+  { "word": "legislation", "definition": "Laws considered collectively", "example": "New legislation was passed to protect workers.", "partOfSpeech": "noun", "phonetic": "/ˌledʒ.ɪsˈleɪ.ʃən/" },
+  { "word": "campaign", "definition": "An organized effort to achieve a political goal", "example": "The election campaign lasted six months.", "partOfSpeech": "noun", "phonetic": "/kæmˈpeɪn/" },
+  { "word": "referendum", "definition": "A vote in which people decide a specific question", "example": "The country held a referendum on EU membership.", "partOfSpeech": "noun", "phonetic": "/ˌref.əˈren.dəm/" },
+  { "word": "diplomacy", "definition": "Managing relations between countries", "example": "Diplomacy is preferred over military action.", "partOfSpeech": "noun", "phonetic": "/dɪˈploʊ.mə.si/" },
+  { "word": "bureaucracy", "definition": "A system of government with many complex rules", "example": "The bureaucracy makes it hard to get things done.", "partOfSpeech": "noun", "phonetic": "/bjʊˈrɒk.rə.si/" },
+  { "word": "opposition", "definition": "The political parties not in government", "example": "The opposition criticized the new policy.", "partOfSpeech": "noun", "phonetic": "/ˌɒp.əˈzɪʃ.ən/" },
+  { "word": "constitute", "definition": "To form or make up something", "example": "These groups constitute the majority.", "partOfSpeech": "verb", "phonetic": "/ˈkɒn.stɪ.tjuːt/" },
+  { "word": "enforce", "definition": "To make people obey a law or rule", "example": "The police enforce traffic laws.", "partOfSpeech": "verb", "phonetic": "/ɪnˈfɔːrs/" },
+  { "word": "advocate", "definition": "To publicly support a cause or policy", "example": "She advocates for equal rights.", "partOfSpeech": "verb", "phonetic": "/ˈæd.və.keɪt/" },
+  { "word": "ratify", "definition": "To make an agreement official by voting", "example": "Parliament ratified the treaty.", "partOfSpeech": "verb", "phonetic": "/ˈræt.ɪ.faɪ/" },
+  { "word": "sanction", "definition": "An official punishment or restriction against a country", "example": "Economic sanctions were imposed on the regime.", "partOfSpeech": "noun", "phonetic": "/ˈsæŋk.ʃən/" },
+  { "word": "sovereignty", "definition": "The power of a country to govern itself", "example": "National sovereignty must be respected.", "partOfSpeech": "noun", "phonetic": "/ˈsɒv.rɪn.ti/" },
+  { "word": "bipartisan", "definition": "Supported by two political parties", "example": "The bill had bipartisan support.", "partOfSpeech": "adjective", "phonetic": "/ˌbaɪˈpɑːr.tɪ.zən/" },
+  { "word": "authoritarian", "definition": "Demanding obedience to authority, not allowing freedom", "example": "The country has an authoritarian government.", "partOfSpeech": "adjective", "phonetic": "/əˌθɒr.ɪˈteə.ri.ən/" },
+  { "word": "corruption", "definition": "Dishonest or illegal behavior by people in power", "example": "The report exposed government corruption.", "partOfSpeech": "noun", "phonetic": "/kəˈrʌp.ʃən/" },
+  { "word": "fiscal", "definition": "Relating to government money and spending", "example": "The fiscal policy aims to reduce debt.", "partOfSpeech": "adjective", "phonetic": "/ˈfɪs.kəl/" },
+  { "word": "coalition", "definition": "A group of parties joining together to govern", "example": "The two parties formed a coalition government.", "partOfSpeech": "noun", "phonetic": "/ˌkoʊ.əˈlɪʃ.ən/" },
+  { "word": "amendment", "definition": "A change or addition to a law or document", "example": "The First Amendment protects free speech.", "partOfSpeech": "noun", "phonetic": "/əˈmend.mənt/" },
+  { "word": "policy", "definition": "A plan of action adopted by a government or organization", "example": "The government announced a new health policy.", "partOfSpeech": "noun", "phonetic": "/ˈpɒl.ə.si/" }
+]

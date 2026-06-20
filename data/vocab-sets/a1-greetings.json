@@ -1,0 +1,22 @@
+[
+  { "word": "hello", "definition": "A common greeting", "example": "Hello! Nice to meet you.", "partOfSpeech": "interjection", "phonetic": "/həˈloʊ/" },
+  { "word": "goodbye", "definition": "A farewell expression", "example": "Goodbye! See you tomorrow.", "partOfSpeech": "interjection", "phonetic": "/ɡʊdˈbaɪ/" },
+  { "word": "please", "definition": "A polite word used when asking for something", "example": "Can I have some water, please?", "partOfSpeech": "adverb", "phonetic": "/pliːz/" },
+  { "word": "thank", "definition": "To express gratitude", "example": "Thank you for your help.", "partOfSpeech": "verb", "phonetic": "/θæŋk/" },
+  { "word": "sorry", "definition": "Used to express apology or regret", "example": "Sorry, I'm late.", "partOfSpeech": "adjective", "phonetic": "/ˈsɒr.i/" },
+  { "word": "name", "definition": "What someone or something is called", "example": "My name is Anna.", "partOfSpeech": "noun", "phonetic": "/neɪm/" },
+  { "word": "meet", "definition": "To see someone for the first time", "example": "Nice to meet you!", "partOfSpeech": "verb", "phonetic": "/miːt/" },
+  { "word": "help", "definition": "To do something for someone", "example": "Can you help me, please?", "partOfSpeech": "verb", "phonetic": "/help/" },
+  { "word": "yes", "definition": "Used to agree or say something is correct", "example": "Yes, I understand.", "partOfSpeech": "interjection", "phonetic": "/jes/" },
+  { "word": "no", "definition": "Used to refuse or disagree", "example": "No, thank you.", "partOfSpeech": "interjection", "phonetic": "/noʊ/" },
+  { "word": "good", "definition": "Of a high quality or standard", "example": "This is a good book.", "partOfSpeech": "adjective", "phonetic": "/ɡʊd/" },
+  { "word": "bad", "definition": "Of poor quality or not acceptable", "example": "The weather is bad today.", "partOfSpeech": "adjective", "phonetic": "/bæd/" },
+  { "word": "welcome", "definition": "Used to greet someone warmly", "example": "Welcome to our home!", "partOfSpeech": "interjection", "phonetic": "/ˈwel.kəm/" },
+  { "word": "excuse", "definition": "A polite way to get someone's attention", "example": "Excuse me, where is the station?", "partOfSpeech": "verb", "phonetic": "/ɪkˈskjuːz/" },
+  { "word": "how", "definition": "In what way or manner", "example": "How are you today?", "partOfSpeech": "adverb", "phonetic": "/haʊ/" },
+  { "word": "fine", "definition": "Healthy and well", "example": "I'm fine, thanks.", "partOfSpeech": "adjective", "phonetic": "/faɪn/" },
+  { "word": "nice", "definition": "Pleasant and agreeable", "example": "It's nice to see you again.", "partOfSpeech": "adjective", "phonetic": "/naɪs/" },
+  { "word": "morning", "definition": "The early part of the day until noon", "example": "Good morning!", "partOfSpeech": "noun", "phonetic": "/ˈmɔːr.nɪŋ/" },
+  { "word": "night", "definition": "The time when it is dark", "example": "Good night! Sweet dreams.", "partOfSpeech": "noun", "phonetic": "/naɪt/" },
+  { "word": "again", "definition": "One more time; another time", "example": "Let's meet again soon.", "partOfSpeech": "adverb", "phonetic": "/əˈɡen/" }
+]

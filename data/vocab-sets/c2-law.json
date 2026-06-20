@@ -1,0 +1,22 @@
+[
+  { "word": "jurisdiction", "definition": "The official power to make legal decisions", "example": "This case falls under federal jurisdiction.", "partOfSpeech": "noun", "phonetic": "/ˌdʒʊə.rɪsˈdɪk.ʃən/" },
+  { "word": "legislation", "definition": "Laws enacted by a governing body", "example": "The new legislation takes effect next month.", "partOfSpeech": "noun", "phonetic": "/ˌledʒ.ɪsˈleɪ.ʃən/" },
+  { "word": "litigation", "definition": "The process of taking legal action", "example": "The company faces litigation over patent infringement.", "partOfSpeech": "noun", "phonetic": "/ˌlɪt.ɪˈɡeɪ.ʃən/" },
+  { "word": "testimony", "definition": "A formal statement given in court", "example": "The witness gave testimony under oath.", "partOfSpeech": "noun", "phonetic": "/ˈtes.tɪ.mə.ni/" },
+  { "word": "verdict", "definition": "The decision of a jury or judge", "example": "The jury returned a guilty verdict.", "partOfSpeech": "noun", "phonetic": "/ˈvɜːr.dɪkt/" },
+  { "word": "statute", "definition": "A written law passed by a legislative body", "example": "The statute was enacted in 1990.", "partOfSpeech": "noun", "phonetic": "/ˈstætʃ.uːt/" },
+  { "word": "precedent", "definition": "A previous case that guides future legal decisions", "example": "This ruling sets a legal precedent.", "partOfSpeech": "noun", "phonetic": "/ˈpres.ɪ.dənt/" },
+  { "word": "plaintiff", "definition": "The person who brings a case against another in court", "example": "The plaintiff filed a lawsuit.", "partOfSpeech": "noun", "phonetic": "/ˈpleɪn.tɪf/" },
+  { "word": "defendant", "definition": "A person accused or sued in court", "example": "The defendant pleaded not guilty.", "partOfSpeech": "noun", "phonetic": "/dɪˈfen.dənt/" },
+  { "word": "acquit", "definition": "To declare someone not guilty", "example": "The jury acquitted the accused.", "partOfSpeech": "verb", "phonetic": "/əˈkwɪt/" },
+  { "word": "convict", "definition": "To find someone guilty of a crime", "example": "He was convicted of fraud.", "partOfSpeech": "verb", "phonetic": "/kənˈvɪkt/" },
+  { "word": "adjudicate", "definition": "To make a formal judgment about a dispute", "example": "The court adjudicated the claim.", "partOfSpeech": "verb", "phonetic": "/əˈdʒuː.dɪ.keɪt/" },
+  { "word": "probation", "definition": "A period of supervised behavior instead of prison", "example": "He was sentenced to two years of probation.", "partOfSpeech": "noun", "phonetic": "/prəˈbeɪ.ʃən/" },
+  { "word": "indictment", "definition": "A formal charge of a serious crime", "example": "The grand jury issued an indictment.", "partOfSpeech": "noun", "phonetic": "/ɪnˈdaɪt.mənt/" },
+  { "word": "tort", "definition": "A wrongful act leading to civil legal liability", "example": "Defamation is a common tort.", "partOfSpeech": "noun", "phonetic": "/tɔːrt/" },
+  { "word": "statutory", "definition": "Required or allowed by law", "example": "The company has statutory obligations.", "partOfSpeech": "adjective", "phonetic": "/ˈstætʃ.ə.tɔːr.i/" },
+  { "word": "judicial", "definition": "Relating to courts of law", "example": "The judicial system must be independent.", "partOfSpeech": "adjective", "phonetic": "/dʒuːˈdɪʃ.əl/" },
+  { "word": "arbitration", "definition": "Using a neutral person to settle a dispute outside court", "example": "They resolved the conflict through arbitration.", "partOfSpeech": "noun", "phonetic": "/ˌɑːr.bɪˈtreɪ.ʃən/" },
+  { "word": "liability", "definition": "The state of being legally responsible", "example": "The company admitted liability for the accident.", "partOfSpeech": "noun", "phonetic": "/ˌlaɪ.əˈbɪl.ə.ti/" },
+  { "word": "amnesty", "definition": "An official pardon for political offenses", "example": "The government granted amnesty to political prisoners.", "partOfSpeech": "noun", "phonetic": "/ˈæm.nə.sti/" }
+]

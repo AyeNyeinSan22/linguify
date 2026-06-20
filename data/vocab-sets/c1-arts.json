@@ -1,0 +1,22 @@
+[
+  { "word": "aesthetic", "definition": "Concerned with beauty or art appreciation", "example": "The building has great aesthetic appeal.", "partOfSpeech": "adjective", "phonetic": "/esˈθet.ɪk/" },
+  { "word": "exhibition", "definition": "A public display of works of art", "example": "The museum has a new photography exhibition.", "partOfSpeech": "noun", "phonetic": "/ˌek.sɪˈbɪʃ.ən/" },
+  { "word": "masterpiece", "definition": "A work of outstanding quality", "example": "The Mona Lisa is a masterpiece.", "partOfSpeech": "noun", "phonetic": "/ˈmæs.tər.piːs/" },
+  { "word": "sculpture", "definition": "A three-dimensional work of art", "example": "The sculpture is made of marble.", "partOfSpeech": "noun", "phonetic": "/ˈskʌlp.tʃər/" },
+  { "word": "portrait", "definition": "A painting or photograph of a person", "example": "She painted a portrait of her mother.", "partOfSpeech": "noun", "phonetic": "/ˈpɔːr.trɪt/" },
+  { "word": "curator", "definition": "A person who manages a museum's collection", "example": "The curator organized the exhibition.", "partOfSpeech": "noun", "phonetic": "/kjʊˈreɪ.tər/" },
+  { "word": "gallery", "definition": "A room or building for displaying art", "example": "We visited an art gallery downtown.", "partOfSpeech": "noun", "phonetic": "/ˈɡæl.ər.i/" },
+  { "word": "abstract", "definition": "Art that does not represent real objects", "example": "She paints abstract art.", "partOfSpeech": "adjective", "phonetic": "/ˈæb.strækt/" },
+  { "word": "contemporary", "definition": "Belonging to the present time", "example": "The gallery shows contemporary art.", "partOfSpeech": "adjective", "phonetic": "/kənˈtem.pər.er.i/" },
+  { "word": "novel", "definition": "A long fictional story in book form", "example": "She wrote her first novel at age 25.", "partOfSpeech": "noun", "phonetic": "/ˈnɒv.əl/" },
+  { "word": "poetry", "definition": "Literary work in metrical form", "example": "He published a collection of poetry.", "partOfSpeech": "noun", "phonetic": "/ˈpoʊ.ə.tri/" },
+  { "word": "compose", "definition": "To create a piece of music or writing", "example": "Beethoven composed nine symphonies.", "partOfSpeech": "verb", "phonetic": "/kəmˈpoʊz/" },
+  { "word": "perform", "definition": "To act, sing, or play for an audience", "example": "The actors performed beautifully.", "partOfSpeech": "verb", "phonetic": "/pərˈfɔːrm/" },
+  { "word": "inspire", "definition": "To give someone a creative idea", "example": "The landscape inspired her painting.", "partOfSpeech": "verb", "phonetic": "/ɪnˈspaɪər/" },
+  { "word": "interpret", "definition": "To explain the meaning of a work of art", "example": "Everyone interprets this poem differently.", "partOfSpeech": "verb", "phonetic": "/ɪnˈtɜːr.prɪt/" },
+  { "word": "avant-garde", "definition": "New and experimental art", "example": "Her avant-garde style shocked the audience.", "partOfSpeech": "adjective", "phonetic": "/ˌæ.vɒ̃ˈɡɑːrd/" },
+  { "word": "patron", "definition": "A person who supports the arts financially", "example": "The patron donated millions to the museum.", "partOfSpeech": "noun", "phonetic": "/ˈpeɪ.trən/" },
+  { "word": "symphony", "definition": "A long piece of music for an orchestra", "example": "The symphony was three movements.", "partOfSpeech": "noun", "phonetic": "/ˈsɪm.fə.ni/" },
+  { "word": "improvise", "definition": "To create or perform without preparation", "example": "Jazz musicians often improvise.", "partOfSpeech": "verb", "phonetic": "/ˈɪm.prə.vaɪz/" },
+  { "word": "renaissance", "definition": "A revival of art and learning", "example": "The Renaissance transformed European culture.", "partOfSpeech": "noun", "phonetic": "/rɪˈneɪ.səns/" }
+]

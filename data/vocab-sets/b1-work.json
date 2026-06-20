@@ -1,0 +1,22 @@
+[
+  { "word": "interview", "definition": "A meeting to decide if someone gets a job", "example": "I have a job interview tomorrow.", "partOfSpeech": "noun", "phonetic": "/ˈɪn.tər.vjuː/" },
+  { "word": "salary", "definition": "Money you earn from your job each month", "example": "The salary for this position is competitive.", "partOfSpeech": "noun", "phonetic": "/ˈsæl.ər.i/" },
+  { "word": "colleague", "definition": "A person you work with", "example": "My colleagues are very supportive.", "partOfSpeech": "noun", "phonetic": "/ˈkɒl.iːɡ/" },
+  { "word": "deadline", "definition": "The latest time something must be finished", "example": "The deadline for the report is Friday.", "partOfSpeech": "noun", "phonetic": "/ˈded.laɪn/" },
+  { "word": "meeting", "definition": "A planned event where people discuss things", "example": "We have a meeting at 10 a.m.", "partOfSpeech": "noun", "phonetic": "/ˈmiː.tɪŋ/" },
+  { "word": "experience", "definition": "Knowledge gained from doing a job over time", "example": "This job requires three years of experience.", "partOfSpeech": "noun", "phonetic": "/ɪkˈspɪr.i.əns/" },
+  { "word": "skill", "definition": "An ability to do something well", "example": "Communication skills are important.", "partOfSpeech": "noun", "phonetic": "/skɪl/" },
+  { "word": "apply", "definition": "To formally ask for a job", "example": "I want to apply for this position.", "partOfSpeech": "verb", "phonetic": "/əˈplaɪ/" },
+  { "word": "hire", "definition": "To give someone a job", "example": "They want to hire a new designer.", "partOfSpeech": "verb", "phonetic": "/haɪər/" },
+  { "word": "resign", "definition": "To officially leave your job", "example": "She resigned from her position last month.", "partOfSpeech": "verb", "phonetic": "/rɪˈzaɪn/" },
+  { "word": "promote", "definition": "To give someone a better job with more responsibility", "example": "He was promoted to manager.", "partOfSpeech": "verb", "phonetic": "/prəˈmoʊt/" },
+  { "word": "commute", "definition": "To travel to and from work", "example": "I commute for an hour each day.", "partOfSpeech": "verb", "phonetic": "/kəˈmjuːt/" },
+  { "word": "full-time", "definition": "Working the whole working week", "example": "She has a full-time job.", "partOfSpeech": "adjective", "phonetic": "/ˌfʊlˈtaɪm/" },
+  { "word": "part-time", "definition": "Working only part of the week", "example": "He has a part-time job at the cafe.", "partOfSpeech": "adjective", "phonetic": "/ˌpɑːrtˈtaɪm/" },
+  { "word": "professional", "definition": "Related to a job that needs special training", "example": "She is very professional in her work.", "partOfSpeech": "adjective", "phonetic": "/prəˈfeʃ.ən.əl/" },
+  { "word": "overtime", "definition": "Working hours beyond your normal schedule", "example": "I had to work overtime last week.", "partOfSpeech": "noun", "phonetic": "/ˈoʊ.vər.taɪm/" },
+  { "word": "benefit", "definition": "Something extra you get from your job (health insurance, etc.)", "example": "This job has great benefits.", "partOfSpeech": "noun", "phonetic": "/ˈben.ɪ.fɪt/" },
+  { "word": "team", "definition": "A group of people working together", "example": "Our team finished the project early.", "partOfSpeech": "noun", "phonetic": "/tiːm/" },
+  { "word": "task", "definition": "A piece of work that needs to be done", "example": "I have several tasks to complete today.", "partOfSpeech": "noun", "phonetic": "/tæsk/" },
+  { "word": "resume", "definition": "A document listing your education and work experience", "example": "Please send your resume by email.", "partOfSpeech": "noun", "phonetic": "/rɪˈzuːm/" }
+]

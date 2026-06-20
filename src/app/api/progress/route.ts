@@ -22,6 +22,11 @@ export async function GET(): Promise<NextResponse> {
       writingStats,
       levels,
       recentEntries: progress.entries.slice(-10).reverse(),
+      xp: progress.xp || 0,
+      level: progress.level || 1,
+      achievements: progress.achievements || [],
+      flashcardStats: progress.flashcardStats || { totalReviews: 0, correctReviews: 0, currentStreak: 0, bestStreak: 0, lastReviewDate: null },
+      setMastery: progress.setMastery || {},
     });
   } catch (err) {
     return NextResponse.json(

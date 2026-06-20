@@ -1,0 +1,22 @@
+[
+  { "word": "software", "definition": "Programs that run on a computer", "example": "We need to update the software.", "partOfSpeech": "noun", "phonetic": "/ˈsɒft.wer/" },
+  { "word": "hardware", "definition": "The physical parts of a computer", "example": "The hardware needs to be replaced.", "partOfSpeech": "noun", "phonetic": "/ˈhɑːrd.wer/" },
+  { "word": "algorithm", "definition": "A set of steps a computer follows to solve a problem", "example": "The search algorithm shows relevant results.", "partOfSpeech": "noun", "phonetic": "/ˈæl.ɡə.rɪ.ðəm/" },
+  { "word": "database", "definition": "An organized collection of data stored electronically", "example": "Customer information is kept in a database.", "partOfSpeech": "noun", "phonetic": "/ˈdeɪ.tə.beɪs/" },
+  { "word": "artificial", "definition": "Made by humans, not natural", "example": "Artificial intelligence is transforming many industries.", "partOfSpeech": "adjective", "phonetic": "/ˌɑːr.tɪˈfɪʃ.əl/" },
+  { "word": "network", "definition": "A system of connected computers", "example": "The office network is very fast.", "partOfSpeech": "noun", "phonetic": "/ˈnet.wɜːrk/" },
+  { "word": "password", "definition": "A secret word used to access a system", "example": "Choose a strong password.", "partOfSpeech": "noun", "phonetic": "/ˈpæs.wɜːrd/" },
+  { "word": "download", "definition": "To copy a file from the internet to your device", "example": "I downloaded the app yesterday.", "partOfSpeech": "verb", "phonetic": "/ˈdaʊn.loʊd/" },
+  { "word": "upload", "definition": "To send a file from your device to the internet", "example": "Please upload your photo.", "partOfSpeech": "verb", "phonetic": "/ˈʌp.loʊd/" },
+  { "word": "browse", "definition": "To look through websites on the internet", "example": "I browse social media in the evening.", "partOfSpeech": "verb", "phonetic": "/braʊz/" },
+  { "word": "stream", "definition": "To watch or listen to content online without downloading", "example": "We stream movies on Netflix.", "partOfSpeech": "verb", "phonetic": "/striːm/" },
+  { "word": "device", "definition": "A piece of equipment made for a purpose", "example": "This device can track your steps.", "partOfSpeech": "noun", "phonetic": "/dɪˈvaɪs/" },
+  { "word": "cloud", "definition": "Remote servers accessed via the internet for storage", "example": "I save my files to the cloud.", "partOfSpeech": "noun", "phonetic": "/klaʊd/" },
+  { "word": "cybersecurity", "definition": "The practice of protecting systems from digital attacks", "example": "Cybersecurity is a growing concern.", "partOfSpeech": "noun", "phonetic": "/ˌsaɪ.bər.sɪˈkjʊr.ə.ti/" },
+  { "word": "innovation", "definition": "A new idea or method", "example": "This technology is a major innovation.", "partOfSpeech": "noun", "phonetic": "/ˌɪn.əˈveɪ.ʃən/" },
+  { "word": "automation", "definition": "Using machines to do work without human help", "example": "Automation has changed manufacturing.", "partOfSpeech": "noun", "phonetic": "/ˌɔː.təˈmeɪ.ʃən/" },
+  { "word": "digital", "definition": "Relating to computer technology", "example": "We live in a digital age.", "partOfSpeech": "adjective", "phonetic": "/ˈdɪdʒ.ɪ.təl/" },
+  { "word": "virtual", "definition": "Existing in a computer, not in the physical world", "example": "We had a virtual meeting on Zoom.", "partOfSpeech": "adjective", "phonetic": "/ˈvɜːr.tʃu.əl/" },
+  { "word": "compatible", "definition": "Able to work together without problems", "example": "This app is compatible with Android.", "partOfSpeech": "adjective", "phonetic": "/kəmˈpæt.ə.bəl/" },
+  { "word": "obsolete", "definition": "No longer used because something newer exists", "example": "Floppy disks are now obsolete.", "partOfSpeech": "adjective", "phonetic": "/ˌɒb.səlˈiːt/" }
+]

@@ -1,0 +1,22 @@
+[
+  { "word": "doctor", "definition": "A person who treats sick people", "example": "I need to see a doctor.", "partOfSpeech": "noun", "phonetic": "/ˈdɒk.tər/" },
+  { "word": "medicine", "definition": "A substance used to treat illness", "example": "Take this medicine twice a day.", "partOfSpeech": "noun", "phonetic": "/ˈmed.ɪ.sən/" },
+  { "word": "symptom", "definition": "A sign that you have a particular illness", "example": "Fever is a common symptom of the flu.", "partOfSpeech": "noun", "phonetic": "/ˈsɪmp.təm/" },
+  { "word": "headache", "definition": "A pain in your head", "example": "I have a terrible headache.", "partOfSpeech": "noun", "phonetic": "/ˈhed.eɪk/" },
+  { "word": "exercise", "definition": "Physical activity to stay healthy", "example": "Regular exercise is good for your heart.", "partOfSpeech": "noun", "phonetic": "/ˈek.sər.saɪz/" },
+  { "word": "diet", "definition": "The food you eat regularly", "example": "A balanced diet includes vegetables and fruit.", "partOfSpeech": "noun", "phonetic": "/ˈdaɪ.ət/" },
+  { "word": "weight", "definition": "How heavy someone or something is", "example": "I've gained some weight this year.", "partOfSpeech": "noun", "phonetic": "/weɪt/" },
+  { "word": "appointment", "definition": "A planned meeting with a doctor", "example": "I have a dental appointment at 3 p.m.", "partOfSpeech": "noun", "phonetic": "/əˈpɔɪnt.mənt/" },
+  { "word": "prescription", "definition": "A doctor's written order for medicine", "example": "The doctor gave me a prescription.", "partOfSpeech": "noun", "phonetic": "/prɪˈskrɪp.ʃən/" },
+  { "word": "allergy", "definition": "A bad reaction to something (food, pollen, etc.)", "example": "I have an allergy to peanuts.", "partOfSpeech": "noun", "phonetic": "/ˈæl.ər.dʒi/" },
+  { "word": "recover", "definition": "To get well after an illness", "example": "She recovered from the flu in a week.", "partOfSpeech": "verb", "phonetic": "/rɪˈkʌv.ər/" },
+  { "word": "injure", "definition": "To hurt part of your body", "example": "He injured his knee playing football.", "partOfSpeech": "verb", "phonetic": "/ˈɪn.dʒər/" },
+  { "word": "treat", "definition": "To give medical care for an illness", "example": "The doctor treated the wound.", "partOfSpeech": "verb", "phonetic": "/triːt/" },
+  { "word": "healthy", "definition": "In good physical condition", "example": "She looks very healthy.", "partOfSpeech": "adjective", "phonetic": "/ˈhel.θi/" },
+  { "word": "sick", "definition": "Not well; ill", "example": "I feel sick today.", "partOfSpeech": "adjective", "phonetic": "/sɪk/" },
+  { "word": "fit", "definition": "In good physical condition from exercise", "example": "He goes to the gym to stay fit.", "partOfSpeech": "adjective", "phonetic": "/fɪt/" },
+  { "word": "pain", "definition": "A bad physical feeling in your body", "example": "I have pain in my back.", "partOfSpeech": "noun", "phonetic": "/peɪn/" },
+  { "word": "ambulance", "definition": "A vehicle that takes sick people to hospital", "example": "Call an ambulance — he's hurt!", "partOfSpeech": "noun", "phonetic": "/ˈæm.bjə.ləns/" },
+  { "word": "surgery", "definition": "A medical operation", "example": "She had surgery on her knee.", "partOfSpeech": "noun", "phonetic": "/ˈsɜːr.dʒər.i/" },
+  { "word": "stress", "definition": "Worry and pressure that affects your health", "example": "Work can cause a lot of stress.", "partOfSpeech": "noun", "phonetic": "/stres/" }
+]

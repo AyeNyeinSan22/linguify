@@ -1,47 +1,178 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Link from "next/link";
 import { sm2, getDueCards, getCardStats, type Flashcard } from "@/lib/flashcard-engine";
+import FlashcardViewer from "@/components/flashcards/FlashcardViewer";
+import FlashcardStatsBar from "@/components/flashcards/FlashcardStatsBar";
+import XPNotification from "@/components/flashcards/XPNotification";
+import AchievementPopup from "@/components/flashcards/AchievementPopup";
 
-const TOPIC_LABELS: Record<string,string> = {"past-tense":"Past Tense","present-tense":"Present Tense","articles":"Articles","prepositions":"Prepositions","conditionals":"Conditionals","modal-verbs":"Modal Verbs","subject-verb-agreement":"Subject-Verb Agreement","general":"General"};
 const STORAGE_KEY = "linguify-flashcards";
-function load(): Flashcard[] { try{const r=localStorage.getItem(STORAGE_KEY);return r?JSON.parse(r):[];}catch{return[];} }
-function save(c:Flashcard[]){localStorage.setItem(STORAGE_KEY,JSON.stringify(c));}
+
+function loadCards(): Flashcard[] {
+  try {
+    const r = localStorage.getItem(STORAGE_KEY);
+    return r ? JSON.parse(r) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveCards(c: Flashcard[]) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(c));
+}
 
 export default function FlashcardsPage() {
-  const [cards,setCards]=useState<Flashcard[]>(()=>load());
-  const [idx,setIdx]=useState(0);
-  const [flipped,setFlipped]=useState(false);
-  const [loaded]=useState(true);
-  const due=getDueCards(cards), stats=getCardStats(cards), card=due[idx];
+  const [cards, setCards] = useState<Flashcard[]>([]);
+  const [idx, setIdx] = useState(0);
+  const [reviewing, setReviewing] = useState(false);
+  const [xp, setXp] = useState(0);
+  const [level, setLevel] = useState(1);
+  const [xpGain, setXpGain] = useState(0);
+  const [showXp, setShowXp] = useState(false);
+  const [achievement, setAchievement] = useState<{ name: string; description: string; icon: string } | null>(null);
 
-  const rate = useCallback((q:number)=>{
-    if(!card)return;
-    const u=sm2(q,card); const n=cards.map(c=>c.id===u.id?u:c);
-    setCards(n); save(n); setFlipped(false);
-  },[cards,card]);
+  useEffect(() => {
+    setCards(loadCards());
+    // Load XP/level from server
+    fetch("/api/progress")
+      .then((r) => r.json())
+      .then((d) => { setXp(d.xp || 0); setLevel(d.level || 1); })
+      .catch(() => {});
+  }, []);
 
-  if(!loaded)return <div className="flex items-center justify-center min-h-[60vh]"><div className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-accent-400 animate-bounce"/><span className="h-2 w-2 rounded-full bg-accent-500 animate-bounce"/><span className="h-2 w-2 rounded-full bg-accent-600 animate-bounce"/></div></div>;
+  const due = getDueCards(cards);
+  const stats = getCardStats(cards);
+  const card = due[idx];
 
-  return <div className="mx-auto w-full max-w-2xl px-4 sm:px-6 py-8 sm:py-12">
-    <div className="mb-8 text-center"><h1 className="text-2xl sm:text-3xl font-bold text-text-primary">🃏 Flashcards</h1><p className="mt-1.5 text-sm text-text-secondary">Spaced repetition review</p></div>
-    <div className="flex justify-center gap-4 mb-8">
-      {[{l:"Due",v:stats.due,c:"text-error"},{l:"Learning",v:stats.learning,c:"text-warning"},{l:"Mastered",v:stats.mastered,c:"text-success"},{l:"Total",v:stats.total,c:"text-accent-600"}].map(s=><div key={s.l} className="bg-white border border-gray-100 rounded-2xl px-3 py-1.5 text-center min-w-[80px] shadow-sm"><div className={`text-lg font-bold ${s.c}`}>{s.v}</div><div className="text-[10px] text-text-muted">{s.l}</div></div>)}
-    </div>
-    {card?<div className="space-y-6">
-      <div className="text-center text-xs text-text-muted">{idx+1} of {due.length} due</div>
-      <div onClick={()=>setFlipped(!flipped)} className="cursor-pointer select-none"><div className={`relative w-full bg-white border border-gray-100 rounded-3xl shadow-sm p-8 transition-colors ${flipped?"bg-blue-50/50 border-accent-200":""}`} style={{minHeight:"280px"}}>
-        <div className="absolute top-4 left-4"><span className="inline-flex rounded-full bg-accent-500/10 px-2.5 py-0.5 text-[10px] font-medium text-accent-600">{TOPIC_LABELS[card.topic]||card.topic}</span></div>
-        <div className="flex items-center justify-center h-full min-h-[240px]">
-          {!flipped?<div className="text-center"><p className="text-xs text-text-muted uppercase tracking-wide mb-3">Fix this sentence</p><p className="text-lg sm:text-xl font-semibold text-text-primary leading-relaxed">&ldquo;{card.front}&rdquo;</p><p className="mt-4 text-xs text-text-muted">Tap to reveal</p></div>
-          :<div className="text-left w-full"><p className="text-xs text-text-muted uppercase tracking-wide mb-3">Correction & Explanation</p><div className="text-sm text-text-primary leading-relaxed whitespace-pre-wrap">{card.back}</div></div>}
+  const handleRate = useCallback(async (quality: number) => {
+    if (!card) return;
+
+    // SM-2 update locally
+    const updated = sm2(quality, card);
+    const newCards = cards.map((c) => (c.id === updated.id ? updated : c));
+    setCards(newCards);
+    saveCards(newCards);
+
+    // Server-side XP/achievement tracking
+    try {
+      const res = await fetch("/api/flashcards", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "review-stats", quality }),
+      });
+      const data = await res.json();
+      if (data.xpGained > 0) {
+        setXpGain(data.xpGained);
+        setShowXp(true);
+        setXp(data.stats?.totalReviews ? (prev => prev + data.xpGained) : data.xpGained);
+      }
+      if (data.level) setLevel(data.level);
+      if (data.newAchievements?.length > 0) {
+        setAchievement(data.newAchievements[0]);
+      }
+    } catch {}
+
+    // Move to next card
+    if (idx < due.length - 1) {
+      setIdx(idx + 1);
+    } else {
+      setIdx(0);
+      setReviewing(false);
+    }
+  }, [card, cards, idx, due.length]);
+
+  const handleSkip = useCallback(() => {
+    if (idx < due.length - 1) {
+      setIdx(idx + 1);
+    } else {
+      setIdx(0);
+    }
+  }, [idx, due.length]);
+
+  return (
+    <div className="mx-auto w-full max-w-2xl px-4 sm:px-6 py-8 sm:py-12">
+      <XPNotification amount={xpGain} show={showXp} onDone={() => setShowXp(false)} />
+      <AchievementPopup achievement={achievement} onDismiss={() => setAchievement(null)} />
+
+      {/* Header */}
+      <div className="mb-8 text-center">
+        <h1 className="text-2xl sm:text-3xl font-bold gradient-text">🃏 Flashcards</h1>
+        <p className="mt-1.5 text-sm text-[var(--text-muted)]">Spaced repetition review</p>
+      </div>
+
+      {/* Stats */}
+      <div className="mb-8">
+        <FlashcardStatsBar stats={stats} xp={xp} level={level} />
+      </div>
+
+      {/* Quick Start or Review */}
+      {reviewing && card ? (
+        <div className="space-y-6">
+          <div className="text-center text-xs text-[var(--text-muted)]">
+            {idx + 1} of {due.length} due
+          </div>
+          <FlashcardViewer card={card} onRate={handleRate} onSkip={handleSkip} />
         </div>
-      </div></div>
-      {flipped&&<div className="flex justify-center gap-2">
-        {[{q:0,l:"Forgot",c:"text-error"},{q:2,l:"Hard",c:"text-warning"},{q:4,l:"Good",c:"text-accent-600"},{q:5,l:"Easy",c:"text-success"}].map(b=><button key={b.q} onClick={()=>rate(b.q)} className={`px-4 py-2 rounded-xl bg-white border border-gray-200 text-xs font-medium ${b.c} hover:bg-gray-50 transition-colors`}>{b.q} · {b.l}</button>)}
-      </div>}
-      {!flipped&&<div className="flex justify-center"><button onClick={()=>{setFlipped(false);setIdx(p=>(p+1)%Math.max(due.length,1));}} className="text-xs text-text-muted hover:text-accent-600 transition-colors">Skip →</button></div>}
-    </div>:<div className="text-center py-16"><div className="text-5xl mb-4">🎉</div><h2 className="text-lg font-semibold text-text-primary mb-2">No cards to review!</h2><p className="text-sm text-text-secondary mb-6">{stats.total===0?"Start coaching to generate flashcards.":"All caught up!"}</p>{stats.total===0&&<Link href="/skill" className="btn-gradient">Start Coaching</Link>}</div>}
-  </div>;
+      ) : (
+        <div className="space-y-6">
+          {/* Quick Start */}
+          {due.length > 0 ? (
+            <div className="text-center py-8">
+              <div className="text-5xl mb-4">📚</div>
+              <h2 className="text-lg font-semibold text-[var(--text)] mb-2">
+                {due.length} card{due.length !== 1 ? "s" : ""} due
+              </h2>
+              <p className="text-sm text-[var(--text-muted)] mb-6">
+                Review now to keep your streak going!
+              </p>
+              <button
+                onClick={() => { setReviewing(true); setIdx(0); }}
+                className="btn-gradient px-8 py-3 rounded-xl text-sm font-medium"
+              >
+                Quick Start — {due.length} cards
+              </button>
+            </div>
+          ) : (
+            <div className="text-center py-16">
+              <div className="text-5xl mb-4">🎉</div>
+              <h2 className="text-lg font-semibold text-[var(--text)] mb-2">
+                No cards to review!
+              </h2>
+              <p className="text-sm text-[var(--text-muted)] mb-6">
+                {stats.total === 0
+                  ? "Start coaching or explore vocabulary sets."
+                  : "All caught up!"}
+              </p>
+            </div>
+          )}
+
+          {/* Navigation */}
+          <div className="flex flex-wrap justify-center gap-3">
+            <Link
+              href="/flashcards/sets"
+              className="glass rounded-xl px-5 py-2.5 text-sm font-medium text-[var(--text)] hover:bg-[var(--glass-hover)] transition-colors"
+            >
+              📖 Vocabulary Sets
+            </Link>
+            <Link
+              href="/flashcards/my-cards"
+              className="glass rounded-xl px-5 py-2.5 text-sm font-medium text-[var(--text)] hover:bg-[var(--glass-hover)] transition-colors"
+            >
+              🗂️ My Cards
+            </Link>
+            {stats.total === 0 && (
+              <Link
+                href="/skill"
+                className="btn-gradient rounded-xl px-5 py-2.5 text-sm font-medium"
+              >
+                Start Coaching
+              </Link>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }

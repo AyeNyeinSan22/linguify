@@ -1,0 +1,22 @@
+[
+  { "word": "shop", "definition": "A place where you buy things", "example": "There's a new shop on the corner.", "partOfSpeech": "noun", "phonetic": "/ʃɒp/" },
+  { "word": "price", "definition": "The amount of money something costs", "example": "What's the price of this shirt?", "partOfSpeech": "noun", "phonetic": "/praɪs/" },
+  { "word": "size", "definition": "How big or small something is", "example": "Do you have this in a larger size?", "partOfSpeech": "noun", "phonetic": "/saɪz/" },
+  { "word": "sale", "definition": "A time when items are sold at lower prices", "example": "The shoes were on sale for 50% off.", "partOfSpeech": "noun", "phonetic": "/seɪl/" },
+  { "word": "cash", "definition": "Money in the form of coins and notes", "example": "Do you have cash or a card?", "partOfSpeech": "noun", "phonetic": "/kæʃ/" },
+  { "word": "card", "definition": "A plastic card used to pay for things", "example": "I'll pay by card, please.", "partOfSpeech": "noun", "phonetic": "/kɑːrd/" },
+  { "word": "receipt", "definition": "A paper showing what you bought and paid", "example": "Can I have a receipt, please?", "partOfSpeech": "noun", "phonetic": "/rɪˈsiːt/" },
+  { "word": "try", "definition": "To put on clothes to see if they fit", "example": "Can I try this jacket on?", "partOfSpeech": "verb", "phonetic": "/traɪ/" },
+  { "word": "buy", "definition": "To get something by paying money", "example": "I want to buy a new phone.", "partOfSpeech": "verb", "phonetic": "/baɪ/" },
+  { "word": "sell", "definition": "To give something to someone for money", "example": "They sell fresh bread here.", "partOfSpeech": "verb", "phonetic": "/sel/" },
+  { "word": "pay", "definition": "To give money for something", "example": "I need to pay for these groceries.", "partOfSpeech": "verb", "phonetic": "/peɪ/" },
+  { "word": "cheap", "definition": "Not costing much money", "example": "This bag was very cheap.", "partOfSpeech": "adjective", "phonetic": "/tʃiːp/" },
+  { "word": "expensive", "definition": "Costing a lot of money", "example": "That restaurant is too expensive.", "partOfSpeech": "adjective", "phonetic": "/ɪkˈspen.sɪv/" },
+  { "word": "size", "definition": "The measurement of how big something is", "example": "I need a medium size.", "partOfSpeech": "noun", "phonetic": "/saɪz/" },
+  { "word": "customer", "definition": "A person who buys something", "example": "The customer is always right.", "partOfSpeech": "noun", "phonetic": "/ˈkʌs.tə.mər/" },
+  { "word": "market", "definition": "A place where people buy and sell goods", "example": "We buy vegetables at the market.", "partOfSpeech": "noun", "phonetic": "/ˈmɑːr.kɪt/" },
+  { "word": "try on", "definition": "To put on clothing to check the fit", "example": "I'd like to try on these shoes.", "partOfSpeech": "phrasal verb", "phonetic": "/traɪ ɒn/" },
+  { "word": "exchange", "definition": "To return something and get a different one", "example": "Can I exchange this for a bigger size?", "partOfSpeech": "verb", "phonetic": "/ɪksˈtʃeɪndʒ/" },
+  { "word": "discount", "definition": "A reduction in the usual price", "example": "Students get a 10% discount.", "partOfSpeech": "noun", "phonetic": "/ˈdɪs.kaʊnt/" },
+  { "word": "total", "definition": "The full amount of money for everything", "example": "The total is $45.", "partOfSpeech": "noun", "phonetic": "/ˈtoʊ.təl/" }
+]

@@ -1,0 +1,22 @@
+[
+  { "word": "epistemology", "definition": "The branch of philosophy studying knowledge", "example": "Epistemology asks: what can we know?", "partOfSpeech": "noun", "phonetic": "/ɪˌpɪs.tɪˈmɒl.ə.dʒi/" },
+  { "word": "metaphysics", "definition": "The study of reality and existence", "example": "Metaphysics explores the nature of being.", "partOfSpeech": "noun", "phonetic": "/ˌmet.əˈfɪz.ɪks/" },
+  { "word": "ontology", "definition": "The study of what exists", "example": "Ontology examines the categories of being.", "partOfSpeech": "noun", "phonetic": "/ɒnˈtɒl.ə.dʒi/" },
+  { "word": "altruism", "definition": "The belief in selfless concern for others", "example": "His altruism led him to volunteer.", "partOfSpeech": "noun", "phonetic": "/ˈæl.tru.ɪ.zəm/" },
+  { "word": "nihilism", "definition": "The belief that life has no meaning", "example": "Nihilism rejects all moral principles.", "partOfSpeech": "noun", "phonetic": "/ˈnaɪ.ɪ.lɪ.zəm/" },
+  { "word": "empiricism", "definition": "The theory that knowledge comes from experience", "example": "Empiricism relies on observation and experiment.", "partOfSpeech": "noun", "phonetic": "/ɪmˈpɪr.ɪ.sɪ.zəm/" },
+  { "word": "determinism", "definition": "The belief that all events are caused by prior events", "example": "Determinism leaves no room for free will.", "partOfSpeech": "noun", "phonetic": "/dɪˈtɜːr.mɪ.nɪ.zəm/" },
+  { "word": "pragmatism", "definition": "A practical approach to problems and ideas", "example": "Pragmatism values what works in practice.", "partOfSpeech": "noun", "phonetic": "/ˈpræɡ.mə.tɪ.zəm/" },
+  { "word": "contemplate", "definition": "To think deeply and at length about something", "example": "She contemplated the meaning of existence.", "partOfSpeech": "verb", "phonetic": "/ˈkɒn.təm.pleɪt/" },
+  { "word": "postulate", "definition": "To assume the existence or truth of something", "example": "The theory postulates a parallel universe.", "partOfSpeech": "verb", "phonetic": "/ˈpɒs.tʃə.leɪt/" },
+  { "word": "inherent", "definition": "Existing as a natural part of something", "example": "There are inherent contradictions in the argument.", "partOfSpeech": "adjective", "phonetic": "/ɪnˈher.ənt/" },
+  { "word": "intrinsic", "definition": "Belonging naturally; essential", "example": "Happiness has intrinsic value.", "partOfSpeech": "adjective", "phonetic": "/ɪnˈtrɪn.zɪk/" },
+  { "word": "autonomy", "definition": "The right to govern yourself or make your own decisions", "example": "Individual autonomy is a key human right.", "partOfSpeech": "noun", "phonetic": "/ɔːˈtɒn.ə.mi/" },
+  { "word": "dialectic", "definition": "The art of investigating truths through discussion", "example": "Plato's dialogues use the dialectic method.", "partOfSpeech": "noun", "phonetic": "/ˌdaɪ.əˈlek.tɪk/" },
+  { "word": "utilitarian", "definition": "Designed to be useful rather than attractive", "example": "Mill's utilitarian ethics maximize happiness.", "partOfSpeech": "adjective", "phonetic": "/juːˌtɪl.ɪˈteə.ri.ən/" },
+  { "word": "existential", "definition": "Relating to existence and individual experience", "example": "Climate change poses an existential threat.", "partOfSpeech": "adjective", "phonetic": "/ˌeɡ.zɪˈsten.ʃəl/" },
+  { "word": "paradox", "definition": "A statement that seems contradictory but may be true", "example": "It's a paradox that more choice can mean less happiness.", "partOfSpeech": "noun", "phonetic": "/ˈpær.ə.dɒks/" },
+  { "word": "subjective", "definition": "Based on personal feelings rather than facts", "example": "Beauty is subjective.", "partOfSpeech": "adjective", "phonetic": "/səbˈdʒek.tɪv/" },
+  { "word": "objective", "definition": "Based on facts, not personal feelings", "example": "We need an objective assessment.", "partOfSpeech": "adjective", "phonetic": "/əbˈdʒek.tɪv/" },
+  { "word": "consequentialism", "definition": "The theory that the morality of an action depends on its outcome", "example": "Consequentialism judges actions by their results.", "partOfSpeech": "noun", "phonetic": "/ˌkɒn.sɪˈkwen.ʃəl.ɪ.zəm/" }
+]
