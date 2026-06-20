@@ -3,11 +3,29 @@
 import { useState, useRef, useEffect, useCallback, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import ChatPanel from "@/components/ChatPanel";
+import ScenarioInstructions from "@/components/ScenarioInstructions";
 import { DOMAIN_COLORS, DEFAULT_DOMAIN_STYLE } from "@/lib/constants";
 
-interface DomainMeta { name: string; label: string; icon: string; description: string; dialogues: number; openings: number; }
+interface DomainMeta {
+  name: string;
+  label: string;
+  icon: string;
+  description: string;
+  dialogues: number;
+  openings: number;
+}
 
-interface Message { role: "user" | "coach"; content: string; meta?: string; }
+interface Message {
+  role: "user" | "coach";
+  content: string;
+  meta?: string;
+}
+
+interface ScenarioData {
+  context: string;
+  prompt: string;
+  numTurns: number;
+}
 
 function AgentPageContent() {
   const searchParams = useSearchParams();
@@ -19,73 +37,359 @@ function AgentPageContent() {
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [started, setStarted] = useState(false);
   const [mwDomains, setMwDomains] = useState<DomainMeta[]>([]);
-  const [mwLoading, setMwLoading] = useState<Record<string,boolean>>({});
-  const [mwError, setMwError] = useState<string|null>(null);
-  const [activeDomain, setActiveDomain] = useState<string|null>(scenarioParam||null);
+  const [mwLoading, setMwLoading] = useState<Record<string, boolean>>({});
+  const [mwError, setMwError] = useState<string | null>(null);
+  const [activeDomain, setActiveDomain] = useState<string | null>(
+    scenarioParam || null
+  );
+  const [activeScenario, setActiveScenario] = useState<ScenarioData | null>(
+    null
+  );
+  const [activeDomainMeta, setActiveDomainMeta] = useState<DomainMeta | null>(
+    null
+  );
   const chatEndRef = useRef<HTMLDivElement>(null);
 
-  const resetSession = useCallback(()=>{setSessionId(null);setMessages([]);setSessionGoal("");setInput("");setStarted(false);setActiveDomain(null);},[]);
+  const resetSession = useCallback(() => {
+    setSessionId(null);
+    setMessages([]);
+    setSessionGoal("");
+    setInput("");
+    setStarted(false);
+    setActiveDomain(null);
+    setActiveScenario(null);
+    setActiveDomainMeta(null);
+  }, []);
 
-  const handleMultiWOZ = useCallback(async (domain: DomainMeta) => {
-    setMwLoading(p=>({...p,[domain.name]:true})); setActiveDomain(domain.name);
+  const handleMultiWOZ = useCallback(
+    async (domain: DomainMeta) => {
+      setMwLoading((p) => ({ ...p, [domain.name]: true }));
+      setActiveDomain(domain.name);
+      setActiveDomainMeta(domain);
+      try {
+        const res = await fetch("/api/scenarios", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ domain: domain.name, type: "roleplay" }),
+        });
+        const d = await res.json();
+        if (d.error) {
+          setMessages([
+            { role: "coach", content: `Couldn't load scenario. ${d.error}` },
+          ]);
+          setStarted(true);
+          return;
+        }
+        setSessionGoal(
+          `Practice a ${domain.label} conversation — ${d.scenario.numTurns}-turn dialogue`
+        );
+        setActiveScenario({
+          context: d.scenario.context,
+          prompt: d.scenario.prompt,
+          numTurns: d.scenario.numTurns,
+        });
+        setMessages([]);
+        setStarted(true);
+      } catch {
+        setMessages([
+          { role: "coach", content: "Sorry, couldn't load scenario." },
+        ]);
+        setStarted(true);
+      } finally {
+        setMwLoading((p) => ({ ...p, [domain.name]: false }));
+      }
+    },
+    []
+  );
+
+  useEffect(() => {
+    fetch("/api/scenarios")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.domains) {
+          setMwDomains(d.domains);
+          if (scenarioParam) {
+            const m = d.domains.find(
+              (x: DomainMeta) => x.name === scenarioParam
+            );
+            if (m) handleMultiWOZ(m);
+          }
+        } else {
+          setMwError(d.error || "Failed to load scenarios.");
+        }
+      })
+      .catch(() =>
+        setMwError("Could not reach the server. Please try again later.")
+      );
+  }, [scenarioParam, handleMultiWOZ]);
+
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const handleSend = async (textOverride?: string) => {
+    const text = (textOverride || input).trim();
+    if (!text || loading) return;
+    setMessages((p) => [...p, { role: "user", content: text }]);
+    setInput("");
+    setLoading(true);
     try {
-      const res=await fetch("/api/scenarios",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({domain:domain.name,type:"roleplay"})});
-      const d=await res.json();
-      if(d.error){setMessages([{role:"coach",content:`Couldn't load scenario. ${d.error}`}]);setStarted(true);return;}
-      setSessionGoal(`Practice a ${domain.label} conversation — ${d.scenario.numTurns}-turn dialogue`);
-      setMessages([{role:"coach",content:`${domain.icon} **${domain.label} Scenario**\n\n${d.scenario.context}\n\n**Your turn:** ${d.scenario.prompt}`,meta:`🏙️ ${domain.label} · ${d.scenario.numTurns} turns`}]);
-      setStarted(true);
-    }catch{setMessages([{role:"coach",content:"Sorry, couldn't load scenario."}]);setStarted(true);}
-    finally{setMwLoading(p=>({...p,[domain.name]:false}));}
-  },[]);
-
-  useEffect(()=>{fetch("/api/scenarios").then(r=>r.json()).then(d=>{if(d.domains){setMwDomains(d.domains);if(scenarioParam){const m=d.domains.find((x:DomainMeta)=>x.name===scenarioParam);if(m)handleMultiWOZ(m);}}else{setMwError(d.error||"Failed to load scenarios.");}}).catch(()=>setMwError("Could not reach the server. Please try again later."));},[scenarioParam, handleMultiWOZ]);
-  useEffect(()=>{chatEndRef.current?.scrollIntoView({behavior:"smooth"});},[messages]);
-
-  const handleSend = async () => {
-    const text=input.trim(); if(!text||loading)return;
-    setMessages(p=>[...p,{role:"user",content:text}]); setInput(""); setLoading(true);
-    try{const body:Record<string,unknown>={message:text,mode:"multiwoz"};if(sessionId)body.sessionId=sessionId;const res=await fetch("/api/practice",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});const d=await res.json();if(d.code==="SESSION_EXPIRED"){setMessages(p=>[...p,{role:"coach",content:"Session expired."}]);setSessionId(null);return;}if(d.sessionId)setSessionId(d.sessionId);setMessages(p=>[...p,{role:"coach",content:d.response,meta:d.messageCount?`Msg ${d.messageCount}`:undefined}]);}catch{setMessages(p=>[...p,{role:"coach",content:"Sorry, couldn't reach coach."}]);}finally{setLoading(false);}
+      const body: Record<string, unknown> = {
+        message: text,
+        mode: "multiwoz",
+      };
+      if (sessionId) body.sessionId = sessionId;
+      const res = await fetch("/api/practice", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      const d = await res.json();
+      if (d.code === "SESSION_EXPIRED") {
+        setMessages((p) => [
+          ...p,
+          { role: "coach", content: "Session expired." },
+        ]);
+        setSessionId(null);
+        return;
+      }
+      if (d.sessionId) setSessionId(d.sessionId);
+      setMessages((p) => [
+        ...p,
+        {
+          role: "coach",
+          content: d.response,
+          meta: d.messageCount ? `Msg ${d.messageCount}` : undefined,
+        },
+      ]);
+    } catch {
+      setMessages((p) => [
+        ...p,
+        { role: "coach", content: "Sorry, couldn't reach coach." },
+      ]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="flex flex-col flex-1">
       <div className="mx-auto w-full max-w-6xl flex-1 flex flex-col gap-6 px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        {/* Header */}
         <div className="flex items-center justify-between">
-          <div><h1 className="text-2xl sm:text-3xl font-bold text-text-primary"><span className="mr-2">🏙️</span>Practice Coach</h1><p className="mt-1.5 text-sm text-text-secondary">Real-world English conversations from Cambridge, UK — MultiWOZ 2.2 dataset.</p></div>
-          {sessionId&&<button onClick={resetSession} className="rounded-xl border border-gray-200 bg-white px-3.5 py-1.5 text-xs font-medium text-accent-600 transition-all hover:bg-gray-50 hover:border-accent-500/30">+ New Session</button>}
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">
+              <span className="mr-2">🏙️</span>
+              Practice Coach
+            </h1>
+            <p className="mt-1.5 text-sm text-[var(--text-secondary)]">
+              Real-world English conversations from Cambridge, UK — MultiWOZ 2.2
+              dataset.
+            </p>
+          </div>
+          {sessionId && (
+            <button
+              onClick={resetSession}
+              className="rounded-xl border border-[var(--border-card)] bg-[var(--bg-card)] px-3.5 py-1.5 text-xs font-medium text-[var(--accent-600)] transition-all hover:bg-[var(--bg-panel)] hover:border-[var(--accent-500)]/30"
+            >
+              + New Session
+            </button>
+          )}
         </div>
-        {sessionId&&(<div className="flex items-center gap-2 rounded-xl border border-accent-200 bg-accent-50 px-4 py-2 text-xs text-accent-700"><span className="pulse-dot" />Session active</div>)}
-        {!started&&messages.length===0&&mwDomains.length>0&&(
+
+        {/* Session active indicator */}
+        {sessionId && (
+          <div className="flex items-center gap-2 rounded-xl border border-[var(--accent-500)]/20 bg-[var(--accent-500)]/5 px-4 py-2 text-xs text-[var(--accent-600)]">
+            <span className="pulse-dot" />
+            Session active
+          </div>
+        )}
+
+        {/* Goal */}
+        {sessionGoal && (
+          <div className="rounded-xl border border-[var(--accent-500)]/20 bg-[var(--accent-500)]/5 px-4 py-3 text-sm text-[var(--accent-700)] dark:text-[var(--accent-400)]">
+            <span className="font-semibold">🎯 Goal:</span> {sessionGoal}
+          </div>
+        )}
+
+        {/* Domain selection grid */}
+        {!started && messages.length === 0 && mwDomains.length > 0 && (
           <section className="flex-1 flex flex-col justify-center">
-            <div className="text-center mb-8"><h2 className="text-lg sm:text-xl font-bold text-text-primary">Choose a real-world scenario</h2><p className="mt-2 text-sm text-text-secondary max-w-md mx-auto">Each scenario from real MultiWOZ 2.2 dialogues — practice English as it&apos;s actually spoken.</p></div>
+            <div className="text-center mb-8">
+              <h2 className="text-lg sm:text-xl font-bold text-[var(--text-primary)]">
+                Choose a real-world scenario
+              </h2>
+              <p className="mt-2 text-sm text-[var(--text-secondary)] max-w-md mx-auto">
+                Each scenario from real MultiWOZ 2.2 dialogues — practice
+                English as it&apos;s actually spoken.
+              </p>
+            </div>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {mwDomains.map(domain=>{
-                const style=DOMAIN_COLORS[domain.name]||DEFAULT_DOMAIN_STYLE;
-                const isActive = activeDomain===domain.name;
-                return <button key={domain.name} onClick={()=>handleMultiWOZ(domain)} disabled={mwLoading[domain.name]}
-                  className={`relative overflow-hidden bg-white rounded-2xl border-l-4 ${style.border} group p-5 text-left transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${isActive?`ring-2 ${style.ring} shadow-lg`:""} disabled:opacity-50 disabled:cursor-wait`}>
-                  <span className="absolute -bottom-2 -right-2 text-6xl opacity-[0.04] select-none pointer-events-none">{domain.icon}</span>
-                  <div className="relative">
-                    <span className={`inline-flex items-center justify-center w-12 h-12 rounded-full ${style.bg} text-2xl`}>{domain.icon}</span>
-                    <h3 className="mt-3 text-base font-bold text-text-primary">{domain.label}</h3>
-                    <p className="mt-1.5 text-[12px] text-text-secondary leading-relaxed">{domain.description}</p>
-                    <div className="mt-3 flex items-center gap-2"><span className="inline-flex items-center gap-1 rounded-full bg-gray-50 px-2 py-0.5 text-[10px] font-medium text-text-secondary">{domain.dialogues.toLocaleString()} dialogues</span>{mwLoading[domain.name]&&<span className="flex items-center gap-1 text-[10px] text-text-muted"><span className="inline-block w-1.5 h-1.5 rounded-full bg-accent-500 animate-pulse" />Loading...</span>}</div>
-                  </div>
-                </button>;
+              {mwDomains.map((domain) => {
+                const style =
+                  DOMAIN_COLORS[domain.name] || DEFAULT_DOMAIN_STYLE;
+                const isActive = activeDomain === domain.name;
+                return (
+                  <button
+                    key={domain.name}
+                    onClick={() => handleMultiWOZ(domain)}
+                    disabled={mwLoading[domain.name]}
+                    className={`relative overflow-hidden bg-[var(--bg-card)] rounded-2xl border-l-4 ${style.border} group p-5 text-left transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${
+                      isActive
+                        ? `ring-2 ${style.ring} shadow-lg`
+                        : ""
+                    } disabled:opacity-50 disabled:cursor-wait`}
+                  >
+                    <span className="absolute -bottom-2 -right-2 text-6xl opacity-[0.04] select-none pointer-events-none">
+                      {domain.icon}
+                    </span>
+                    <div className="relative">
+                      <span
+                        className={`inline-flex items-center justify-center w-12 h-12 rounded-full ${style.bg} text-2xl`}
+                      >
+                        {domain.icon}
+                      </span>
+                      <h3 className="mt-3 text-base font-bold text-[var(--text-primary)]">
+                        {domain.label}
+                      </h3>
+                      <p className="mt-1.5 text-[12px] text-[var(--text-secondary)] leading-relaxed">
+                        {domain.description}
+                      </p>
+                      <div className="mt-3 flex items-center gap-2">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-[var(--bg-panel)] px-2 py-0.5 text-[10px] font-medium text-[var(--text-muted)]">
+                          {domain.dialogues.toLocaleString()} dialogues
+                        </span>
+                        {mwLoading[domain.name] && (
+                          <span className="flex items-center gap-1 text-[10px] text-[var(--text-muted)]">
+                            <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--accent-500)] animate-pulse" />
+                            Loading...
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </button>
+                );
               })}
             </div>
-            <p className="mt-6 text-center text-[11px] text-text-muted">Powered by <span className="font-medium text-text-secondary">MultiWOZ 2.2</span> · 8,437 dialogues · 7 domains · Cambridge, UK</p>
+            <p className="mt-6 text-center text-[11px] text-[var(--text-muted)]">
+              Powered by{" "}
+              <span className="font-medium text-[var(--text-secondary)]">
+                MultiWOZ 2.2
+              </span>{" "}
+              · 8,437 dialogues · 7 domains · Cambridge, UK
+            </p>
           </section>
         )}
-        {!started&&messages.length===0&&mwError&&(<div className="flex-1 flex items-center justify-center"><div className="text-center"><div className="text-4xl mb-3">⚠️</div><p className="text-sm text-red-600 font-medium">{mwError}</p><button onClick={()=>{setMwError(null);fetch("/api/scenarios").then(r=>r.json()).then(d=>{if(d.domains)setMwDomains(d.domains);else setMwError(d.error||"Failed to load scenarios.");}).catch(()=>setMwError("Could not reach the server."));}} className="btn-gradient mt-4 text-xs">Retry</button></div></div>)}
-        {!started&&messages.length===0&&mwDomains.length===0&&!mwError&&(<div className="flex-1 flex items-center justify-center"><div className="text-center"><div className="flex items-center justify-center gap-1.5 mb-3"><span className="h-2 w-2 rounded-full bg-accent-400 animate-bounce"/><span className="h-2 w-2 rounded-full bg-accent-500 animate-bounce"/><span className="h-2 w-2 rounded-full bg-accent-600 animate-bounce"/></div><p className="text-sm text-text-muted">Loading scenarios…</p></div></div>)}
-        {sessionGoal&&(<div className="rounded-xl border border-accent-200 bg-accent-50 px-4 py-3 text-sm text-accent-800"><span className="font-semibold">🎯 Goal:</span> {sessionGoal}</div>)}
-        {started&&messages.length>0&&(<><ChatPanel messages={messages} isLoading={loading} /><div className="flex gap-2"><input type="text" value={input} onChange={e=>setInput(e.target.value)} onKeyDown={e=>e.key==="Enter"&&handleSend()} placeholder="Type your response…" className="glass-input flex-1" /><button onClick={handleSend} disabled={!input.trim()||loading} className="btn-gradient shrink-0">Send</button></div></>)}
+
+        {/* Error state */}
+        {!started && messages.length === 0 && mwError && (
+          <div className="flex-1 flex items-center justify-center">
+            <div className="text-center">
+              <div className="text-4xl mb-3">⚠️</div>
+              <p className="text-sm text-red-600 font-medium">{mwError}</p>
+              <button
+                onClick={() => {
+                  setMwError(null);
+                  fetch("/api/scenarios")
+                    .then((r) => r.json())
+                    .then((d) => {
+                      if (d.domains) setMwDomains(d.domains);
+                      else
+                        setMwError(
+                          d.error || "Failed to load scenarios."
+                        );
+                    })
+                    .catch(() => setMwError("Could not reach the server."));
+                }}
+                className="btn-gradient mt-4 text-xs"
+              >
+                Retry
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Loading state */}
+        {!started &&
+          messages.length === 0 &&
+          mwDomains.length === 0 &&
+          !mwError && (
+            <div className="flex-1 flex items-center justify-center">
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-1.5 mb-3">
+                  <span className="h-2 w-2 rounded-full bg-[var(--accent-400)] animate-bounce" />
+                  <span className="h-2 w-2 rounded-full bg-[var(--accent-500)] animate-bounce" />
+                  <span className="h-2 w-2 rounded-full bg-[var(--accent-600)] animate-bounce" />
+                </div>
+                <p className="text-sm text-[var(--text-muted)]">
+                  Loading scenarios…
+                </p>
+              </div>
+            </div>
+          )}
+
+        {/* Scenario instructions + chat */}
+        {started && (
+          <div className="flex flex-col gap-5">
+            {/* Card-based instructions */}
+            {activeScenario && activeDomainMeta && (
+              <ScenarioInstructions
+                domainLabel={activeDomainMeta.label}
+                domainIcon={activeDomainMeta.icon}
+                context={activeScenario.context}
+                prompt={activeScenario.prompt}
+                numTurns={activeScenario.numTurns}
+              />
+            )}
+
+            {/* Chat messages */}
+            {messages.length > 0 && (
+              <ChatPanel
+                messages={messages}
+                isLoading={loading}
+              />
+            )}
+
+            {/* Input */}
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleSend()}
+                placeholder={
+                  activeDomainMeta
+                    ? `Reply as if you're really there…`
+                    : "Type your response…"
+                }
+                className="glass-input flex-1"
+              />
+              <button
+                onClick={() => handleSend()}
+                disabled={!input.trim() || loading}
+                className="btn-gradient shrink-0"
+              >
+                Send
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* How it works */}
         <details className="glass-details p-4 mt-auto">
-          <summary className="cursor-pointer text-xs font-semibold text-text-muted select-none">How Practice Coach Works</summary>
-          <ul className="mt-3 space-y-1.5 text-xs text-text-secondary"><li>1️⃣ Choose a real-world scenario</li><li>2️⃣ Read the opening prompt</li><li>3️⃣ Type your response — AI coaches you</li><li className="mt-1.5 text-accent-600">🏙️ All scenarios from authentic Cambridge, UK dialogues.</li></ul>
+          <summary className="cursor-pointer text-xs font-semibold text-[var(--text-muted)] select-none">
+            How Practice Coach Works
+          </summary>
+          <ul className="mt-3 space-y-1.5 text-xs text-[var(--text-secondary)]">
+            <li>1️⃣ Choose a real-world scenario</li>
+            <li>2️⃣ Read the context and your task</li>
+            <li>3️⃣ Type your response — AI coaches you</li>
+            <li className="mt-1.5 text-[var(--accent-600)]">
+              🏙️ All scenarios from authentic Cambridge, UK dialogues.
+            </li>
+          </ul>
         </details>
+
         <div ref={chatEndRef} />
       </div>
     </div>
@@ -93,5 +397,15 @@ function AgentPageContent() {
 }
 
 export default function AgentPage() {
-  return <Suspense fallback={<div className="flex items-center justify-center min-h-screen text-text-muted">Loading...</div>}><AgentPageContent /></Suspense>;
+  return (
+    <Suspense
+      fallback={
+        <div className="flex items-center justify-center min-h-screen text-[var(--text-muted)]">
+          Loading...
+        </div>
+      }
+    >
+      <AgentPageContent />
+    </Suspense>
+  );
 }

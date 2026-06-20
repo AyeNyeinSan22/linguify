@@ -75,6 +75,62 @@
       ],
       "corrections": [],
       "wordsLearned": []
+    },
+    {
+      "timestamp": 1781967048571,
+      "mode": "grammar",
+      "userText": "Dear Manager,  I hope you are doing well.  I would like to request time off on [Date] due to a personal reason that requires my attention. I will ensure that all my current tasks are completed or properly handed over before my absence.  Please let me know if you need any additional information. I appreciate your understanding and consideration of my request.  Thank you for your time.  Sincerely,  [Your Name]",
+      "coachResponse": "🔍 **Correction** — Your sentence is correct, but a minor suggestion: \"I would like to request a day off on [Date] due to a personal reason that requires my attention.\"\n\n📖 **Explanation** — Using the phrase \"a day off\" is more specific and common in formal requests, and it implies that you are asking for a single day of leave.\n\n📝 **Examples** — For example, \"I would like to request a day off on Friday to attend a family event.\" or \"Could I have a day off on Monday to take care of a personal matter?\"\n\n🎯 **Next Step** — Practice writing a similar email to request a week's leave, making sure to include the dates and a brief explanation for your request.",
+      "errorTypes": [
+        "modal-verbs"
+      ],
+      "corrections": [],
+      "wordsLearned": []
+    },
+    {
+      "timestamp": 1781967111131,
+      "mode": "grammar",
+      "userText": "hi",
+      "coachResponse": "🔍 Your sentence is correct!\n📖 As a greeting, \"hi\" is a suitable informal expression, often used in casual conversations.\n📝 Examples: You can say \"hi\" to a friend or use \"hello\" in more formal situations, like \"Hello, how are you?\"\n🎯 **Next Step**: Try responding to a greeting, for example, \"How are you?\" and practice your reply, like \"I'm fine, thank you.\"",
+      "errorTypes": [
+        "modal-verbs"
+      ],
+      "corrections": [],
+      "wordsLearned": []
+    },
+    {
+      "timestamp": 1781967402228,
+      "mode": "writing",
+      "userText": "Dear Manager,  I hope you are doing well.  I would like to request time off on [Date] due to a personal reason that requires my attention. I will ensure that all my current tasks are completed or properly handed over before my absence.  Please let me know if you need any additional information. I appreciate your understanding and consideration of my request.  Thank you for your time.  Sincerely,  [Your Name]",
+      "coachResponse": "🔍 **Correction** — Your sentence is correct, but a minor tweak can be made: \"I would like to request time off on [Date] due to a personal reason that requires my attention\" can be rephrased as \"I would like to request a day off on [Date] due to a personal matter that requires my attention\".\n\n📖 **Explanation** — Using \"a day off\" is more specific and common in formal requests, while \"personal matter\" is a more formal and polite way to express a personal reason.\n\n📝 **Examples** — For example, \"I am requesting a day off on Friday to attend to a personal matter\" or \"I need to take a day off on Monday to deal with a family issue\".\n\n🎯 **Next Step** — Practice writing a similar email by requesting a day off for a different reason, such as a doctor's appointment or a family event, and focus on using formal language and polite expressions.",
+      "errorTypes": [
+        "modal-verbs"
+      ],
+      "corrections": [],
+      "wordsLearned": []
+    },
+    {
+      "timestamp": 1781967556721,
+      "mode": "voice",
+      "userText": "what is this",
+      "coachResponse": "🎙️ **What You Said** — \"what is this\"\n🔊 **Pronunciation** — The word \"this\" can be tricky, it's pronounced as /ðɪs/ (this). Try to focus on the soft \"th\" sound. \n💬 **Fluency** — Your sentence sounds a bit like a question, which is great for sparking conversation. \n📝 **Key Tip** — To sound more natural, try adding a little more context or curiosity to your question, like \"what is this thing?\" or \"what's going on here?\" - you're doing great, keep practicing and you'll see improvement in no time!",
+      "errorTypes": [
+        "modal-verbs"
+      ],
+      "corrections": [],
+      "wordsLearned": []
+    },
+    {
+      "timestamp": 1781967661880,
+      "mode": "grammar",
+      "userText": "I ated banana",
+      "coachResponse": "🔍 **Correction** — I ate a banana\n📖 **Explanation** — The verb \"ate\" is in the past simple tense and should be used with the indefinite article \"a\" before the noun \"banana\" to indicate a single, non-specific item.\n📝 **Examples** — I ate a sandwich, She ate an apple\n🎯 **Next Step** — Practice using the past simple tense with food items, e.g., write a sentence about what you ate for breakfast.",
+      "errorTypes": [
+        "articles",
+        "modal-verbs"
+      ],
+      "corrections": [],
+      "wordsLearned": []
     }
   ],
   "masteryScores": {
@@ -87,8 +143,8 @@
     "articles": {
       "topic": "articles",
       "correct": 0,
-      "total": 1,
-      "lastSeen": 1781890697147
+      "total": 2,
+      "lastSeen": 1781967661880
     },
     "plurals": {
       "topic": "plurals",
@@ -111,12 +167,24 @@
     "modal-verbs": {
       "topic": "modal-verbs",
       "correct": 0,
-      "total": 1,
-      "lastSeen": 1781893556174
+      "total": 6,
+      "lastSeen": 1781967661880
     }
   },
-  "totalSessions": 1,
-  "totalMessages": 7,
-  "streakDays": 1,
-  "lastActiveDate": "2026-06-19"
+  "totalSessions": 2,
+  "totalMessages": 12,
+  "streakDays": 2,
+  "lastActiveDate": "2026-06-20",
+  "xp": 0,
+  "level": 1,
+  "achievements": [],
+  "flashcardStats": {
+    "totalReviews": 0,
+    "correctReviews": 0,
+    "currentStreak": 0,
+    "bestStreak": 0,
+    "lastReviewDate": null
+  },
+  "setMastery": {},
+  "feedbackCompleted": 4
 }

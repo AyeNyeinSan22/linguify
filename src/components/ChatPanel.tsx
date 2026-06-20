@@ -26,7 +26,7 @@ export default function ChatPanel({
   }, [messages, streamingText]);
 
   return (
-    <div className="glass-heavy flex flex-col gap-4 p-5 min-h-[420px] max-h-[540px] overflow-y-auto bg-[#FAFAFA]">
+    <div className="glass-heavy flex flex-col gap-4 p-5 min-h-[420px] max-h-[540px] overflow-y-auto dark:bg-[var(--bg-panel)]">
       {messages.length === 0 && !streamingText && (
         <div className="flex flex-1 items-center justify-center">
           <p className="text-sm text-[var(--text-muted)]">
