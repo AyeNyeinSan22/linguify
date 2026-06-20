@@ -2,8 +2,8 @@
 
 An AI-powered English language learning platform with real-world conversation practice, spaced-repetition flashcards, and CEFR-aligned vocabulary sets.
 
-Built with Next.js 16, React 19, Tailwind CSS 4, and Groq (Llama 3.3 70B). <br/>
-Explore and test Linguify at https://linguify-eta.vercel.app
+<h4> Built with Next.js 16, React 19, Tailwind CSS 4, and Groq (Llama 3.3 70B).</h4> 
+<h4> </h4>Explore and test Linguify at https://linguify-eta.vercel.app</h4>
 ---
 
 ## Screenshots
