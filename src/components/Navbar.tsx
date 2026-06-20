@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useCallback, useRef } from "react";
+import ThemeToggle from "./ThemeToggle";
 
 interface NavLink {
   href: string;
@@ -118,8 +119,10 @@ export default function Navbar() {
             })}
           </ul>
 
-          {/* Mobile hamburger button (<768px) */}
-          <button
+          {/* Theme toggle + mobile hamburger */}
+          <div className="flex items-center gap-1">
+            <ThemeToggle />
+            <button
             onClick={toggleMobile}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
@@ -148,7 +151,8 @@ export default function Navbar() {
                 </>
               )}
             </svg>
-          </button>
+            </button>
+          </div>
         </nav>
       </header>
 
@@ -163,7 +167,7 @@ export default function Navbar() {
 
       {/* Mobile slide-out menu */}
       <div
-        className={`fixed top-0 right-0 z-50 h-full w-[280px] bg-[rgba(227,242,253,0.98)] backdrop-blur-2xl border-l border-[rgba(0,0,0,0.06)] shadow-2xl md:hidden transition-transform duration-300 ease-out ${
+        className={`fixed top-0 right-0 z-50 h-full w-[280px] bg-[var(--bg-root)] backdrop-blur-2xl border-l border-[var(--border-card)] shadow-2xl md:hidden transition-transform duration-300 ease-out ${
           mobileOpen ? "translate-x-0" : "translate-x-full"
         }`}
         role="dialog"
@@ -171,7 +175,7 @@ export default function Navbar() {
         aria-label="Navigation menu"
       >
         {/* Menu header with close button */}
-        <div className="flex items-center justify-between px-4 h-16 border-b border-[rgba(0,0,0,0.06)]">
+        <div className="flex items-center justify-between px-4 h-16 border-b border-[var(--border-card)]">
           <span className="gradient-text font-bold text-lg">Linguify</span>
           <button
             onClick={toggleMobile}
@@ -204,8 +208,8 @@ export default function Navbar() {
                 href={link.href}
                 className={`flex items-center gap-3 min-h-[44px] px-4 rounded-xl text-[15px] font-medium transition-all duration-200 ${
                   active
-                    ? "bg-[rgba(30,136,229,0.08)] text-[#1E88E5]"
-                    : "text-[#616161] hover:bg-[#F0F5FA] hover:text-[#212121] active:bg-[#E3F2FD]"
+                    ? "bg-accent-500/10 text-accent-500"
+                    : "text-text-secondary hover:bg-[var(--bg-panel)] hover:text-text-primary active:bg-accent-500/5"
                 }`}
               >
                 <span className="text-lg w-6 text-center flex-shrink-0">{link.icon}</span>
@@ -219,6 +223,14 @@ export default function Navbar() {
             );
           })}
         </nav>
+
+        {/* Theme toggle at bottom of mobile menu */}
+        <div className="absolute bottom-0 left-0 right-0 px-4 py-4 border-t border-[var(--border-card)]">
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-text-secondary">Dark mode</span>
+            <ThemeToggle />
+          </div>
+        </div>
       </div>
     </>
   );

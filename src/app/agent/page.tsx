@@ -3,17 +3,9 @@
 import { useState, useRef, useEffect, useCallback, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import ChatPanel from "@/components/ChatPanel";
+import { DOMAIN_COLORS, DEFAULT_DOMAIN_STYLE } from "@/lib/constants";
 
 interface DomainMeta { name: string; label: string; icon: string; description: string; dialogues: number; openings: number; }
-
-const DOMAIN_STYLES: Record<string, { gradient: string; ring: string; border: string; bg: string }> = {
-  restaurant: { gradient: "from-[#FF7043]/5 to-white", ring: "ring-[#FF7043]/40", border: "border-[#FF7043]", bg: "bg-[#FF7043]/8" },
-  hotel:      { gradient: "from-[#26A69A]/5 to-white", ring: "ring-[#26A69A]/40", border: "border-[#26A69A]", bg: "bg-[#26A69A]/8" },
-  train:      { gradient: "from-[#1E88E5]/5 to-white", ring: "ring-[#1E88E5]/40", border: "border-[#1E88E5]", bg: "bg-[#1E88E5]/8" },
-  attraction: { gradient: "from-[#8E24AA]/5 to-white", ring: "ring-[#8E24AA]/40", border: "border-[#8E24AA]", bg: "bg-[#8E24AA]/8" },
-  taxi:       { gradient: "from-[#FB8C00]/5 to-white", ring: "ring-[#FB8C00]/40", border: "border-[#FB8C00]", bg: "bg-[#FB8C00]/8" },
-  hospital:   { gradient: "from-[#43A047]/5 to-white", ring: "ring-[#43A047]/40", border: "border-[#43A047]", bg: "bg-[#43A047]/8" },
-};
 
 interface Message { role: "user" | "coach"; content: string; meta?: string; }
 
@@ -69,7 +61,7 @@ function AgentPageContent() {
             <div className="text-center mb-8"><h2 className="text-lg sm:text-xl font-bold text-text-primary">Choose a real-world scenario</h2><p className="mt-2 text-sm text-text-secondary max-w-md mx-auto">Each scenario from real MultiWOZ 2.2 dialogues — practice English as it&apos;s actually spoken.</p></div>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {mwDomains.map(domain=>{
-                const style=DOMAIN_STYLES[domain.name]||DOMAIN_STYLES.restaurant;
+                const style=DOMAIN_COLORS[domain.name]||DEFAULT_DOMAIN_STYLE;
                 const isActive = activeDomain===domain.name;
                 return <button key={domain.name} onClick={()=>handleMultiWOZ(domain)} disabled={mwLoading[domain.name]}
                   className={`relative overflow-hidden bg-white rounded-2xl border-l-4 ${style.border} group p-5 text-left transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${isActive?`ring-2 ${style.ring} shadow-lg`:""} disabled:opacity-50 disabled:cursor-wait`}>
