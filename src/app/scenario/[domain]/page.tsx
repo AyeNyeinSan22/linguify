@@ -8,7 +8,7 @@ import CourseCard from "@/components/CourseCard";
 import ChatPanel from "@/components/ChatPanel";
 
 interface DomainDetail { name: string; label: string; icon: string; description: string; subtitle: string; dialogues: number; rating: number; reviews: number; students: number; }
-interface Lesson { id: number; title: string; duration: string; }
+interface Lesson { id: number; title: string; duration: string; completed?: boolean; }
 interface Message { role: "user" | "coach"; content: string; meta?: string; }
 
 // Domain accent colors for scenario headers
@@ -40,9 +40,13 @@ export default function ScenarioDetailPage({ params }: { params: Promise<{ domai
     fetch("/api/scenarios").then(r=>r.json()).then(d=>{if(d.domains)setRelated(d.domains.filter((x:DomainDetail)=>x.name!==domain).slice(0,3));}).catch(()=>{});
   },[domain]);
 
-  const handleStart = async () => {
-    try{const r=await fetch("/api/scenarios",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({domain,type:"roleplay"})});const d=await r.json();if(d.scenario){setMessages([{role:"coach",content:`**${d.domainInfo?.label||domain}**\n\n${d.scenario.context}\n\n**Your turn:** ${d.scenario.prompt}`,meta:`🏙️ ${d.domainInfo?.label||domain}`}]);setChatStarted(true);}else{setMessages([{role:"coach",content:`Couldn't load scenario: ${d.error||"Unknown error"}`}]);setChatStarted(true);}}catch{setMessages([{role:"coach",content:"Could not reach the server. Please try again."}]);setChatStarted(true);}
+  const startPractice = async (lessonTitle?: string) => {
+    const topicHint = lessonTitle ? ` Focus on: ${lessonTitle}.` : "";
+    try{const r=await fetch("/api/scenarios",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({domain,type:"roleplay"})});const d=await r.json();if(d.scenario){const extra=topicHint?`\n\n📌 **Lesson focus:** ${lessonTitle}`:"";setMessages([{role:"coach",content:`**${d.domainInfo?.label||domain}**${extra}\n\n${d.scenario.context}\n\n**Your turn:** ${d.scenario.prompt}`,meta:`🏙️ ${d.domainInfo?.label||domain}${lessonTitle?" · "+lessonTitle:""}`}]);setChatStarted(true);}else{setMessages([{role:"coach",content:`Couldn't load scenario: ${d.error||"Unknown error"}`}]);setChatStarted(true);}}catch{setMessages([{role:"coach",content:"Could not reach the server. Please try again."}]);setChatStarted(true);}
   };
+
+  const handleStart = () => startPractice();
+  const handleStartLesson = (lesson: { id: number; title: string; duration: string }) => startPractice(lesson.title);
 
   const handleSend = async () => {
     const text = input.trim(); if(!text||chatLoading)return;
@@ -61,7 +65,7 @@ export default function ScenarioDetailPage({ params }: { params: Promise<{ domai
     <div className={`grid gap-8 ${chatStarted?"lg:grid-cols-2":""}`}>
       <div className="space-y-6">
         <div className="glass p-6"><h2 className="text-base font-bold text-text-primary mb-3">📖 About This Scenario</h2><p className="text-sm text-text-secondary leading-relaxed">{detail.description}</p></div>
-        <div><h2 className="text-base font-bold text-text-primary mb-3">📋 Lessons ({lessons.length})</h2><LessonList lessons={lessons} /></div>
+        <div><h2 className="text-base font-bold text-text-primary mb-3">📋 Lessons ({lessons.length})</h2><LessonList lessons={lessons} onStartLesson={handleStartLesson} /></div>
       </div>
       {chatStarted&&<div className="flex flex-col gap-4"><div className="flex items-center gap-2"><span className="pulse-dot"/><span className="text-sm font-semibold text-text-primary">Practice Session</span></div><ChatPanel messages={messages} isLoading={chatLoading} /><div className="flex gap-2"><input type="text" value={input} onChange={e=>setInput(e.target.value)} onKeyDown={e=>e.key==="Enter"&&handleSend()} placeholder="Type your response…" className="glass-input flex-1"/><button onClick={handleSend} disabled={!input.trim()||chatLoading} className="btn-gradient shrink-0">Send</button></div></div>}
     </div>
