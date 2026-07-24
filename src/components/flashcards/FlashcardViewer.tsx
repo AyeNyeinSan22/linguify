@@ -10,10 +10,10 @@ interface FlashcardViewerProps {
 }
 
 const RATINGS = [
-  { quality: 0, label: "Forgot", color: "bg-red-500/20 text-red-400 border-red-500/30", icon: "✕" },
-  { quality: 2, label: "Hard", color: "bg-orange-500/20 text-orange-400 border-orange-500/30", icon: "◔" },
-  { quality: 4, label: "Good", color: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30", icon: "✓" },
-  { quality: 5, label: "Easy", color: "bg-blue-500/20 text-blue-400 border-blue-500/30", icon: "★" },
+  { quality: 0, label: "Forgot", color: "bg-red-500/20 text-red-400 border-red-500/30", icon: "✕", tooltip: "Reset — card reappears soon" },
+  { quality: 2, label: "Hard", color: "bg-orange-500/20 text-orange-400 border-orange-500/30", icon: "◔", tooltip: "Short interval — review again tomorrow" },
+  { quality: 4, label: "Good", color: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30", icon: "✓", tooltip: "Normal interval — card comes back later" },
+  { quality: 5, label: "Easy", color: "bg-blue-500/20 text-blue-400 border-blue-500/30", icon: "★", tooltip: "Longest interval — mastered this one" },
 ];
 
 export default function FlashcardViewer({ card, onRate, onSkip }: FlashcardViewerProps) {
@@ -76,16 +76,20 @@ export default function FlashcardViewer({ card, onRate, onSkip }: FlashcardViewe
 
       {/* Rating buttons — only show when flipped */}
       {flipped && (
-        <div className="flex gap-3 flex-wrap justify-center">
-          {RATINGS.map((r) => (
-            <button
-              key={r.quality}
-              onClick={() => handleRate(r.quality)}
-              className={`px-4 py-2 rounded-xl border font-medium text-sm transition-all hover:scale-105 ${r.color}`}
-            >
-              <span className="mr-1">{r.icon}</span> {r.label}
-            </button>
-          ))}
+        <div className="flex flex-col items-center gap-2 w-full">
+          <p className="text-[11px] text-[var(--text-muted)]">How well did you remember? This controls when you&apos;ll see it again.</p>
+          <div className="flex gap-2 flex-wrap justify-center">
+            {RATINGS.map((r) => (
+              <button
+                key={r.quality}
+                title={r.tooltip}
+                onClick={() => handleRate(r.quality)}
+                className={`px-3 py-2 rounded-xl border font-medium text-xs transition-all hover:scale-105 ${r.color}`}
+              >
+                <span className="mr-1">{r.icon}</span> {r.label}
+              </button>
+            ))}
+          </div>
         </div>
       )}
 

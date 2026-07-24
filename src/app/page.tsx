@@ -11,9 +11,19 @@ import ContinueLearning from "@/components/ContinueLearning";
 import OnboardingWizard from "@/components/OnboardingWizard";
 import { DOMAIN_COLORS, DEFAULT_DOMAIN_STYLE, type LevelKey } from "@/lib/constants";
 
-interface DomainData { name: string; label: string; icon: string; description: string; dialogues: number; openings: number; rating: number; }
+interface DomainData { name: string; label: string; icon: string; description: string; dialogues: number; openings: number; rating: number; level?: string; }
 
 const FILTERS = ["All Scenarios", "Popular", "Newest", "A1-A2", "B1-B2", "C1-C2"];
+
+// CEFR level mapping for each domain
+const DOMAIN_LEVELS: Record<string, string> = {
+  restaurant: "A2",
+  hotel: "B1",
+  train: "A2",
+  attraction: "A2",
+  taxi: "A2",
+  hospital: "B1",
+};
 
 export default function Home() {
   const [domains, setDomains] = useState<DomainData[]>([]);
@@ -56,7 +66,10 @@ export default function Home() {
   const filtered = activeFilter === "All Scenarios" ? domains
     : activeFilter === "Popular" ? [...domains].sort((a,b) => b.rating - a.rating)
     : activeFilter === "Newest" ? [...domains].reverse()
-    : [...domains].slice(0, 4);
+    : activeFilter === "A1-A2" ? domains.filter(d => (DOMAIN_LEVELS[d.name] || "B1") === "A1" || (DOMAIN_LEVELS[d.name] || "B1") === "A2")
+    : activeFilter === "B1-B2" ? domains.filter(d => (DOMAIN_LEVELS[d.name] || "B1") === "B1" || (DOMAIN_LEVELS[d.name] || "B1") === "B2")
+    : activeFilter === "C1-C2" ? domains.filter(d => (DOMAIN_LEVELS[d.name] || "B1") === "C1" || (DOMAIN_LEVELS[d.name] || "B1") === "C2")
+    : domains;
 
   // Determine recommended domain (highest rating)
   const recommendedDomain = domains.length > 0
@@ -91,13 +104,46 @@ export default function Home() {
             { icon: "🎯", value: level, label: "Level", accent: "text-purple-500", bg: "bg-purple-50 dark:bg-purple-500/10" },
           ]} />
         ) : (
-          <div className="bg-[var(--bg-card)] border border-[var(--border-card)] rounded-2xl p-6 text-center">
-            <div className="text-4xl mb-3">🚀</div>
-            <h3 className="text-lg font-bold text-text-primary mb-1">Ready to start learning?</h3>
-            <p className="text-sm text-text-secondary mb-4">Choose a scenario below and start your first conversation in 2 minutes.</p>
-            <Link href="/agent" className="btn-gradient inline-flex items-center gap-2">
-              Quick Start — Random Scenario →
-            </Link>
+          <div className="space-y-4">
+            {/* Recommended Learning Path for new users */}
+            <section className="glass rounded-2xl p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="text-2xl">🗺️</span>
+                <div>
+                  <h3 className="text-lg font-bold text-text-primary">Your Learning Path</h3>
+                  <p className="text-xs text-text-secondary">Recommended for {level} level — about 15 min</p>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <Link href="/skill" className="flex items-start gap-3 p-3 rounded-xl bg-[var(--bg-panel)] hover:bg-accent-500/5 hover:border-accent-500/30 border border-transparent transition-all group">
+                  <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-accent-500/10 text-accent-600 text-sm font-bold shrink-0">1</span>
+                  <div>
+                    <p className="text-sm font-semibold text-text-primary group-hover:gradient-text">Grammar Coach</p>
+                    <p className="text-xs text-text-secondary mt-0.5">Write a sentence and get AI feedback on mistakes</p>
+                  </div>
+                </Link>
+                <Link href="/agent" className="flex items-start gap-3 p-3 rounded-xl bg-[var(--bg-panel)] hover:bg-accent-500/5 hover:border-accent-500/30 border border-transparent transition-all group">
+                  <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-accent-500/10 text-accent-600 text-sm font-bold shrink-0">2</span>
+                  <div>
+                    <p className="text-sm font-semibold text-text-primary group-hover:gradient-text">First Conversation</p>
+                    <p className="text-xs text-text-secondary mt-0.5">Practice real-world scenarios like ordering food</p>
+                  </div>
+                </Link>
+                <Link href="/flashcards/sets" className="flex items-start gap-3 p-3 rounded-xl bg-[var(--bg-panel)] hover:bg-accent-500/5 hover:border-accent-500/30 border border-transparent transition-all group">
+                  <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-accent-500/10 text-accent-600 text-sm font-bold shrink-0">3</span>
+                  <div>
+                    <p className="text-sm font-semibold text-text-primary group-hover:gradient-text">Vocabulary Sets</p>
+                    <p className="text-xs text-text-secondary mt-0.5">Study {level} words with spaced-repetition flashcards</p>
+                  </div>
+                </Link>
+              </div>
+            </section>
+            <div className="bg-[var(--bg-card)] border border-[var(--border-card)] rounded-2xl p-6 text-center">
+              <p className="text-sm text-text-secondary mb-4">Or jump straight into a conversation:</p>
+              <Link href="/agent" className="btn-gradient inline-flex items-center gap-2">
+                Quick Start — Random Scenario →
+              </Link>
+            </div>
           </div>
         )}
 

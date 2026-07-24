@@ -106,7 +106,7 @@ export default function SkillPage() {
           {sessionId&&<button onClick={resetSession} className="rounded-xl border border-gray-200 bg-white px-3.5 py-1.5 text-xs font-medium text-accent-600 transition-all hover:bg-gray-50 hover:border-accent-500/30">+ New Session</button>}
         </div>
         {levels&&(
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {Object.entries(levels).map(([m,level])=>{
               const meta=LEVEL_META[level]||LEVEL_META.B1;
               return <div key={m} className="glass p-4 text-center">

@@ -25,7 +25,7 @@ export default function DashboardPage() {
         {l:"Messages",v:data?.totalMessages||0,icon:"💬",accent:"bg-blue-50 text-blue-500"},
         {l:"🔥 Day Streak",v:data?.streakDays||0,icon:"🔥",accent:"bg-amber-50 text-amber-500"},
         {l:"Words Learned",v:data?.vocabulary?.length||0,icon:"📚",accent:"bg-green-50 text-green-500"},
-      ].map(s=><div key={s.l} className="bg-white border border-gray-100 rounded-2xl p-5 text-center shadow-sm hover:-translate-y-1 hover:shadow-md transition-all group">
+      ].map(s=><div key={s.l} className="glass rounded-2xl p-5 text-center shadow-sm hover:-translate-y-1 hover:shadow-md transition-all group">
         <span className={`inline-flex items-center justify-center w-10 h-10 rounded-xl ${s.accent} text-lg mb-2 group-hover:scale-110 transition-transform`}>{s.icon}</span>
         <div className="text-2xl font-bold text-text-primary">{s.v}</div>
         <div className="text-[11px] text-text-muted mt-0.5 font-medium">{s.l}</div>

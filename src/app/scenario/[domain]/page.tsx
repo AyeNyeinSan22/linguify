@@ -7,6 +7,7 @@ import LessonList from "@/components/LessonList";
 import CourseCard from "@/components/CourseCard";
 import ChatPanel from "@/components/ChatPanel";
 import ScenarioInstructions from "@/components/ScenarioInstructions";
+import { saveRecentSession } from "@/lib/recent-sessions";
 
 interface DomainDetail {
   name: string;
@@ -172,6 +173,8 @@ export default function ScenarioDetailPage({
           numTurns: d.scenario.numTurns,
         });
         setChatStarted(true);
+        // Save to Continue Learning
+        saveRecentSession(domain, 10);
       } else {
         setMessages([
           {

@@ -127,7 +127,7 @@ export default function VoicePage() {
         </p>
       </div>
 
-      <div className="flex-1 glass-heavy p-4 mb-4 min-h-[300px] max-h-[400px] overflow-y-auto space-y-3 bg-[#FAFAFA]">
+      <div className="flex-1 glass-heavy p-4 mb-4 min-h-[300px] max-h-[400px] overflow-y-auto space-y-3">
         {messages.length === 0 && (
           <div className="flex items-center justify-center h-full text-sm text-text-muted">
             Tap the mic and say something in English!
@@ -159,7 +159,7 @@ export default function VoicePage() {
       </div>
 
       <div className="text-center">
-        <div className="bg-white border border-gray-100 rounded-2xl p-4 mb-4 min-h-[60px] flex items-center justify-center shadow-sm">
+        <div className="glass rounded-2xl p-4 mb-4 min-h-[60px] flex items-center justify-center shadow-sm">
           <p className={`text-lg ${transcript ? "text-text-primary" : "text-text-muted"}`}>
             {transcript || (isRecording ? "Listening..." : "Your speech will appear here")}
           </p>

@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import ChatPanel from "@/components/ChatPanel";
 import ScenarioInstructions from "@/components/ScenarioInstructions";
 import { DOMAIN_COLORS, DEFAULT_DOMAIN_STYLE } from "@/lib/constants";
+import { saveRecentSession } from "@/lib/recent-sessions";
 
 interface DomainMeta {
   name: string;
@@ -90,6 +91,7 @@ function AgentPageContent() {
         });
         setMessages([]);
         setStarted(true);
+        saveRecentSession(domain.name, 10);
       } catch {
         setMessages([
           { role: "coach", content: "Sorry, couldn't load scenario." },
