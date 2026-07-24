@@ -63,17 +63,17 @@ export function generateFlashcards(
 ): Flashcard[] {
   const cards: Flashcard[] = [];
 
-  // Extract correction
+  // Extract correction (handles both \n and " — " separator after header)
   const corrMatch = coachResponse.match(
-    /🔍\s*\*?\*?Correction\*?\*?\s*\n([\s\S]*?)(?=📖|$)/i
+    /🔍\s*\*?\*?Correction\*?\*?[—–\-:\s]*\n?([\s\S]*?)(?=📖|$)/i
   );
-  // Extract explanation
+  // Extract explanation (handles both \n and " — " separator after header)
   const explMatch = coachResponse.match(
-    /📖\s*\*?\*?Explanation\*?\*?\s*\n([\s\S]*?)(?=📝|$)/i
+    /📖\s*\*?\*?Explanation\*?\*?[—–\-:\s]*\n?([\s\S]*?)(?=📝|$)/i
   );
-  // Extract examples
+  // Extract examples (handles both \n and " — " separator after header)
   const exMatch = coachResponse.match(
-    /📝\s*\*?\*?Examples?\*?\*?\s*\n([\s\S]*?)(?=🎯|$)/i
+    /📝\s*\*?\*?Examples?\*?\*?[—–\-:\s]*\n?([\s\S]*?)(?=🎯|$)/i
   );
 
   const correction = corrMatch ? corrMatch[1].trim() : "";
