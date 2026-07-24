@@ -141,7 +141,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   } catch (err) {
     console.error("[scenarios] GET error:", err);
     return NextResponse.json(
-      { error: "Failed to load domains.", detail: String(err) },
+      { error: "Failed to load domains." },
       { status: 500 }
     );
   }
@@ -188,7 +188,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   } catch (err) {
     console.error("[scenarios] POST error:", err);
     return NextResponse.json(
-      { error: "Failed to generate scenario.", detail: String(err) },
+      { error: "Failed to generate scenario." },
       { status: 500 }
     );
   }

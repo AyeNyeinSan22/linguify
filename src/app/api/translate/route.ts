@@ -46,7 +46,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ nativeText, userTranslation, naturalTranslation, comparison: fullResponse, vocabulary });
   } catch (err: unknown) {
     console.error("Translate error:", err);
-    const message = err instanceof Error ? err.message : String(err);
-    return NextResponse.json({ error: "Translation failed", detail: message, hint: "Get a free key at https://console.groq.com/keys" }, { status: 502 });
+    return NextResponse.json({ error: "Translation failed", hint: "Get a free key at https://console.groq.com/keys" }, { status: 502 });
   }
 }

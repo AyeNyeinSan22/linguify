@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { DOMAIN_COLORS, DEFAULT_DOMAIN_STYLE, DOMAIN_META } from "@/lib/constants";
 
@@ -21,11 +21,10 @@ function loadRecent(): RecentSession[] {
 }
 
 export default function ContinueLearning() {
-  const [sessions, setSessions] = useState<RecentSession[]>([]);
-
-  useEffect(() => {
-    setSessions(loadRecent());
-  }, []);
+  const [sessions] = useState<RecentSession[]>(() => {
+    if (typeof window !== "undefined") return loadRecent();
+    return [];
+  });
 
   if (sessions.length === 0) return null;
 

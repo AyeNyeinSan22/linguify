@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 interface AnimatedRingProps {
   value: number;
   max: number;
@@ -21,13 +19,10 @@ export default function AnimatedRing({
   label,
   icon,
 }: AnimatedRingProps) {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
-
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const pct = max > 0 ? Math.min(value / max, 1) : 0;
-  const offset = circumference - (mounted ? pct : 0) * circumference;
+  const offset = circumference - pct * circumference;
 
   return (
     <div className="flex flex-col items-center gap-1.5">

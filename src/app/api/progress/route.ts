@@ -29,9 +29,9 @@ export async function GET(): Promise<NextResponse> {
       setMastery: progress.setMastery || {},
       feedbackCompleted: progress.feedbackCompleted || 0,
     });
-  } catch (err) {
+  } catch {
     return NextResponse.json(
-      { error: "Failed to load progress.", detail: String(err) },
+      { error: "Failed to load progress." },
       { status: 500 }
     );
   }

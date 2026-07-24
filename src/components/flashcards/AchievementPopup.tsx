@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 interface AchievementPopupProps {
   achievement: { name: string; description: string; icon: string } | null;
@@ -8,20 +8,16 @@ interface AchievementPopupProps {
 }
 
 export default function AchievementPopup({ achievement, onDismiss }: AchievementPopupProps) {
-  const [visible, setVisible] = useState(false);
-
   useEffect(() => {
     if (achievement) {
-      setVisible(true);
       const timer = setTimeout(() => {
-        setVisible(false);
         onDismiss();
       }, 4000);
       return () => clearTimeout(timer);
     }
   }, [achievement, onDismiss]);
 
-  if (!visible || !achievement) return null;
+  if (!achievement) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
@@ -37,7 +33,7 @@ export default function AchievementPopup({ achievement, onDismiss }: Achievement
           {achievement.description}
         </p>
         <button
-          onClick={() => { setVisible(false); onDismiss(); }}
+          onClick={onDismiss}
           className="mt-4 px-4 py-1.5 text-sm rounded-lg bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 hover:bg-yellow-500/30 transition-colors"
         >
           Awesome!

@@ -12,7 +12,15 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // MCP servers use CommonJS (require) for stdin/stdout transport
+    "mcp-servers/**",
   ]),
+  // Allow underscore-prefixed unused params (callback args)
+  {
+    rules: {
+      "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+    },
+  },
 ]);
 
 export default eslintConfig;

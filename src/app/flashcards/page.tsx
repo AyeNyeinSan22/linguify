@@ -26,7 +26,10 @@ function saveCards(c: Flashcard[]) {
 }
 
 export default function FlashcardsPage() {
-  const [cards, setCards] = useState<Flashcard[]>([]);
+  const [cards, setCards] = useState<Flashcard[]>(() => {
+    if (typeof window !== "undefined") return loadCards();
+    return [];
+  });
   const [idx, setIdx] = useState(0);
   const [reviewing, setReviewing] = useState(false);
   const [xp, setXp] = useState(0);
@@ -35,11 +38,8 @@ export default function FlashcardsPage() {
   const [showXp, setShowXp] = useState(false);
   const [achievement, setAchievement] = useState<{ name: string; description: string; icon: string } | null>(null);
   const [showQuickStart, setShowQuickStart] = useState(false);
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setCards(loadCards());
-    setMounted(true);
     fetch("/api/progress")
       .then((r) => r.json())
       .then((d) => { setXp(d.xp || 0); setLevel(d.level || 1); })

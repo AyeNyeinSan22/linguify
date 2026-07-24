@@ -104,7 +104,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
               role: "system",
               content: `You are a vocabulary flashcard generator for English learners.
 Generate exactly ${count} vocabulary words about "${topic}" at CEFR level ${level}.
-Return ONLY a JSON array, no other text. Each element: {"word": "...", "definition": "...", "example": "...", "partOfSpeech": "..."}
+Return a JSON object with a "words" key containing the array, like: {"words": [{"word": "...", "definition": "...", "example": "...", "partOfSpeech": "..."}]}
 Make definitions clear and concise. Examples should show natural usage.`,
             },
             { role: "user", content: `Generate ${count} vocabulary flashcards about "${topic}" at ${level} level.` },
@@ -114,9 +114,9 @@ Make definitions clear and concise. Examples should show natural usage.`,
           response_format: { type: "json_object" },
         });
 
-        const content = result.choices[0]?.message?.content || "[]";
+        const content = result.choices[0]?.message?.content || "{}";
         const parsed = JSON.parse(content);
-        vocabItems = Array.isArray(parsed) ? parsed : parsed.cards || parsed.words || [];
+        vocabItems = parsed.words || [];
       } catch {
         // Fallback
         vocabItems = SIMULATED_VOCAB.slice(0, count);
@@ -194,9 +194,9 @@ Make definitions clear and concise. Examples should show natural usage.`,
     }
 
     return NextResponse.json({ error: `Unknown action: ${action}` }, { status: 400 });
-  } catch (err) {
+  } catch {
     return NextResponse.json(
-      { error: "Flashcard operation failed.", detail: String(err) },
+      { error: "Flashcard operation failed." },
       { status: 500 }
     );
   }

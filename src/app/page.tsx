@@ -21,21 +21,24 @@ export default function Home() {
   const [streak, setStreak] = useState(0);
   const [messageCount, setMessageCount] = useState(0);
   const [vocabCount, setVocabCount] = useState(0);
-  const [level, setLevel] = useState<string>("B1");
-  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [level] = useState<string>(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("linguify-level");
+      if (saved) {
+        const labels: Record<string, string> = { beginner: "A1-A2", intermediate: "B1-B2", advanced: "C1-C2" };
+        return labels[saved] || "B1";
+      }
+    }
+    return "B1";
+  });
+  const [showOnboarding, setShowOnboarding] = useState(() => {
+    if (typeof window !== "undefined") {
+      return !localStorage.getItem("linguify-onboarded");
+    }
+    return false;
+  });
 
   useEffect(() => {
-    // Check if first-time user
-    const onboarded = localStorage.getItem("linguify-onboarded");
-    if (!onboarded) setShowOnboarding(true);
-
-    // Load saved level
-    const savedLevel = localStorage.getItem("linguify-level");
-    if (savedLevel) {
-      const labels: Record<string, string> = { beginner: "A1-A2", intermediate: "B1-B2", advanced: "C1-C2" };
-      setLevel(labels[savedLevel] || "B1");
-    }
-
     fetch("/api/scenarios").then(r => r.json()).then(d => { if (d.domains) setDomains(d.domains); }).catch(() => {});
     fetch("/api/progress").then(r => r.json()).then(d => {
       if (d.streakDays) setStreak(d.streakDays);

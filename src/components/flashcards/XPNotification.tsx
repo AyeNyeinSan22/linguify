@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 interface XPNotificationProps {
   amount: number;
@@ -9,20 +9,16 @@ interface XPNotificationProps {
 }
 
 export default function XPNotification({ amount, show, onDone }: XPNotificationProps) {
-  const [visible, setVisible] = useState(false);
-
   useEffect(() => {
     if (show && amount > 0) {
-      setVisible(true);
       const timer = setTimeout(() => {
-        setVisible(false);
         onDone?.();
       }, 1500);
       return () => clearTimeout(timer);
     }
   }, [show, amount, onDone]);
 
-  if (!visible) return null;
+  if (!show || amount <= 0) return null;
 
   return (
     <div className="fixed top-20 right-4 z-50 animate-bounce-in">

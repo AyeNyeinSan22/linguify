@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 interface ScenarioInstructionsProps {
   domainLabel: string;
@@ -61,12 +61,6 @@ export default function ScenarioInstructions({
   tips,
 }: ScenarioInstructionsProps) {
   const [showTips, setShowTips] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const domainKey = domainLabel.toLowerCase().replace(/\s+/g, "-");
   const tipPhrases = tips || DEFAULT_TIPS[domainKey] || DEFAULT_TIPS.restaurant;
 
@@ -74,9 +68,7 @@ export default function ScenarioInstructions({
     <div className="flex flex-col gap-4">
       {/* Card 1: Scenario Context */}
       <div
-        className={`rounded-2xl border border-[var(--border-card)] bg-[var(--bg-card)] p-5 transition-all duration-500 ${
-          mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
-        }`}
+        className={`rounded-2xl border border-[var(--border-card)] bg-[var(--bg-card)] p-5 opacity-100 translate-y-0 transition-all duration-500`}
       >
         <div className="flex items-start gap-3">
           <div className="w-10 h-10 rounded-xl bg-[var(--accent-500)]/10 flex items-center justify-center shrink-0">
@@ -110,9 +102,7 @@ export default function ScenarioInstructions({
 
       {/* Card 2: Task Instruction */}
       <div
-        className={`rounded-2xl border-2 border-[var(--accent-500)]/20 bg-[var(--accent-500)]/5 p-5 transition-all duration-500 delay-200 ${
-          mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
-        }`}
+        className={`rounded-2xl border-2 border-[var(--accent-500)]/20 bg-[var(--accent-500)]/5 p-5 opacity-100 translate-y-0 transition-all duration-500 delay-200`}
       >
         <div className="flex items-start gap-3">
           <div className="w-10 h-10 rounded-xl bg-[var(--accent-500)]/15 flex items-center justify-center shrink-0">
@@ -134,9 +124,7 @@ export default function ScenarioInstructions({
 
       {/* Card 3: Tips (expandable) */}
       <div
-        className={`rounded-2xl border border-[var(--border-card)] bg-[var(--bg-card)] overflow-hidden transition-all duration-500 delay-400 ${
-          mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
-        }`}
+        className={`rounded-2xl border border-[var(--border-card)] bg-[var(--bg-card)] overflow-hidden opacity-100 translate-y-0 transition-all duration-500 delay-400`}
       >
         <button
           onClick={() => setShowTips(!showTips)}

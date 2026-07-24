@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import Link from "next/link";
 import { type Flashcard } from "@/lib/flashcard-engine";
 import CardEditor from "@/components/flashcards/CardEditor";
@@ -21,16 +21,15 @@ function saveCards(c: Flashcard[]) {
 }
 
 export default function MyCardsPage() {
-  const [cards, setCards] = useState<Flashcard[]>([]);
+  const [cards, setCards] = useState<Flashcard[]>(() => {
+    if (typeof window !== "undefined") return loadCards();
+    return [];
+  });
   const [editing, setEditing] = useState<Flashcard | null>(null);
   const [showAdd, setShowAdd] = useState(false);
   const [showBulkImport, setShowBulkImport] = useState(false);
   const [bulkText, setBulkText] = useState("");
   const [filter, setFilter] = useState<"all" | "coaching" | "manual" | "ai" | "set">("all");
-
-  useEffect(() => {
-    setCards(loadCards());
-  }, []);
 
   // Group cards by source
   const getSource = (card: Flashcard) => {

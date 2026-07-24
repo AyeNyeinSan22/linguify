@@ -51,13 +51,15 @@ export default function SetDetailPage() {
       .catch(() => setLoading(false));
 
     // Load user's flashcards for this set
-    try {
-      const stored = localStorage.getItem(FC_STORAGE_KEY);
-      if (stored) {
-        const all: Flashcard[] = JSON.parse(stored);
-        setFlashcards(all.filter((c) => c.setId === setId));
-      }
-    } catch {}
+    Promise.resolve().then(() => {
+      try {
+        const stored = localStorage.getItem(FC_STORAGE_KEY);
+        if (stored) {
+          const all: Flashcard[] = JSON.parse(stored);
+          setFlashcards(all.filter((c) => c.setId === setId));
+        }
+      } catch {}
+    });
   }, [setId]);
 
   // Merge vocab cards with flashcard state

@@ -24,9 +24,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       levels: getAllLevels(),
       labels: getLevelLabels(),
     });
-  } catch (err) {
+  } catch {
     return NextResponse.json(
-      { error: "Failed to load prompts.", detail: String(err) },
+      { error: "Failed to load prompts." },
       { status: 500 }
     );
   }
