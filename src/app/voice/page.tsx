@@ -1,8 +1,15 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 
 interface Message { role: "user" | "coach"; content: string; }
+
+function getRecognition() {
+  if (typeof window === "undefined") return null;
+  const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognitionAPI) return null;
+  return new SpeechRecognitionAPI();
+}
 
 export default function VoicePage() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -11,81 +18,73 @@ export default function VoicePage() {
   const [isRecording, setIsRecording] = useState(false);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [ttsMode, setTtsMode] = useState<"browser" | "voivoice">("browser");
+  const [asrMode] = useState<"browser" | "voivoice">("browser");
   const [supported] = useState(() => {
     if (typeof window === "undefined") return true;
-    return !!(navigator.mediaDevices?.getUserMedia);
+    return !!(window.SpeechRecognition || window.webkitSpeechRecognition);
   });
 
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-  const chunksRef = useRef<Blob[]>([]);
+  const recRef = useRef<ReturnType<typeof getRecognition>>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // ── Initialize browser SpeechRecognition ────────────────────────────
+
+  useEffect(() => {
+    const rec = getRecognition();
+    if (!rec) return;
+    rec.continuous = false;
+    rec.interimResults = true;
+    rec.lang = "en-US";
+
+    rec.onresult = (event: unknown) => {
+      const e = event as {
+        resultIndex: number;
+        results: { length: number; [index: number]: { isFinal: boolean; [index: number]: { transcript: string } } };
+      };
+      let final = "";
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        if (e.results[i].isFinal) {
+          final += e.results[i][0].transcript;
+        }
+      }
+      if (final) {
+        setTranscript(final);
+        setIsRecording(false);
+      }
+    };
+
+    rec.onerror = () => {
+      setIsRecording(false);
+    };
+
+    rec.onend = () => {
+      setIsRecording(false);
+    };
+
+    recRef.current = rec;
+  }, []);
 
   // ── Record audio ────────────────────────────────────────────────────
 
-  const startRecording = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const recorder = new MediaRecorder(stream, { mimeType: "audio/webm" });
-      chunksRef.current = [];
-
-      recorder.ondataavailable = (e) => {
-        if (e.data.size > 0) chunksRef.current.push(e.data);
-      };
-
-      recorder.onstop = async () => {
-        // Stop all tracks
-        stream.getTracks().forEach((t) => t.stop());
-
-        const blob = new Blob(chunksRef.current, { type: "audio/webm" });
-        await transcribeAudio(blob);
-      };
-
-      mediaRecorderRef.current = recorder;
-      recorder.start();
-      setIsRecording(true);
-    } catch {
-      alert("Microphone access is needed for voice practice.");
+  const startRecording = () => {
+    setTranscript("");
+    setIsRecording(true);
+    if (recRef.current) {
+      try { recRef.current.start(); } catch { /* already started */ }
     }
   };
 
   const stopRecording = () => {
-    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
-      mediaRecorderRef.current.stop();
-      setIsRecording(false);
+    if (recRef.current) {
+      try { recRef.current.stop(); } catch { /* already stopped */ }
     }
-  };
-
-  // ── Transcribe via VoiVoice ASR ─────────────────────────────────────
-
-  const transcribeAudio = async (blob: Blob) => {
-    setLoading(true);
-    try {
-      const formData = new FormData();
-      formData.append("file", blob, "recording.webm");
-
-      const res = await fetch("/api/asr", {
-        method: "POST",
-        body: formData,
-      });
-
-      const data = await res.json();
-      if (data.text) {
-        setTranscript(data.text);
-      } else {
-        setTranscript("(Could not hear clearly — try again?)");
-      }
-    } catch {
-      setTranscript("(Transcription failed — check mic and try again)");
-    } finally {
-      setLoading(false);
-    }
+    setIsRecording(false);
   };
 
   // ── Browser TTS fallback ────────────────────────────────────────────
 
   const speakViaBrowser = (text: string) => {
     if (typeof window !== "undefined" && window.speechSynthesis) {
-      // Cancel any ongoing speech first
       window.speechSynthesis.cancel();
 
       const u = new SpeechSynthesisUtterance(text);
@@ -94,7 +93,6 @@ export default function VoicePage() {
       u.pitch = 1.05;
       u.volume = 1;
 
-      // Pick a natural-sounding voice if available
       const voices = window.speechSynthesis.getVoices();
       const preferred = voices.find((v) =>
         v.name.includes("Samantha") ||
@@ -160,11 +158,8 @@ export default function VoicePage() {
       const d = await res.json();
 
       if (d.response) {
-        // Strip emoji and markdown for cleaner reading
         const clean = d.response.replace(/[*🎙️🔊💬📝💛🌱]/g, "").replace(/\*\*/g, "").trim();
         setMessages((p) => [...p, { role: "coach", content: d.response }]);
-
-        // Speak feedback aloud via VoiVoice TTS
         speakViaTts(clean);
       }
     } catch {
@@ -185,7 +180,7 @@ export default function VoicePage() {
     }
   };
 
-  // ── Unsupporting browser fallback ───────────────────────────────────
+  // ── Unsupported browser fallback ────────────────────────────────────
 
   if (!supported) {
     return (
@@ -193,7 +188,7 @@ export default function VoicePage() {
         <div className="text-5xl mb-4">🎤</div>
         <h1 className="text-2xl font-bold text-text-primary mb-2">Voice Coach</h1>
         <p className="text-sm text-text-secondary mb-4">
-          Your browser doesn&apos;t support audio recording.
+          Your browser doesn&apos;t support speech recognition.
         </p>
         <p className="text-xs text-text-muted">
           Try Chrome, Edge, or Safari on a device with a microphone.
@@ -212,7 +207,9 @@ export default function VoicePage() {
           Speak naturally — I&apos;ll listen warmly and guide you
         </p>
         <div className="mt-2 flex items-center justify-center gap-3 text-[10px] text-text-muted">
-          <span>🎙️ VoiVoice ASR</span>
+          <span className={`inline-flex items-center gap-1 ${asrMode === "voivoice" ? "text-accent-500" : ""}`}>
+            🎙️ {asrMode === "voivoice" ? "VoiVoice ASR" : "Browser ASR"}
+          </span>
           <span>·</span>
           <span className={`inline-flex items-center gap-1 ${ttsMode === "voivoice" ? "text-accent-500" : ""}`}>
             🔊 {ttsMode === "voivoice" ? "VoiVoice TTS" : "Browser TTS"}
@@ -275,7 +272,10 @@ export default function VoicePage() {
           {isRecording ? "Tap to stop" : "Tap to speak"}
         </p>
 
-        {/* Action buttons */}
+        {/* Hidden audio player for TTS */}
+        <audio ref={audioRef} className="hidden" controls={false} />
+
+        {/* Action buttons — show when transcript is ready */}
         {transcript && !isRecording && (
           <div className="flex gap-3 justify-center mt-4">
             <button
@@ -294,9 +294,6 @@ export default function VoicePage() {
             </button>
           </div>
         )}
-
-        {/* Hidden audio player for TTS */}
-        <audio ref={audioRef} className="hidden" controls={false} />
       </div>
     </div>
   );
