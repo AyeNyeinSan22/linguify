@@ -2,10 +2,12 @@
 
 An AI-powered English language learning platform with real-world conversation practice, spaced-repetition flashcards, and CEFR-aligned vocabulary sets.
 
-<h4> Built with Next.js 16, React 19, Tailwind CSS 4, and Groq (Llama 3.3 70B).</h4> 
-<h4> </h4>Explore and test Linguify at https://linguify-eta.vercel.app</h4>
+Built with **Next.js 16**, **React 19**, **Tailwind CSS 4**, and **Groq (Llama 3.3 70B)**.
+
+**Live demo:** [https://linguify-eta.vercel.app](https://linguify-eta.vercel.app)
 
 ---
+
 ## Screenshots
 
 | Home | AI Coach |
@@ -29,23 +31,36 @@ Three coaching modes — **Grammar**, **Vocabulary**, and **Writing** — with r
 
 ### Conversation Practice
 Real-world role-play scenarios powered by the **MultiWOZ 2.2** dataset — 8,437 authentic Cambridge, UK dialogues across 6 domains:
-- 🍽️ Restaurant — order food, book tables
-- 🏨 Hotel — book rooms, check amenities
-- 🚂 Train — check schedules, find routes
-- 🎭 Attractions — find museums, parks
-- 🚕 Taxi — book rides, give directions
-- 🏥 Hospital — describe symptoms, make appointments
+
+- 🍽️ **Restaurant** — order food, book tables
+- 🏨 **Hotel** — book rooms, check amenities
+- 🚂 **Train** — check schedules, find routes
+- 🎭 **Attractions** — find museums, parks
+- 🚕 **Taxi** — book rides, give directions
+- 🏥 **Hospital** — describe symptoms, make appointments
 
 Each domain has 5–7 lessons with scenario-based practice.
 
 ### Translation Coach
-Write a sentence in your native language, translate it to English, and get AI feedback comparing your translation with natural English. Supports **18 native languages** including Burmese, Spanish, French, German, Japanese, Korean, Chinese, Arabic, and more.
+Write in your native language, get an instant English translation, then compare your own attempt with AI coaching feedback. Supports **18 native languages** including Burmese, Spanish, French, German, Japanese, Korean, Chinese, Arabic, and more.
 
-### Voice Practice
-Speak into your microphone and receive AI feedback on pronunciation, fluency, and key tips. Uses the Web Speech API with text-to-speech readback of feedback.
+- **Auto-translate** — debounced translation as you type
+- **Compare & Learn** — fluency score, nuance analysis, vocabulary highlights, and pro tips
+- **Listen** — browser text-to-speech for natural translations
+- **Sample phrases** — one-click starters in Burmese, Spanish, French, Japanese, and German
+
+### Voice Coach
+Speak or upload audio and receive warm, personalised English coaching on pronunciation, grammar, and fluency.
+
+- **Record live** — browser SpeechRecognition for quick spoken input
+- **Upload audio** — drag-and-drop MP3, M4A, WAV, WEBM, OGG, FLAC, or AAC (up to 25 MB)
+- **Groq Whisper ASR** — accurate transcription for uploaded files
+- **VoiVoice TTS** — natural coach readback, with browser TTS fallback
+- **Playback controls** — pause, resume, or stop coach voice while feedback is playing
 
 ### Spaced Repetition Flashcards
 A full **SM-2 spaced repetition** engine for efficient vocabulary retention:
+
 - Flip-card UI with 4 quality ratings (Forgot / Hard / Good / Easy)
 - Cards auto-generated from coaching sessions
 - Manual card creation and bulk import
@@ -77,6 +92,7 @@ Generate vocabulary flashcards on any topic at any CEFR level using AI. Also sup
 
 ### Progress Dashboard
 Track your learning journey with:
+
 - Session and message counts
 - Day streak
 - CEFR level per mode (grammar / vocabulary / writing)
@@ -96,7 +112,9 @@ Track your learning journey with:
 | Language | TypeScript |
 | UI | React 19, Tailwind CSS 4 |
 | AI | Groq SDK (Llama 3.3 70B Versatile) |
+| Speech | Groq Whisper (ASR), VoiVoice TTS (via VibeCode proxy) |
 | Dataset | MultiWOZ 2.2 (8,437 dialogues) |
+| Testing | Playwright |
 | Fonts | Geist Sans + Geist Mono |
 | MCP | Model Context Protocol SDK |
 
@@ -106,7 +124,7 @@ Track your learning journey with:
 
 ### Prerequisites
 - Node.js 18+
-- A [Groq API key](https://console.groq.com/) (optional — the app works with simulated responses without one)
+
 
 ### Installation
 
@@ -120,20 +138,36 @@ npm install
 
 ```bash
 cp .env.example .env
-# Add your Groq API key:
-# GROQ_API_KEY=gsk_...
 ```
+
+| Variable | Required | Purpose |
+|----------|----------|---------|
+| `GROQ_API_KEY` | Optional | AI coaching, translation, Whisper ASR |
+
+Without API keys, the app falls back to simulated coaching responses and browser speech APIs.
 
 ### Run
 
 ```bash
-npm run dev       # Development server
-npm run build     # Production build
-npm run start     # Production server
-npm run lint      # Linter
+npm run dev          # Development server → http://localhost:3000
+npm run build        # Production build
+npm run start        # Production server
+npm run lint         # ESLint
+npm run test:e2e     # Playwright end-to-end tests
+npm run test:e2e:ui  # Playwright interactive UI mode
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+---
+
+## Testing
+
+End-to-end tests use [Playwright](https://playwright.dev/) and cover page smoke tests plus Voice Coach playback controls (pause, resume, stop).
+
+```bash
+npm run test:e2e
+```
+
+Tests mock browser speech APIs and backend routes so they run without a microphone or live API keys. The config reuses an existing dev server on port 3000 when available.
 
 ---
 
@@ -147,9 +181,15 @@ linguify/
 │       ├── index.json             # Set manifest
 │       ├── a1-daily-life.json     # 20 words per set
 │       └── ...
+├── e2e/
+│   ├── smoke.spec.ts              # Page load smoke tests
+│   ├── voice-coach.spec.ts        # Voice Coach playback control tests
+│   └── helpers/
+│       └── mock-browser-apis.ts   # Speech API + route mocks
 ├── mcp-servers/
 │   ├── skill-server.js            # MCP: English coaching tools
 │   └── agent-server.js            # MCP: Practice coaching tools
+├── playwright.config.ts
 └── src/
     ├── app/
     │   ├── page.tsx               # Home — greeting, scenarios, quick actions
@@ -161,7 +201,7 @@ linguify/
     │   │   ├── sets/[setId]/      # Set detail + study
     │   │   └── my-cards/page.tsx  # Personal card management
     │   ├── translate/page.tsx     # Translation coach
-    │   ├── voice/page.tsx         # Voice/speech coach
+    │   ├── voice/page.tsx         # Voice coach — record, upload, TTS playback
     │   ├── dashboard/page.tsx     # Progress dashboard
     │   ├── scenario/[domain]/     # Scenario detail + practice
     │   └── api/
@@ -174,7 +214,7 @@ linguify/
     │       ├── scenarios/         # GET/POST — MultiWOZ scenarios
     │       ├── translate/         # POST — translation coaching
     │       ├── tts/               # POST — Text-to-Speech (VoiVoice)
-    │       └── asr/               # POST — Speech Recognition (VoiVoice)
+    │       └── asr/               # POST — Speech Recognition (Groq Whisper / VoiVoice)
     ├── components/
     │   ├── Navbar.tsx             # Navigation with flashcard badge
     │   ├── ChatPanel.tsx          # Reusable chat interface
@@ -215,9 +255,9 @@ linguify/
 | `/api/progress` | GET | XP, level, achievements, mastery, stats |
 | `/api/prompts` | GET | Daily writing prompts by CEFR level |
 | `/api/scenarios` | GET/POST | MultiWOZ domain data and scenario generation |
-| `/api/translate` | POST | Translation coaching |
-| `/api/tts` | POST | Text-to-Speech — convert text to audio (VoiVoice) |
-| `/api/asr` | POST | Speech Recognition — transcribe audio to text (VoiVoice) |
+| `/api/translate` | POST | Auto-translate and translation coaching |
+| `/api/tts` | POST | Text-to-Speech — VoiVoice audio stream |
+| `/api/asr` | POST | Speech-to-text — Groq Whisper (primary) or VoiVoice fallback |
 
 ---
 
@@ -237,3 +277,6 @@ linguify/
 
 ---
 
+## License
+
+MIT
