@@ -228,6 +228,42 @@
       "errorTypes": [],
       "corrections": [],
       "wordsLearned": []
+    },
+    {
+      "timestamp": 1784994212518,
+      "mode": "voice",
+      "userText": "i am trying to finalize the chapter",
+      "coachResponse": "🎙️ **What I Heard** — You said \"I am trying to finalize the chapter\".\n💬 **Nice Work** — I love how clearly you spoke, your words were easy to understand.\n🌱 **Little Boost** — Try pausing slightly after \"chapter\" for a more natural flow.\n💛 **Keep Going** — You're doing great, keep up the good work and you'll finalize that chapter in no time.",
+      "errorTypes": [],
+      "corrections": [],
+      "wordsLearned": []
+    },
+    {
+      "timestamp": 1784995742755,
+      "mode": "voice",
+      "userText": "Hello, welcome back to my channel.",
+      "coachResponse": "🎙️ **What I Heard** — Hello, welcome back to my channel.\n💬 **Nice Work** — Your tone is so warm and inviting, it feels like a big hug for your viewers.\n🌱 **Little Boost** — Try pausing for a tiny beat after \"welcome back\" to make it feel even more conversational.\n💛 **Keep Going** — You're off to a great start, keep sharing your enthusiasm with your audience.",
+      "errorTypes": [],
+      "corrections": [],
+      "wordsLearned": []
+    },
+    {
+      "timestamp": 1784995959417,
+      "mode": "voice",
+      "userText": "hello testing 1 2 3",
+      "coachResponse": "🎙️ **What I Heard** — You said \"hello testing 1 2 3\" with a clear voice.\n💬 **Nice Work** — I love how clearly you spoke each number in sequence.\n🌱 **Little Boost** — Try adding a slight pause after \"hello\" to sound even more natural.\n💛 **Keep Going** — You're doing great, keep practicing and you'll sound amazing.",
+      "errorTypes": [],
+      "corrections": [],
+      "wordsLearned": []
+    },
+    {
+      "timestamp": 1784997134442,
+      "mode": "voice",
+      "userText": "Hello, welcome back to my channel.",
+      "coachResponse": "🎙️ **What I Heard** — Hello, welcome back to my channel.\n💬 **Nice Work** — Your tone is very warm and inviting, it feels like a great start to a video.\n🌱 **Little Boost** — Try pausing for a brief moment after \"hello\" to make it feel more natural.\n💛 **Keep Going** — You're off to a fantastic start, keep sharing your enthusiasm with your audience.",
+      "errorTypes": [],
+      "corrections": [],
+      "wordsLearned": []
     }
   ],
   "masteryScores": {
@@ -275,7 +311,7 @@
     }
   },
   "totalSessions": 4,
-  "totalMessages": 21,
+  "totalMessages": 25,
   "streakDays": 2,
   "lastActiveDate": "2026-07-25",
   "xp": 60,
