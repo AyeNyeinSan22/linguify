@@ -10,6 +10,7 @@ export default function VoicePage() {
   const [loading, setLoading] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const [ttsMode, setTtsMode] = useState<"browser" | "voivoice">("browser");
   const [supported] = useState(() => {
     if (typeof window === "undefined") return true;
     return !!(navigator.mediaDevices?.getUserMedia);
@@ -60,7 +61,7 @@ export default function VoicePage() {
     setLoading(true);
     try {
       const formData = new FormData();
-      formData.append("audio", blob, "recording.webm");
+      formData.append("file", blob, "recording.webm");
 
       const res = await fetch("/api/asr", {
         method: "POST",
@@ -118,6 +119,7 @@ export default function VoicePage() {
       });
 
       if (!res.ok) {
+        setTtsMode("browser");
         speakViaBrowser(text);
         return;
       }
@@ -127,12 +129,14 @@ export default function VoicePage() {
 
       if (audioUrl) URL.revokeObjectURL(audioUrl);
       setAudioUrl(url);
+      setTtsMode("voivoice");
 
       if (audioRef.current) {
         audioRef.current.src = url;
         audioRef.current.play().catch(() => {});
       }
     } catch {
+      setTtsMode("browser");
       speakViaBrowser(text);
     }
   }, [audioUrl]);
@@ -207,6 +211,13 @@ export default function VoicePage() {
         <p className="mt-1.5 text-sm text-text-secondary">
           Speak naturally — I&apos;ll listen warmly and guide you
         </p>
+        <div className="mt-2 flex items-center justify-center gap-3 text-[10px] text-text-muted">
+          <span>🎙️ VoiVoice ASR</span>
+          <span>·</span>
+          <span className={`inline-flex items-center gap-1 ${ttsMode === "voivoice" ? "text-accent-500" : ""}`}>
+            🔊 {ttsMode === "voivoice" ? "VoiVoice TTS" : "Browser TTS"}
+          </span>
+        </div>
       </div>
 
       {/* Chat history */}

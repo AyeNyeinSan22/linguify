@@ -2,13 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 
 /**
  * POST /api/asr
- * Body: FormData with audio file (field name: "audio")
+ * Body: FormData with audio file (field name: "file")
  * Returns: { text: string }
  */
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const formData = await request.formData();
-    const audio = formData.get("audio");
+    const audio = formData.get("file") || formData.get("audio");
 
     if (!audio || !(audio instanceof Blob)) {
       return NextResponse.json({ error: "Missing audio file" }, { status: 400 });
@@ -21,9 +21,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       return NextResponse.json({ error: "VIBE_KEY not configured" }, { status: 500 });
     }
 
-    // Forward to proxy ASR endpoint
+    // Forward to proxy ASR endpoint (OpenAI-compatible format)
     const proxyForm = new FormData();
-    proxyForm.append("audio", audio, "recording.wav");
+    proxyForm.append("file", audio, "recording.wav");
     proxyForm.append("model", "mimo-v2.5-asr");
 
     const response = await fetch(`${proxyUrl}/v1/audio/transcriptions`, {
