@@ -84,9 +84,25 @@ export default function VoicePage() {
 
   const speakViaBrowser = (text: string) => {
     if (typeof window !== "undefined" && window.speechSynthesis) {
+      // Cancel any ongoing speech first
+      window.speechSynthesis.cancel();
+
       const u = new SpeechSynthesisUtterance(text);
       u.lang = "en-US";
       u.rate = 0.85;
+      u.pitch = 1.05;
+      u.volume = 1;
+
+      // Pick a natural-sounding voice if available
+      const voices = window.speechSynthesis.getVoices();
+      const preferred = voices.find((v) =>
+        v.name.includes("Samantha") ||
+        v.name.includes("Google US English") ||
+        v.name.includes("Female") ||
+        v.name.includes("Natural")
+      ) || voices.find((v) => v.lang.startsWith("en")) || null;
+      if (preferred) u.voice = preferred;
+
       window.speechSynthesis.speak(u);
     }
   };
