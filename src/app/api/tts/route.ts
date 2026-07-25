@@ -28,8 +28,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       body: JSON.stringify({
         model: "mimo-v2.5-tts",
         input: text,
-        voice: "alloy",
-        response_format: "wav",
       }),
     });
 
