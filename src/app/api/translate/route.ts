@@ -37,9 +37,11 @@ export async function POST(request: NextRequest) {
     });
 
     const fullResponse = result.choices[0]?.message?.content || "";
-    const natMatch = fullResponse.match(/🌐\s*\*?\*?Natural Translation\*?\*?\s*\n([\s\S]*?)(?=🔄|$)/i);
+    // Capture natural translation — handles both "- text" and "\n text" formats
+    const natMatch = fullResponse.match(/🌐\s*\*?\*?Natural Translation\*?\*?[—–\-:\s]*\n?([\s\S]*?)(?=🔄|$)/i);
     const naturalTranslation = natMatch ? natMatch[1].trim() : "";
-    const vocabMatch = fullResponse.match(/📝\s*\*?\*?Key Vocabulary\*?\*?\s*\n([\s\S]*?)$/i);
+    // Capture vocabulary — handles "- **word** — def" format
+    const vocabMatch = fullResponse.match(/📝\s*\*?\*?Key Vocabulary\*?\*?[—–\-:\s]*\n?([\s\S]*?)$/i);
     const vocabulary: string[] = [];
     if (vocabMatch) vocabMatch[1].trim().split("\n").forEach(l => { const c = l.replace(/^[-•*]\s*/, "").trim(); if (c) vocabulary.push(c); });
 
