@@ -172,7 +172,9 @@ linguify/
     │       ├── progress/          # GET — user progress data
     │       ├── prompts/           # GET — daily writing prompts
     │       ├── scenarios/         # GET/POST — MultiWOZ scenarios
-    │       └── translate/         # POST — translation coaching
+    │       ├── translate/         # POST — translation coaching
+    │       ├── tts/               # POST — Text-to-Speech (VoiVoice)
+    │       └── asr/               # POST — Speech Recognition (VoiVoice)
     ├── components/
     │   ├── Navbar.tsx             # Navigation with flashcard badge
     │   ├── ChatPanel.tsx          # Reusable chat interface
@@ -214,6 +216,8 @@ linguify/
 | `/api/prompts` | GET | Daily writing prompts by CEFR level |
 | `/api/scenarios` | GET/POST | MultiWOZ domain data and scenario generation |
 | `/api/translate` | POST | Translation coaching |
+| `/api/tts` | POST | Text-to-Speech — convert text to audio (VoiVoice) |
+| `/api/asr` | POST | Speech Recognition — transcribe audio to text (VoiVoice) |
 
 ---
 

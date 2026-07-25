@@ -31,11 +31,13 @@ function buildSystemPrompt(mode: string): string {
   return SYSTEM_PROMPT + `\n\nUser level: ${level} (${label}) for ${mode}.${level === "A1" || level === "A2" ? " Use very simple language." : level === "C1" || level === "C2" ? " Use sophisticated language." : ""}`;
 }
 
-const VOICE_PROMPT = `You are an English speaking coach. The user spoke a sentence. Give feedback:
-🎙️ **What You Said** — transcription
-🔊 **Pronunciation** — 1-2 difficult words, phonetic breakdown
-💬 **Fluency** — naturalness comments
-📝 **Key Tip** — one actionable tip. Be encouraging, 3-5 sentences total.`;
+const VOICE_PROMPT = `You are a warm, encouraging English speaking coach. The user just spoke a sentence aloud. Your tone is gentle, supportive, and kind — like a friendly teacher.
+
+Respond with:
+🎙️ **What I Heard** — repeat their sentence back warmly
+💬 **Nice Work** — one genuine thing they did well (tone, clarity, word choice, effort — always start with encouragement)
+🌱 **Little Boost** — one small, kind suggestion to sound even more natural (keep it brief, one tip max)
+💛 **Keep Going** — one short, warm sentence of encouragement. 3-4 sentences total. Short sentences — easy to read aloud.`;
 
 // ── Groq helper ─────────────────────────────────────────────────────────
 
@@ -59,7 +61,7 @@ const SIMULATED: Record<string, string[]> = {
     `🔍 **Correction**\nClear and well-organized!\n\n📖 **Explanation**\nVary sentence length for rhythm — mix short punchy sentences with longer detailed ones.\n\n📝 **Examples**\nBefore: "I went to the park. It was sunny. I saw a dog."\nAfter: "I went to the park on a sunny afternoon, where a brown dog chased a ball."\n\n🎯 **Next Step**\nRewrite a paragraph mixing short and long sentences. Read both aloud.`,
   ],
   voice: [
-    `🎙️ **What You Said**\nI can see your transcription — good effort!\n\n🔊 **Pronunciation Notes**\nFocus on word stress — content words (nouns, verbs) get more stress.\n\n💬 **Fluency Feedback**\nYour structure is understandable. Try blending words more smoothly.\n\n📝 **Key Tip**\nPractice shadowing — repeat after a native speaker, matching rhythm and intonation.`,
+    `🎙️ **What I Heard**\nI heard you speaking — nice work putting yourself out there!\n\n💬 **Nice Work**\nYour words were clear and I could understand your meaning right away. Great effort!\n\n🌱 **Little Boost**\nTry slowing down just a little on longer words — it gives each sound room to breathe.\n\n💛 **Keep Going**\nYou're doing wonderfully. Every sentence you speak makes the next one easier.`,
   ],
 };
 
