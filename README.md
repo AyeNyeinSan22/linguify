@@ -12,16 +12,15 @@ Built with **Next.js 16**, **React 19**, **Tailwind CSS 4**, and **Groq (Llama 3
 
 | Home | AI Coach |
 |:---:|:---:|
-| ![Home](public/images/home.png) | ![AI Coach](public/images/coach.png) |
+| <img src="public/images/home.png" width="500"> | <img src="public/images/coach.png" width="500"> |
 
 | Practice Coach | Flashcards |
 |:---:|:---:|
-| ![Practice](public/images/practice.png) | ![Flashcards](public/images/flashcards.png) |
+| <img src="public/images/practice.png" width="500"> | <img src="public/images/flashcards.png" width="500"> |
 
 | Translation | Voice Coach |
 |:---:|:---:|
-| ![Translation](public/images/translate.png) | ![Voice](public/images/voicecoach.png) |
-
+| <img src="public/images/translate.png" width="500"> | <img src="public/images/voicecoach.png" width="500"> |
 ---
 
 ## Features
