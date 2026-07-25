@@ -131,14 +131,111 @@
       ],
       "corrections": [],
       "wordsLearned": []
+    },
+    {
+      "timestamp": 1784902097041,
+      "mode": "grammar",
+      "userText": "I went to the store yesterday",
+      "coachResponse": "🔍 Your sentence is correct!\n📖 The sentence is in the simple past tense, which is used to describe completed actions in the past. \n📝 For example: \"I ate breakfast this morning\" or \"She watched a movie last night\".\n🎯 Next Step: Try rewriting the sentence using the past perfect tense, e.g., \"I had gone to the store before I met my friend\".",
+      "errorTypes": [
+        "past-tense"
+      ],
+      "corrections": [],
+      "wordsLearned": []
+    },
+    {
+      "timestamp": 1784902098444,
+      "mode": "writing",
+      "userText": "I think that learning english is important for my career because it allows me to communicate with people from different countrys.",
+      "coachResponse": "🔍 **Correction** — I think that learning English is important for my career because it allows me to communicate with people from different countries.\n📖 **Explanation** — The word \"countrys\" should be \"countries\" because it's a plural noun, and \"english\" should be capitalized as it's a proper noun, referring to the language.\n📝 **Examples** — For example, \"I've visited many countries in my lifetime\" or \"She speaks English fluently\".\n🎯 **Next Step** — Practice using country names and their corresponding adjective forms, such as \"English\" for England, by writing a short paragraph about a country you'd like to visit.",
+      "errorTypes": [
+        "plurals",
+        "modal-verbs"
+      ],
+      "corrections": [],
+      "wordsLearned": []
+    },
+    {
+      "timestamp": 1784905007037,
+      "mode": "grammar",
+      "userText": "hello",
+      "coachResponse": "🔍 Your sentence is correct!\n📖 In English, a simple \"hello\" is a common greeting, and it doesn't require any additional words to be grammatically correct.\n📝 Examples: \"Hello, how are you?\" or simply \"Hello!\"\n🎯 Next Step: Try responding to a greeting, practice with \"Hello, I'm fine, thank you!\"",
+      "errorTypes": [],
+      "corrections": [],
+      "wordsLearned": []
+    },
+    {
+      "timestamp": 1784908105440,
+      "mode": "grammar",
+      "userText": "I went to the store yesterday",
+      "coachResponse": "🔍 **Correction** — Your sentence is correct!\n📖 **Explanation** — The sentence is in the simple past tense, which is used to describe completed actions in the past, and the verb \"went\" is the correct form of the verb \"go\" in this tense.\n📝 **Examples** — I studied for my exam last night, She ate breakfast at 7 am.\n🎯 **Next Step** — Try writing a short paragraph about what you did last weekend, using the simple past tense to describe your actions.",
+      "errorTypes": [
+        "past-tense"
+      ],
+      "corrections": [],
+      "wordsLearned": []
+    },
+    {
+      "timestamp": 1784908379059,
+      "mode": "grammar",
+      "userText": "She walk to school",
+      "coachResponse": "🔍 **Correction** — She walks to school.\n📖 **Explanation** — The verb \"walk\" should be in the present simple tense, which is \"walks\" for the third person singular (she).\n📝 **Examples** — He runs to the store, she eats breakfast at 7am.\n🎯 **Next Step** — Practice changing verbs to the present simple tense by writing five sentences about your daily routine, using the correct verb forms for \"I\", \"you\", \"he\", \"she\", and \"it\".",
+      "errorTypes": [
+        "present-tense",
+        "plurals",
+        "modal-verbs",
+        "subject-verb-agreement"
+      ],
+      "corrections": [],
+      "wordsLearned": []
+    },
+    {
+      "timestamp": 1784908455624,
+      "mode": "grammar",
+      "userText": "Hello",
+      "coachResponse": "🔍 Your sentence is correct!\n📖 As a greeting, \"Hello\" is a complete sentence and requires no correction. In English, greetings are often used as standalone sentences.\n📝 Examples: \"Hi, how are you?\" or simply \"Hi!\" can also be used as greetings.\n🎯 Next Step: Practice responding to greetings by writing a short reply to \"Hello, how are you?\"",
+      "errorTypes": [
+        "modal-verbs"
+      ],
+      "corrections": [],
+      "wordsLearned": []
+    },
+    {
+      "timestamp": 1784978446118,
+      "mode": "voice",
+      "userText": "I went to the store yesterday",
+      "coachResponse": "🎙️ **What I Heard** — You said \"I went to the store yesterday\". \n💬 **Nice Work** — Your sentence was clear and easy to understand. \n🌱 **Little Boost** — Try adding a reason for going to the store, like \"I went to the store yesterday to buy some milk\".\n💛 **Keep Going** — You're doing great, keep practicing and your English will sound even more natural.",
+      "errorTypes": [],
+      "corrections": [],
+      "wordsLearned": []
+    },
+    {
+      "timestamp": 1784978507398,
+      "mode": "voice",
+      "userText": "I like to learn English",
+      "coachResponse": "🎙️ **What I Heard** — You said, \"I like to learn English.\" \n💬 **Nice Work** — Your sentence is clear and easy to understand. \n🌱 **Little Boost** — Try using the present simple tense, so it sounds like \"I like learning English.\"\n💛 **Keep Going** — You're doing great, keep practicing and you'll get better every day.",
+      "errorTypes": [
+        "present-tense"
+      ],
+      "corrections": [],
+      "wordsLearned": []
+    },
+    {
+      "timestamp": 1784979578606,
+      "mode": "voice",
+      "userText": "hello",
+      "coachResponse": "🎙️ **What I Heard** — You said \"hello\" \n💬 **Nice Work** — Your tone sounded very friendly and approachable. \n🌱 **Little Boost** — Try adding a slight pause after \"hello\" to make it sound even more natural. \n💛 **Keep Going** — You're off to a great start, keep speaking and I'm here to support you.",
+      "errorTypes": [],
+      "corrections": [],
+      "wordsLearned": []
     }
   ],
   "masteryScores": {
     "past-tense": {
       "topic": "past-tense",
       "correct": 0,
-      "total": 3,
-      "lastSeen": 1781890697147
+      "total": 5,
+      "lastSeen": 1784908105441
     },
     "articles": {
       "topic": "articles",
@@ -149,14 +246,14 @@
     "plurals": {
       "topic": "plurals",
       "correct": 0,
-      "total": 1,
-      "lastSeen": 1781890955576
+      "total": 3,
+      "lastSeen": 1784908379059
     },
     "subject-verb-agreement": {
       "topic": "subject-verb-agreement",
       "correct": 0,
-      "total": 1,
-      "lastSeen": 1781890955576
+      "total": 2,
+      "lastSeen": 1784908379059
     },
     "countability": {
       "topic": "countability",
@@ -167,24 +264,38 @@
     "modal-verbs": {
       "topic": "modal-verbs",
       "correct": 0,
-      "total": 6,
-      "lastSeen": 1781967661880
+      "total": 9,
+      "lastSeen": 1784908455625
+    },
+    "present-tense": {
+      "topic": "present-tense",
+      "correct": 0,
+      "total": 2,
+      "lastSeen": 1784978507399
     }
   },
-  "totalSessions": 2,
-  "totalMessages": 12,
+  "totalSessions": 4,
+  "totalMessages": 21,
   "streakDays": 2,
-  "lastActiveDate": "2026-06-20",
-  "xp": 0,
+  "lastActiveDate": "2026-07-25",
+  "xp": 60,
   "level": 1,
-  "achievements": [],
+  "achievements": [
+    {
+      "id": "first-card",
+      "name": "First Card",
+      "description": "Review your first flashcard",
+      "icon": "🃏",
+      "unlockedAt": 1784902227514
+    }
+  ],
   "flashcardStats": {
-    "totalReviews": 0,
-    "correctReviews": 0,
-    "currentStreak": 0,
-    "bestStreak": 0,
-    "lastReviewDate": null
+    "totalReviews": 4,
+    "correctReviews": 4,
+    "currentStreak": 4,
+    "bestStreak": 4,
+    "lastReviewDate": "2026-07-25"
   },
   "setMastery": {},
-  "feedbackCompleted": 4
+  "feedbackCompleted": 6
 }

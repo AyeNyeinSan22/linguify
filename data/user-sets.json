@@ -1,0 +1,44 @@
+{
+  "sets": [
+    {
+      "name": "Spanish Basics",
+      "cards": [
+        {
+          "front": "hello",
+          "back": "hola"
+        }
+      ],
+      "id": "us-1784904192656-fbda1",
+      "createdAt": 1784904192656,
+      "updatedAt": 1784904192656
+    },
+    {
+      "name": "Spanish Basics",
+      "cards": [
+        {
+          "front": "hello",
+          "back": "hola"
+        },
+        {
+          "front": "goodbye",
+          "back": "adios"
+        }
+      ],
+      "id": "us-1784908566750-exi6i",
+      "createdAt": 1784908566750,
+      "updatedAt": 1784908566750
+    },
+    {
+      "name": "My Test Set",
+      "cards": [
+        {
+          "front": "hello",
+          "back": "world"
+        }
+      ],
+      "id": "us-1784978844980-ryngz",
+      "createdAt": 1784978844980,
+      "updatedAt": 1784978844980
+    }
+  ]
+}
