@@ -1,18 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function ThemeToggle() {
-  const [dark, setDark] = useState(() => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("linguify-theme");
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      const isDark = stored ? stored === "dark" : prefersDark;
-      document.documentElement.classList.toggle("dark", isDark);
-      return isDark;
-    }
-    return false;
-  });
+  const [dark, setDark] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  // Initialize theme from localStorage/system preference on mount
+  useEffect(() => {
+    setMounted(true);
+    const stored = localStorage.getItem("linguify-theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = stored ? stored === "dark" : prefersDark;
+    setDark(isDark);
+    document.documentElement.classList.toggle("dark", isDark);
+  }, []);
 
   const toggle = () => {
     const next = !dark;
@@ -20,6 +22,13 @@ export default function ThemeToggle() {
     document.documentElement.classList.toggle("dark", next);
     localStorage.setItem("linguify-theme", next ? "dark" : "light");
   };
+
+  // Prevent hydration mismatch: render a consistent placeholder until mounted
+  if (!mounted) {
+    return (
+      <div className="w-9 h-9" aria-hidden="true" />
+    );
+  }
 
   return (
     <button

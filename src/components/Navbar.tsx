@@ -14,29 +14,13 @@ interface NavLink {
 
 export default function Navbar() {
   const pathname = usePathname();
-  const [flashcardDue, setFlashcardDue] = useState(() => {
-    try {
-      const raw = typeof window !== "undefined" ? localStorage.getItem("linguify-flashcards") : null;
-      if (raw) {
-        const cards: { nextReview: number }[] = JSON.parse(raw);
-        return cards.filter((c) => c.nextReview <= Date.now()).length;
-      }
-    } catch { /* ignore */ }
-    return 0;
-  });
+  const [flashcardDue, setFlashcardDue] = useState(0);
+  const [mounted, setMounted] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // Close mobile menu on route change
-  const prevPathnameRef = useRef(pathname);
+  // Initialize flashcard count and handle hydration
   useEffect(() => {
-    if (prevPathnameRef.current !== pathname) {
-      prevPathnameRef.current = pathname;
-      setMobileOpen(false);
-    }
-  }, [pathname]);
-
-  // Refresh flashcard count when tab becomes visible
-  useEffect(() => {
+    setMounted(true);
     const refresh = () => {
       try {
         const raw = localStorage.getItem("linguify-flashcards");
@@ -46,6 +30,9 @@ export default function Navbar() {
         }
       } catch { /* ignore */ }
     };
+
+    refresh();
+
     window.addEventListener("visibilitychange", refresh);
     window.addEventListener("focus", refresh);
     return () => {
@@ -53,6 +40,15 @@ export default function Navbar() {
       window.removeEventListener("focus", refresh);
     };
   }, []);
+
+  // Close mobile menu on route change
+  const prevPathnameRef = useRef(pathname);
+  useEffect(() => {
+    if (prevPathnameRef.current !== pathname) {
+      prevPathnameRef.current = pathname;
+      setMobileOpen(false);
+    }
+  }, [pathname]);
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -92,8 +88,8 @@ export default function Navbar() {
             <span className="gradient-text font-bold text-lg hidden sm:inline">Linguify</span>
           </Link>
 
-          {/* Desktop nav (≥768px) — unchanged horizontal layout */}
-          <ul className="hidden md:flex items-center gap-0.5 overflow-x-auto">
+          {/* Desktop nav (≥768px) */}
+          <ul className="hidden md:flex items-center gap-0.5 overflow-x-auto no-scrollbar">
             {links.map((link) => {
               const active = pathname === link.href;
               return (
@@ -105,7 +101,7 @@ export default function Navbar() {
                     }`}
                   >
                     {link.label}
-                    {link.badge && (
+                    {mounted && link.badge && (
                       <span className="absolute -top-0.5 -right-0.5 inline-flex items-center justify-center w-4 h-4 rounded-full bg-error text-[9px] font-bold text-white">
                         {link.badge}
                       </span>
@@ -174,7 +170,6 @@ export default function Navbar() {
         aria-modal="true"
         aria-label="Navigation menu"
       >
-        {/* Menu header with close button */}
         <div className="flex items-center justify-between px-4 h-16 border-b border-[var(--border-card)]">
           <span className="gradient-text font-bold text-lg">Linguify</span>
           <button
@@ -198,7 +193,6 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Menu items */}
         <nav className="flex flex-col px-3 py-4 gap-1">
           {links.map((link) => {
             const active = pathname === link.href;
@@ -214,7 +208,7 @@ export default function Navbar() {
               >
                 <span className="text-lg w-6 text-center flex-shrink-0">{link.icon}</span>
                 <span className="flex-1">{link.label}</span>
-                {link.badge && (
+                {mounted && link.badge && (
                   <span className="inline-flex items-center justify-center min-w-[20px] h-5 rounded-full bg-error px-1.5 text-[11px] font-bold text-white">
                     {link.badge}
                   </span>
@@ -224,7 +218,6 @@ export default function Navbar() {
           })}
         </nav>
 
-        {/* Theme toggle at bottom of mobile menu */}
         <div className="absolute bottom-0 left-0 right-0 px-4 py-4 border-t border-[var(--border-card)]">
           <div className="flex items-center justify-between">
             <span className="text-sm text-text-secondary">Dark mode</span>

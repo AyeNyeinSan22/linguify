@@ -15,7 +15,6 @@ interface DomainData { name: string; label: string; icon: string; description: s
 
 const FILTERS = ["All Scenarios", "Popular", "Newest", "A1-A2", "B1-B2", "C1-C2"];
 
-// CEFR level mapping for each domain
 const DOMAIN_LEVELS: Record<string, string> = {
   restaurant: "A2",
   hotel: "B1",
@@ -31,24 +30,25 @@ export default function Home() {
   const [streak, setStreak] = useState(0);
   const [messageCount, setMessageCount] = useState(0);
   const [vocabCount, setVocabCount] = useState(0);
-  const [level] = useState<string>(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("linguify-level");
-      if (saved) {
-        const labels: Record<string, string> = { beginner: "A1-A2", intermediate: "B1-B2", advanced: "C1-C2" };
-        return labels[saved] || "B1";
-      }
-    }
-    return "B1";
-  });
-  const [showOnboarding, setShowOnboarding] = useState(() => {
-    if (typeof window !== "undefined") {
-      return !localStorage.getItem("linguify-onboarded");
-    }
-    return false;
-  });
+  const [level, setLevel] = useState("B1");
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+
+    // Load local storage data after mount
+    const savedLevel = localStorage.getItem("linguify-level");
+    if (savedLevel) {
+      const labels: Record<string, string> = { beginner: "A1-A2", intermediate: "B1-B2", advanced: "C1-C2" };
+      setLevel(labels[savedLevel] || "B1");
+    }
+
+    const onboarded = localStorage.getItem("linguify-onboarded");
+    if (!onboarded) {
+      setShowOnboarding(true);
+    }
+
     fetch("/api/scenarios").then(r => r.json()).then(d => { if (d.domains) setDomains(d.domains); }).catch(() => {});
     fetch("/api/progress").then(r => r.json()).then(d => {
       if (d.streakDays) setStreak(d.streakDays);
@@ -59,7 +59,6 @@ export default function Home() {
 
   const handleOnboardingComplete = (_level: LevelKey, domain: string) => {
     setShowOnboarding(false);
-    // Navigate to the selected scenario
     window.location.href = `/scenario/${domain}`;
   };
 
@@ -71,12 +70,13 @@ export default function Home() {
     : activeFilter === "C1-C2" ? domains.filter(d => (DOMAIN_LEVELS[d.name] || "B1") === "C1" || (DOMAIN_LEVELS[d.name] || "B1") === "C2")
     : domains;
 
-  // Determine recommended domain (highest rating)
   const recommendedDomain = domains.length > 0
     ? domains.reduce((best, d) => (d.rating || 0) > (best.rating || 0) ? d : best, domains[0]).name
     : null;
 
   const hasActivity = streak > 0 || messageCount > 0;
+
+  if (!mounted) return null;
 
   return (
     <div className="flex flex-col flex-1">
@@ -86,16 +86,12 @@ export default function Home() {
       </div>
       <div className="relative z-[1] mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 py-5 sm:py-8 flex flex-col gap-8 sm:gap-10">
 
-        {/* Hero Section */}
         <GreetingBanner userName="Learner" streak={streak} level={level} />
 
-        {/* Daily Challenge */}
         <DailyChallenge />
 
-        {/* Continue Learning (for returning users) */}
         <ContinueLearning />
 
-        {/* Stats Bar — show for returning users, or a getting-started prompt for new users */}
         {hasActivity ? (
           <QuickStats stats={[
             { icon: "🔥", value: String(streak), label: "Day Streak", accent: "text-amber-500", bg: "bg-amber-50 dark:bg-amber-500/10", highlight: streak > 0 },
@@ -105,7 +101,6 @@ export default function Home() {
           ]} />
         ) : (
           <div className="space-y-4">
-            {/* Recommended Learning Path for new users */}
             <section className="glass rounded-2xl p-6">
               <div className="flex items-center gap-3 mb-4">
                 <span className="text-2xl">🗺️</span>
@@ -147,7 +142,6 @@ export default function Home() {
           </div>
         )}
 
-        {/* Scenario Grid */}
         <section>
           <div className="flex items-end justify-between mb-4">
             <div>
@@ -180,7 +174,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Quick Actions */}
         <section className="grid grid-cols-2 gap-4">
           <Link href="/skill" className="glass group p-5 text-center hover:shadow-lg transition-all hover:-translate-y-1">
             <span className="text-3xl block mb-2">📖</span>
@@ -194,7 +187,6 @@ export default function Home() {
           </Link>
         </section>
 
-        {/* Social Proof + Footer */}
         <section className="text-center space-y-3 pt-4 border-t border-[var(--border-card)]">
           <div className="flex items-center justify-center gap-6 text-xs text-text-secondary">
             <span>🌍 10,000+ learners trust Linguify</span>
@@ -213,7 +205,6 @@ export default function Home() {
         </section>
       </div>
 
-      {/* Onboarding Wizard */}
       {showOnboarding && (
         <OnboardingWizard
           onComplete={handleOnboardingComplete}

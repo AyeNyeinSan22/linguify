@@ -130,7 +130,7 @@ export default function SkillPage() {
             </div>
           </div>
         )}
-        <div className="flex gap-2 overflow-x-auto pb-1">
+        <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
           {MODES.map(m=><button key={m.key} onClick={()=>setMode(m.key)} className={`flex-shrink-0 pill ${mode===m.key?"pill-active":""}`}><span className="block text-lg">{m.icon}</span><div><span className="block text-xs font-semibold text-text-primary">{m.label}</span><span className="mt-0.5 block text-[11px] text-text-muted leading-snug">{m.desc}</span></div></button>)}
         </div>
         <ChatPanel messages={messages} isLoading={loading} streamingText={streamingText} onFeedbackComplete={handleFeedbackComplete} />

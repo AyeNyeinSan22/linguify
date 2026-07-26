@@ -98,7 +98,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
 
 body {
   background: var(--bg-root);
@@ -106,6 +109,8 @@ body {
   font-family: var(--font-sans);
   letter-spacing: -0.011em;
   transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body::before {
@@ -406,6 +411,16 @@ body::before {
 @keyframes feedback-card-in {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Utilities ─────────────────────────────────────────────────── */
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .feedback-card {

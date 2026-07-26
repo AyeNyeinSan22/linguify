@@ -1,10 +1,23 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { getDailyChallenge } from "@/lib/constants";
+import { getDailyChallenge, type DailyChallenge as DailyChallengeType } from "@/lib/constants";
 
 export default function DailyChallenge() {
-  const challenge = getDailyChallenge();
+  const [challenge, setChallenge] = useState<DailyChallengeType | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    setChallenge(getDailyChallenge());
+  }, []);
+
+  if (!mounted || !challenge) {
+    return (
+      <div className="h-[180px] w-full rounded-2xl bg-gray-100 animate-pulse" />
+    );
+  }
 
   return (
     <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-500 via-orange-500 to-red-500 p-5 sm:p-6 text-white shadow-lg challenge-glow">

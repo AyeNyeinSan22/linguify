@@ -264,6 +264,24 @@
       "errorTypes": [],
       "corrections": [],
       "wordsLearned": []
+    },
+    {
+      "timestamp": 1785063657466,
+      "mode": "voice",
+      "userText": "hello",
+      "coachResponse": "🎙️ **What I Heard** — You said \"hello\"!\n💬 **Nice Work** — Your tone sounds very friendly and approachable.\n🌱 **Little Boost** — Try adding a smile to your voice to make it sound even warmer.\n💛 **Keep Going** — You're off to a great start, keep speaking and let's have a conversation!",
+      "errorTypes": [],
+      "corrections": [],
+      "wordsLearned": []
+    },
+    {
+      "timestamp": 1785063762635,
+      "mode": "voice",
+      "userText": "play everyone",
+      "coachResponse": "🎙️ **What I Heard** — You said \"play everyone\".\n💬 **Nice Work** — I love the enthusiasm behind your voice.\n🌱 **Little Boost** — Try saying \"play with everyone\" for a more natural flow.\n💛 **Keep Going** — You're doing great, keep speaking from the heart.",
+      "errorTypes": [],
+      "corrections": [],
+      "wordsLearned": []
     }
   ],
   "masteryScores": {
@@ -310,10 +328,10 @@
       "lastSeen": 1784978507399
     }
   },
-  "totalSessions": 4,
-  "totalMessages": 25,
-  "streakDays": 2,
-  "lastActiveDate": "2026-07-25",
+  "totalSessions": 5,
+  "totalMessages": 27,
+  "streakDays": 3,
+  "lastActiveDate": "2026-07-26",
   "xp": 60,
   "level": 1,
   "achievements": [
