@@ -26,6 +26,11 @@ export default function VoicePage() {
   const [transcript, setTranscript] = useState("");
   const [loading, setLoading] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  const [streamingText, setStreamingText] = useState<string | null>(null);
+  const [speechQueue, setSpeechQueue] = useState<string[]>([]);
+  const [isSpeakingQueue, setIsSpeakingQueue] = useState(false);
+  const speechQueueRef = useRef<string[]>([]);
+  const isSpeakingQueueRef = useRef(false);
 
   // Upload state
   const [uploadFile, setUploadFile] = useState<File | null>(null);
@@ -42,15 +47,21 @@ export default function VoicePage() {
   const [coachSpeaking, setCoachSpeaking] = useState(false);
   const [coachPaused, setCoachPaused] = useState(false);
 
-  const recRef = useRef<ReturnType<typeof getRecognition>>(null);
+  const recRef = useRef<any>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const chatEndRef = useRef<HTMLDivElement | null>(null);
+  const transcriptRef = useRef("");
+  const getFeedbackRef = useRef<any>(null);
+  const silenceTimerRef = useRef<any>(null);
+  const loadingRef = useRef(false);
+  const playPromiseRef = useRef<Promise<void> | null>(null);
+  const resolveSpeechPromiseRef = useRef<(() => void) | null>(null);
 
   // Auto-scroll chat
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, loading]);
+  }, [messages, loading, streamingText]);
 
   // Track VoiVoice audio playback state
   useEffect(() => {
@@ -84,45 +95,70 @@ export default function VoicePage() {
     };
   }, []);
 
-  // ── Init SpeechRecognition ───────────────────────────────────────────
   useEffect(() => {
-    const rec = getRecognition();
+    const rec = getRecognition() as any;
     if (!rec) return;
-    rec.continuous = false;
+    rec.continuous = true;
     rec.interimResults = true;
     rec.lang = "en-US";
 
-    rec.onresult = (event: unknown) => {
-      const e = event as {
-        resultIndex: number;
-        results: {
-          length: number;
-          [i: number]: { isFinal: boolean; [j: number]: { transcript: string } };
-        };
-      };
-      let final = "";
-      for (let i = e.resultIndex; i < e.results.length; i++) {
-        if (e.results[i].isFinal) final += e.results[i][0].transcript;
+    rec.onresult = (event: any) => {
+      let combined = "";
+      for (let i = 0; i < event.results.length; i++) {
+        combined += event.results[i][0].transcript;
       }
-      if (final) {
-        setTranscript(final);
-        setIsRecording(false);
-      }
+      setTranscript(combined);
+      transcriptRef.current = combined;
     };
-    rec.onerror = () => setIsRecording(false);
-    rec.onend = () => setIsRecording(false);
+
+    rec.onstart = () => setIsRecording(true);
+    rec.onerror = () => {
+      setIsRecording(false);
+      if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
+    };
+    rec.onend = () => {
+      setIsRecording(false);
+      if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
+    };
     recRef.current = rec;
-  }, []);
+    return () => {
+      if (rec) rec.abort();
+    };
+  }, [loading]); // Re-init to capture latest loading state
 
   // ── TTS helpers ──────────────────────────────────────────────────────
   const stopCoachVoice = useCallback(() => {
     if (typeof window !== "undefined" && window.speechSynthesis) {
       window.speechSynthesis.cancel();
     }
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
+
+    // Clear speech queue and resolve pending promise to stop the loop
+    speechQueueRef.current = [];
+    isSpeakingQueueRef.current = false;
+    setIsSpeakingQueue(false);
+    if (resolveSpeechPromiseRef.current) {
+      resolveSpeechPromiseRef.current();
+      resolveSpeechPromiseRef.current = null;
     }
+
+    if (audioRef.current) {
+      const audio = audioRef.current;
+      const playPromise = playPromiseRef.current;
+
+      const doPause = () => {
+        try {
+          audio.pause();
+          audio.currentTime = 0;
+        } catch (e) {}
+      };
+
+      if (playPromise) {
+        playPromise.then(doPause).catch(doPause);
+      } else {
+        doPause();
+      }
+    }
+
     setCoachSpeaking(false);
     setCoachPaused(false);
   }, []);
@@ -192,34 +228,86 @@ export default function VoicePage() {
   };
 
   const speakViaTts = useCallback(
-    async (text: string) => {
-      stopCoachVoice();
-      try {
-        const res = await fetch("/api/tts", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ text }),
-        });
-        if (!res.ok) {
-          setTtsMode("browser");
-          speakViaBrowser(text);
+    (text: string) => {
+      return new Promise<void>((resolve) => {
+        const cleanText = text.replace(/[🎙️🔊💬📝💛🌱]/g, "").trim();
+        if (!cleanText) {
+          resolve();
           return;
         }
-        const blob = await res.blob();
-        const url = URL.createObjectURL(blob);
-        if (audioUrl) URL.revokeObjectURL(audioUrl);
-        setAudioUrl(url);
+
+        resolveSpeechPromiseRef.current = resolve;
         setTtsMode("voivoice");
-        if (audioRef.current) {
-          audioRef.current.src = url;
-          audioRef.current.play().catch(() => {});
+
+        const url = `/api/tts?text=${encodeURIComponent(cleanText)}`;
+        const audio = audioRef.current;
+        if (audio) {
+          const finished = () => {
+            if (resolveSpeechPromiseRef.current === resolve) {
+              resolveSpeechPromiseRef.current = null;
+            }
+            audio.onended = null;
+            audio.onerror = null;
+            resolve();
+          };
+
+          audio.onended = finished;
+          audio.onerror = () => {
+            console.error("TTS audio error");
+            setTtsMode("browser");
+            speakViaBrowser(cleanText);
+            finished();
+          };
+
+          audio.src = url;
+          const p = audio.play();
+          playPromiseRef.current = p;
+
+          if (p !== undefined) {
+            p.then(() => {
+              if (playPromiseRef.current === p) playPromiseRef.current = null;
+            }).catch((err) => {
+              if (playPromiseRef.current === p) playPromiseRef.current = null;
+              if (err.name === "AbortError") {
+                finished();
+              } else {
+                console.error("Play failed:", err);
+                setTtsMode("browser");
+                speakViaBrowser(cleanText);
+                finished();
+              }
+            });
+          }
+        } else {
+          resolve();
         }
-      } catch {
-        setTtsMode("browser");
-        speakViaBrowser(text);
-      }
+      });
     },
-    [audioUrl, stopCoachVoice]
+    [speakViaBrowser]
+  );
+
+  const processSpeechQueue = useCallback(async () => {
+    if (isSpeakingQueueRef.current || speechQueueRef.current.length === 0) return;
+    isSpeakingQueueRef.current = true;
+    setIsSpeakingQueue(true);
+
+    while (speechQueueRef.current.length > 0) {
+      const nextText = speechQueueRef.current.shift();
+      if (nextText) {
+        await speakViaTts(nextText);
+      }
+    }
+
+    isSpeakingQueueRef.current = false;
+    setIsSpeakingQueue(false);
+  }, [speakViaTts]);
+
+  const addToSpeechQueue = useCallback(
+    (text: string) => {
+      speechQueueRef.current.push(text);
+      processSpeechQueue();
+    },
+    [processSpeechQueue]
   );
 
   // ── Send text to coach ───────────────────────────────────────────────
@@ -232,32 +320,83 @@ export default function VoicePage() {
         ...p,
         { role: "user", content: t, source, fileName },
       ]);
-      if (source === "mic") setTranscript("");
-      else {
+      if (source === "mic") {
+        setTranscript("");
+        transcriptRef.current = "";
+      } else {
         setUploadTranscript("");
         setUploadFile(null);
         setUploadStatus("idle");
       }
       setLoading(true);
+      setStreamingText(null);
       stopCoachVoice();
+      speechQueueRef.current = [];
+      isSpeakingQueueRef.current = false;
 
       try {
         const res = await fetch("/api/coach", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: t, mode: "voice" }),
+          body: JSON.stringify({ message: t, mode: "voice", stream: true }),
         });
-        const d = await res.json();
-        if (d.response) {
-          // Strip markdown bold (**) and stray asterisks from displayed text
-          const display = d.response.replace(/\*\*/g, "").replace(/\*/g, "").trim();
-          // Strip emojis too for TTS only
-          const ttsClean = display.replace(/[🎙️🔊💬📝💛🌱]/g, "").trim();
-          setMessages((p) => [
-            ...p,
-            { role: "coach", content: display },
-          ]);
-          speakViaTts(ttsClean);
+
+        if (res.ok && res.headers.get("Content-Type")?.includes("text/event-stream")) {
+          const reader = res.body?.getReader();
+          if (!reader) throw new Error("No reader");
+          const decoder = new TextDecoder();
+          let accumulated = "";
+          let buffer = "";
+          let lastSpokenIndex = 0;
+
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split("\n");
+            buffer = lines.pop() || "";
+
+            for (const line of lines) {
+              if (!line.startsWith("data: ")) continue;
+              try {
+                const event = JSON.parse(line.slice(6));
+                if (event.type === "token") {
+                  accumulated += event.text;
+                  setStreamingText(accumulated);
+
+                  // Check for completed sections/lines to speak immediately
+                  const sections = accumulated.split("\n");
+                  if (sections.length > lastSpokenIndex + 1) {
+                    const newSection = sections[lastSpokenIndex].trim();
+                    if (newSection) {
+                      addToSpeechQueue(newSection);
+                    }
+                    lastSpokenIndex++;
+                  }
+                } else if (event.type === "done") {
+                  const finalSections = accumulated.split("\n");
+                  for (let i = lastSpokenIndex; i < finalSections.length; i++) {
+                    const section = finalSections[i].trim();
+                    if (section) addToSpeechQueue(section);
+                  }
+
+                  const display = accumulated.replace(/\*\*/g, "").replace(/\*/g, "").trim();
+                  setMessages((p) => [...p, { role: "coach", content: display }]);
+                  setStreamingText(null);
+                }
+              } catch (e) {}
+            }
+          }
+        } else {
+          const d = await res.json();
+          if (d.response) {
+            const display = d.response.replace(/\*\*/g, "").replace(/\*/g, "").trim();
+            setMessages((p) => [...p, { role: "coach", content: display }]);
+            const sections = display.split("\n");
+            for (const s of sections) {
+              if (s.trim()) addToSpeechQueue(s.trim());
+            }
+          }
         }
       } catch {
         setMessages((p) => [
@@ -271,25 +410,46 @@ export default function VoicePage() {
         setLoading(false);
       }
     },
-    [loading, speakViaTts, stopCoachVoice]
+    [loading, addToSpeechQueue, stopCoachVoice]
   );
+
+  useEffect(() => {
+    getFeedbackRef.current = getFeedback;
+  }, [getFeedback]);
 
   // ── Recording controls ───────────────────────────────────────────────
   const startRecording = () => {
+    stopCoachVoice();
     setTranscript("");
+    transcriptRef.current = "";
     setIsRecording(true);
     if (recRef.current) {
-      try { recRef.current.start(); } catch { /* already started */ }
+      try {
+        recRef.current.start();
+      } catch (e) {
+        console.error("Mic start error:", e);
+      }
     }
   };
-  const stopRecording = () => {
+  const stopRecording = useCallback(() => {
+    if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
+    const finalVal = transcriptRef.current.trim();
+
     if (recRef.current) {
-      try { recRef.current.stop(); } catch { /* already stopped */ }
+      try {
+        recRef.current.abort(); // Use abort for immediate stop
+      } catch (e) {}
     }
     setIsRecording(false);
-  };
-  const toggleRecording = () =>
-    isRecording ? stopRecording() : startRecording();
+
+    // If we have a transcript, send it immediately when the user manually stops
+    if (finalVal && !loading) {
+      getFeedbackRef.current?.(finalVal, "mic");
+      transcriptRef.current = "";
+    }
+  }, [loading]);
+
+  const toggleRecording = () => (isRecording ? stopRecording() : startRecording());
 
   // ── Upload & transcribe ──────────────────────────────────────────────
   const processUploadedFile = async (file: File) => {
@@ -447,12 +607,22 @@ export default function VoicePage() {
             </div>
           </div>
         ))}
-        {loading && (
+        {loading && !streamingText && (
           <div className="flex justify-start">
             <div className="chat-bubble-coach flex items-center gap-1.5 px-5 py-3.5">
               <span className="h-2 w-2 rounded-full bg-accent-400 animate-bounce [animation-delay:0ms]" />
               <span className="h-2 w-2 rounded-full bg-accent-500 animate-bounce [animation-delay:150ms]" />
               <span className="h-2 w-2 rounded-full bg-accent-600 animate-bounce [animation-delay:300ms]" />
+            </div>
+          </div>
+        )}
+        {streamingText && (
+          <div className="flex justify-start">
+            <div className="max-w-[85%] px-4 py-3 text-sm leading-relaxed chat-bubble-coach">
+              <p className="whitespace-pre-wrap">
+                {streamingText}
+                <span className="streaming-cursor" />
+              </p>
             </div>
           </div>
         )}

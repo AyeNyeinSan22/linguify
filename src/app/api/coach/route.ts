@@ -31,13 +31,14 @@ function buildSystemPrompt(mode: string): string {
   return SYSTEM_PROMPT + `\n\nUser level: ${level} (${label}) for ${mode}.${level === "A1" || level === "A2" ? " Use very simple language." : level === "C1" || level === "C2" ? " Use sophisticated language." : ""}`;
 }
 
-const VOICE_PROMPT = `You are a warm, encouraging English speaking coach. The user just spoke a sentence aloud. Your tone is gentle, supportive, and kind — like a friendly teacher.
+const VOICE_PROMPT = `You are a warm English coach. The user just spoke.
+Respond in exactly this format:
+What I Heard — [max 5 words]
+💬 Nice Work — [max 10 words]
+🌱 Little Boost — [max 10 words]
+💛 Keep Going — [max 5 words]
 
-Respond with:
-🎙️ **What I Heard** — repeat their sentence back warmly
-💬 **Nice Work** — one genuine thing they did well (tone, clarity, word choice, effort — always start with encouragement)
-🌱 **Little Boost** — one small, kind suggestion to sound even more natural (keep it brief, one tip max)
-💛 **Keep Going** — one short, warm sentence of encouragement. 3-4 sentences total. Short sentences — easy to read aloud.`;
+Rules: No bolding, single newlines, one short sentence per section. Be extremely concise for speed.`;
 
 // ── Groq helper ─────────────────────────────────────────────────────────
 
@@ -61,7 +62,14 @@ const SIMULATED: Record<string, string[]> = {
     `🔍 **Correction**\nClear and well-organized!\n\n📖 **Explanation**\nVary sentence length for rhythm — mix short punchy sentences with longer detailed ones.\n\n📝 **Examples**\nBefore: "I went to the park. It was sunny. I saw a dog."\nAfter: "I went to the park on a sunny afternoon, where a brown dog chased a ball."\n\n🎯 **Next Step**\nRewrite a paragraph mixing short and long sentences. Read both aloud.`,
   ],
   voice: [
-    `🎙️ **What I Heard**\nI heard you speaking — nice work putting yourself out there!\n\n💬 **Nice Work**\nYour words were clear and I could understand your meaning right away. Great effort!\n\n🌱 **Little Boost**\nTry slowing down just a little on longer words — it gives each sound room to breathe.\n\n💛 **Keep Going**\nYou're doing wonderfully. Every sentence you speak makes the next one easier.`,
+    `What I Heard — You said "hello"!
+💬 Nice Work — Your tone is so friendly and welcoming.
+🌱 Little Boost — Try adding a smile to your voice, it will make it sound even warmer.
+💛 Keep Going — You're off to a great start, keep sharing your thoughts!`,
+    `What I Heard — I heard you speaking clearly, nice work!
+💬 Nice Work — Your pronunciation is very natural and easy to understand.
+🌱 Little Boost — Try to project your voice a bit more for even better clarity.
+💛 Keep Going — You're doing a fantastic job, keep practicing every day!`,
   ],
 };
 
@@ -115,10 +123,10 @@ export async function POST(request: NextRequest) {
         ];
 
         const stream = await groq.chat.completions.create({
-          model: "llama-3.3-70b-versatile",
+          model: session!.mode === "voice" ? "llama-3.1-8b-instant" : "llama-3.3-70b-versatile",
           messages: msgs,
-          max_tokens: 1024,
-          temperature: 0.7,
+          max_tokens: 150,
+          temperature: 0.5,
           stream: true,
         });
 
@@ -154,11 +162,12 @@ export async function POST(request: NextRequest) {
         { role: "system", content: sysPrompt },
         ...session.messages.slice(-20).map(m => ({ role: m.role === "assistant" ? "assistant" as const : "user" as const, content: m.content })),
       ];
+      const model = mode === "voice" ? "llama-3.1-8b-instant" : "llama-3.3-70b-versatile";
       const result = await groq.chat.completions.create({
-        model: "llama-3.3-70b-versatile",
+        model: model,
         messages: msgs,
-        max_tokens: 1024,
-        temperature: 0.7,
+        max_tokens: 150,
+        temperature: 0.5,
       });
       response = result.choices[0]?.message?.content || "";
       if (!response) response = getSimulated(session.mode, session.messageCount);

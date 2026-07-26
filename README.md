@@ -54,7 +54,8 @@ Speak or upload audio and receive warm, personalised English coaching on pronunc
 - **Record live** — browser SpeechRecognition for quick spoken input
 - **Upload audio** — drag-and-drop MP3, M4A, WAV, WEBM, OGG, FLAC, or AAC (up to 25 MB)
 - **Groq Whisper ASR** — accurate transcription for uploaded files
-- **VoiVoice TTS** — natural coach readback, with browser TTS fallback
+- **Incremental TTS** — sentence-level streaming and audio queuing for ultra-low latency playback (~2s start)
+- **VoiVoice TTS** — high-performance direct audio streaming (GET) with browser TTS fallback
 - **Playback controls** — pause, resume, or stop coach voice while feedback is playing
 
 ### Spaced Repetition Flashcards
@@ -255,7 +256,7 @@ linguify/
 | `/api/prompts` | GET | Daily writing prompts by CEFR level |
 | `/api/scenarios` | GET/POST | MultiWOZ domain data and scenario generation |
 | `/api/translate` | POST | Auto-translate and translation coaching |
-| `/api/tts` | POST | Text-to-Speech — VoiVoice audio stream |
+| `/api/tts` | GET/POST | Text-to-Speech — VoiVoice audio stream (GET for direct playback) |
 | `/api/asr` | POST | Speech-to-text — Groq Whisper (primary) or VoiVoice fallback |
 
 ---
